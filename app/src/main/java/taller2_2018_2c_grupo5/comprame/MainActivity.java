@@ -25,17 +25,18 @@ import taller2_2018_2c_grupo5.comprame.dominio.Usuario;
 import taller2_2018_2c_grupo5.comprame.servicios.CustomJsonObjectRequest;
 import taller2_2018_2c_grupo5.comprame.servicios.RequestSender;
 import taller2_2018_2c_grupo5.comprame.servicios.ResponseListener;
+import taller2_2018_2c_grupo5.comprame.servicios.listeners.RegistrarseListener;
 
-public class MainActivity extends AppCompatActivity implements ResponseListener {
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,11 +80,14 @@ public class MainActivity extends AppCompatActivity implements ResponseListener 
 
         JSONObject jsonObject = new JSONObject(parametros);
 
-        String url = R.string.urlAppServer + "comprame/registrarse";
+        String url = getString(R.string.urlAppServer) + "comprame/registrarse";
 
-        requestSender.doPost(this, url, jsonObject);
+        ResponseListener listener = new RegistrarseListener(this);
+
+        requestSender.doPost(listener, url, jsonObject);
     }
 
+    /*
     @Override
     public void onRequestCompleted(Object response) {
 
@@ -99,6 +103,6 @@ public class MainActivity extends AppCompatActivity implements ResponseListener 
             Log.d("RegisterResponse", "Llega el error 500");
             Toast.makeText(this, "Llega el error 500", Toast.LENGTH_LONG).show();
         }
-    }
+    }*/
 }
 
