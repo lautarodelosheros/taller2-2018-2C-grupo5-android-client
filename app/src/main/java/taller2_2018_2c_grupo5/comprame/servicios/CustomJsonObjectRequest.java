@@ -33,7 +33,11 @@ class CustomJsonObjectRequest extends JsonObjectRequest {
 
                                 errorDetail = RequestHelper.getError(error);
 
-                                listener.onRequestError(errorDetail.first, errorDetail.second);
+                                try {
+                                    listener.onRequestError(errorDetail.first, errorDetail.second);
+                                } catch (NullPointerException e) {
+                                    e.printStackTrace();
+                                }
 
                             }
                         }
