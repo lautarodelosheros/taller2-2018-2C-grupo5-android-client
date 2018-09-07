@@ -7,3 +7,5 @@ android:
     - platform-tools
 jdk:
     - oraclejdk8
+before_script:
+    - chmod +x gradlew
