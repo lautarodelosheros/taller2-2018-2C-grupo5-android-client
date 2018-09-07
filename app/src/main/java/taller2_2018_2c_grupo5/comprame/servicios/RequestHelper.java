@@ -10,10 +10,7 @@ import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class RequestHelper {
+class RequestHelper {
     public static Pair<Integer, String> getError(VolleyError error) {
         String errorDesc;
         Integer codError = 0;
@@ -24,7 +21,7 @@ public class RequestHelper {
 
         } else if (error instanceof AuthFailureError) {
 
-            errorDesc = "Error de autenticacion";
+            errorDesc = "Error de authentication";
 
         } else if (error instanceof ServerError) {
 
@@ -44,7 +41,7 @@ public class RequestHelper {
 
         } else if (error instanceof ParseError) {
 
-            errorDesc = "Error de parseo";
+            errorDesc = "Error de parser";
             error.printStackTrace();
 
         } else {
@@ -53,15 +50,6 @@ public class RequestHelper {
 
         }
         return new Pair<>(codError, errorDesc);
-    }
-
-    public static Map getHeaders() {
-
-        Map headers = new HashMap<>();
-
-        headers.put("Content-Type", "application/json");
-
-        return headers;
     }
 
 }

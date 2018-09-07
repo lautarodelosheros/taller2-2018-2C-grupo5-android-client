@@ -2,13 +2,15 @@ package taller2_2018_2c_grupo5.comprame.dominio;
 
 public class Usuario {
 
-    private String nombre;
-    private String apellido;
-    private String email;
+    private final String nombreUsuario;
+    private final String password;
+    private final String nombre;
+    private final String apellido;
+    private final String email;
 
-    public Usuario() {}
-
-    public Usuario(String nombre, String apellido, String email) {
+    public Usuario(String nombreUsuario, String password, String nombre, String apellido, String email) {
+        this.nombreUsuario = nombreUsuario;
+        this.password = password;
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
@@ -19,23 +21,19 @@ public class Usuario {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
     public String getApellido() {
         return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }

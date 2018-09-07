@@ -10,7 +10,7 @@ import taller2_2018_2c_grupo5.comprame.servicios.ResponseListener;
 
 public class RegistrarseListener implements ResponseListener {
 
-    private Context context;
+    private final Context context;
 
     public RegistrarseListener(Context context) {
         this.context = context;
@@ -25,14 +25,13 @@ public class RegistrarseListener implements ResponseListener {
 
             Log.d("RegistrarseListener", response.toString());
 
-            //Hago un toast porque sino nadie se entera que se actualizo
-            Toast.makeText(context, "Llega!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Respuesta: " + jsonObject.toString(), Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public void onRequestError(int codError, String errorMessage) {
-        Log.d("RegistrarseListener", errorMessage);
+        Log.d("RegistrarseListener", errorMessage + codError);
         Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show();
     }
 

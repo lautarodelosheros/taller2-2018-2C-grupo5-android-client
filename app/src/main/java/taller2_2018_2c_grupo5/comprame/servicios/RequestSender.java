@@ -12,7 +12,7 @@ import org.json.JSONObject;
 
 public class RequestSender {
 
-    private RequestQueue queue;
+    private final RequestQueue queue;
 
     public RequestSender(Activity context) {
         queue = Volley.newRequestQueue(context);
@@ -29,10 +29,4 @@ public class RequestSender {
 
     }
 
-    public void doGet(final ResponseListener listener, String url){
-        Log.d("RequestSender", "Sending get to " + url );
-
-        doRequest(new CustomJsonArrayRequest(url, listener));
-
-    }
 }
