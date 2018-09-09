@@ -12,13 +12,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import taller2_2018_2c_grupo5.comprame.R;
+import taller2_2018_2c_grupo5.comprame.servicios.RequestSender;
+import taller2_2018_2c_grupo5.comprame.servicios.listeners.LoginListener;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
 
-    private EditText campo_email;
+    private EditText campo_nombreUsuario;
     private EditText campo_password;
     private Button boton_login;
     private TextView link_registrarse;
@@ -67,13 +74,13 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Ingresando...");
         progressDialog.show();
 
-        campo_email = findViewById(R.id.input_email);
+        campo_nombreUsuario = findViewById(R.id.input_userName);
         campo_password = findViewById(R.id.input_password);
 
-        String email = campo_email.getText().toString();
+        String nombreUsuario = campo_nombreUsuario.getText().toString();
         String password = campo_password.getText().toString();
 
-        // TODO: Autenticar usuario
+        loginUsuario(nombreUsuario, password);
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
@@ -107,7 +114,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void onLoginSuccess() {
         boton_login.setEnabled(true);
-        finish();
+        //finish();
     }
 
     private void onLoginFailed() {
@@ -119,17 +126,17 @@ public class LoginActivity extends AppCompatActivity {
     private boolean validate() {
         boolean valid = true;
 
-        campo_email = findViewById(R.id.input_email);
+        campo_nombreUsuario = findViewById(R.id.input_userName);
         campo_password = findViewById(R.id.input_password);
 
-        String email = campo_email.getText().toString();
+        String nombreUsuario = campo_nombreUsuario.getText().toString();
         String password = campo_password.getText().toString();
 
-        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            campo_email.setError(getString(R.string.email_error));
+        if (nombreUsuario.isEmpty() || nombreUsuario.length() < 2) {
+            campo_nombreUsuario.setError(getString(R.string.nombre_error));
             valid = false;
         } else {
-            campo_email.setError(null);
+            campo_nombreUsuario.setError(null);
         }
 
         if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
@@ -140,5 +147,21 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         return valid;
+    }
+
+    private void loginUsuario(String nombreUsuario, String password) {
+        Map<String,String> parametros;
+        parametros = new HashMap<>();
+        RequestSender requestSender = new RequestSender(this);
+        parametros.put("name", nombreUsuario);
+        parametros.put("password", password);
+
+        JSONObject jsonObject = new JSONObject(parametros);
+
+        String url = getString(R.string.urlAppServer) + "users/login";
+
+        LoginListener listener = new LoginListener(this);
+
+        requestSender.doPost(listener, url, jsonObject);
     }
 }

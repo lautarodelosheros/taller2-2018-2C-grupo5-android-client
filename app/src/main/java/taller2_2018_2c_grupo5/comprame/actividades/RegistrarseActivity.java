@@ -10,11 +10,21 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import taller2_2018_2c_grupo5.comprame.R;
+import taller2_2018_2c_grupo5.comprame.dominio.Usuario;
+import taller2_2018_2c_grupo5.comprame.servicios.RequestSender;
+import taller2_2018_2c_grupo5.comprame.servicios.ResponseListener;
+import taller2_2018_2c_grupo5.comprame.servicios.listeners.RegistrarseListener;
 
 public class RegistrarseActivity extends AppCompatActivity {
     private static final String TAG = "RegistrarseActivity";
 
+    private EditText campo_nombreUsuario;
     private EditText campo_nombre;
     private EditText campo_apellido;
     private EditText campo_email;
@@ -63,17 +73,19 @@ public class RegistrarseActivity extends AppCompatActivity {
         progressDialog.setMessage("Registrando nuevo Usuario...");
         progressDialog.show();
 
+        campo_nombreUsuario = findViewById(R.id.input_userName);
         campo_nombre = findViewById(R.id.input_name);
         campo_apellido = findViewById(R.id.input_apellido);
         campo_email = findViewById(R.id.input_email);
         campo_password = findViewById(R.id.input_password);
 
-        String name = campo_nombre.getText().toString();
+        String nombreUsuario = campo_nombreUsuario.getText().toString();
+        String nombre = campo_nombre.getText().toString();
         String apellido = campo_apellido.getText().toString();
         String email = campo_email.getText().toString();
         String password = campo_password.getText().toString();
 
-        // TODO: Registrar en el server
+        registrarUsuario(new Usuario(nombreUsuario, nombre, apellido, password, email));
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
@@ -91,7 +103,7 @@ public class RegistrarseActivity extends AppCompatActivity {
     private void onSignupSuccess() {
         boton_registrarse.setEnabled(true);
         setResult(RESULT_OK, null);
-        finish();
+        //finish();
     }
 
     private void onSignupFailed() {
@@ -103,17 +115,26 @@ public class RegistrarseActivity extends AppCompatActivity {
     private boolean validate() {
         boolean valid = true;
 
+        campo_nombreUsuario = findViewById(R.id.input_userName);
         campo_nombre = findViewById(R.id.input_name);
         campo_apellido = findViewById(R.id.input_apellido);
         campo_email = findViewById(R.id.input_email);
         campo_password = findViewById(R.id.input_password);
 
-        String name = campo_nombre.getText().toString();
+        String nombreUsuario = campo_nombreUsuario.getText().toString();
+        String nombre = campo_nombre.getText().toString();
         String apellido = campo_apellido.getText().toString();
         String email = campo_email.getText().toString();
         String password = campo_password.getText().toString();
 
-        if (name.isEmpty() || name.length() < 2) {
+        if (nombreUsuario.isEmpty() || nombreUsuario.length() < 2) {
+            campo_nombreUsuario.setError(getString(R.string.nombre_error));
+            valid = false;
+        } else {
+            campo_nombreUsuario.setError(null);
+        }
+
+        if (nombre.isEmpty() || nombre.length() < 2) {
             campo_nombre.setError(getString(R.string.nombre_error));
             valid = false;
         } else {
@@ -142,5 +163,24 @@ public class RegistrarseActivity extends AppCompatActivity {
         }
 
         return valid;
+    }
+
+    private void registrarUsuario(Usuario usuario) {
+        Map<String,String> parametros;
+        parametros = new HashMap<>();
+        RequestSender requestSender = new RequestSender(this);
+        parametros.put("name", usuario.getNombreUsuario());
+        parametros.put("firstname", usuario.getNombre());
+        parametros.put("lastname", usuario.getApellido());
+        parametros.put("password", usuario.getPassword());
+        parametros.put("email", usuario.getEmail());
+
+        JSONObject jsonObject = new JSONObject(parametros);
+
+        String url = getString(R.string.urlAppServer) + "users/signup";
+
+        ResponseListener listener = new RegistrarseListener(this);
+
+        requestSender.doPost(listener, url, jsonObject);
     }
 }

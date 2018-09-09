@@ -9,16 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import taller2_2018_2c_grupo5.comprame.R;
-import taller2_2018_2c_grupo5.comprame.dominio.Usuario;
-import taller2_2018_2c_grupo5.comprame.servicios.RequestSender;
-import taller2_2018_2c_grupo5.comprame.servicios.ResponseListener;
-import taller2_2018_2c_grupo5.comprame.servicios.listeners.RegistrarseListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -57,49 +49,11 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Usuario usuario = new Usuario( "Pep55", "abc123","Pepe", "Gonzalez", "pepe@gmail.com");
-            registrarUsuario(usuario);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void registrarUsuario(Usuario usuario) {
-        Map<String,String> parametros;
-        parametros = new HashMap<>();
-        RequestSender requestSender = new RequestSender(this);
-        parametros.put("nombreUsuario", usuario.getNombreUsuario());
-        parametros.put("password", usuario.getPassword());
-        parametros.put("nombre", usuario.getNombre());
-        parametros.put("apellido", usuario.getApellido());
-        parametros.put("email", usuario.getEmail());
-
-        JSONObject jsonObject = new JSONObject(parametros);
-
-        String url = getString(R.string.urlAppServer) + "comprame/registrarse";
-
-        ResponseListener listener = new RegistrarseListener(this);
-
-        requestSender.doPost(listener, url, jsonObject);
-    }
-
-    /*
-    @Override
-    public void onRequestCompleted(Object response) {
-
-            JSONObject jsonObject = (JSONObject) response;
-            Log.d("RegisterResponse", jsonObject.toString());
-            Toast.makeText(this, "Registro exitoso", Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onRequestError(int errorCode, String errorMessage) {
-
-        if (errorCode == 500) {
-            Log.d("RegisterResponse", "Llega el error 500");
-            Toast.makeText(this, "Llega el error 500", Toast.LENGTH_LONG).show();
-        }
-    }*/
 }
 
