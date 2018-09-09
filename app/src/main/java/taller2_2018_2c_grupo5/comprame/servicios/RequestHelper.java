@@ -13,7 +13,7 @@ import com.android.volley.VolleyError;
 class RequestHelper {
     public static Pair<Integer, String> getError(VolleyError error) {
         String errorDesc;
-        int codError = error.networkResponse.statusCode;
+        int codError = 0;
 
         if (error instanceof TimeoutError || error instanceof NoConnectionError) {
 
@@ -25,6 +25,7 @@ class RequestHelper {
 
         } else if (error instanceof ServerError) {
 
+            codError = error.networkResponse.statusCode;
             errorDesc = new String(error.networkResponse.data);
 
         } else if (error instanceof NetworkError) {
