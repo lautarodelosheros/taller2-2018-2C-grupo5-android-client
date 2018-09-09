@@ -1,18 +1,20 @@
 package taller2_2018_2c_grupo5.comprame.servicios.listeners;
 
-import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 
 
+import taller2_2018_2c_grupo5.comprame.actividades.RegistrarseActivity;
 import taller2_2018_2c_grupo5.comprame.servicios.ResponseListener;
 
 public class RegistrarseListener implements ResponseListener {
 
-    private final Context context;
+    private final RegistrarseActivity context;
 
-    public RegistrarseListener(Context context) {
+    public RegistrarseListener(RegistrarseActivity context) {
         this.context = context;
     }
 
@@ -23,9 +25,16 @@ public class RegistrarseListener implements ResponseListener {
 
             JSONObject jsonObject = (JSONObject) response;
 
-            Log.d("RegistrarseListener", response.toString());
+            String session;
 
-            Toast.makeText(context, "Respuesta: " + jsonObject.toString(), Toast.LENGTH_SHORT).show();
+            try {
+                session = jsonObject.getString("session");
+                context.onSignupSuccess(session);
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Toast.makeText(context, "Hubo un error inesperado al intentar registrar su usuario, intente hacer un Login o registrarse nuevamente", Toast.LENGTH_LONG).show();
+                context.onSignupFailed();
+            }
 
     }
 
@@ -33,6 +42,7 @@ public class RegistrarseListener implements ResponseListener {
     public void onRequestError(int codError, String errorMessage) {
         Log.d("RegistrarseListener", errorMessage + codError);
         Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show();
+        context.onSignupFailed();
     }
 
 }

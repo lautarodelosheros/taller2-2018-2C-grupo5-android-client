@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONObject;
 
@@ -29,6 +28,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText campo_password;
     private Button boton_login;
     private TextView link_registrarse;
+
+    private ProgressDialog progressDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,13 +63,12 @@ public class LoginActivity extends AppCompatActivity {
         Log.d(TAG, "Login");
 
         if (!validate()) {
-            onLoginFailed();
             return;
         }
 
         boton_login.setEnabled(false);
 
-        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
+        progressDialog = new ProgressDialog(LoginActivity.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Ingresando...");
@@ -82,28 +82,6 @@ public class LoginActivity extends AppCompatActivity {
 
         loginUsuario(nombreUsuario, password);
 
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        // On complete call either onLoginSuccess or onLoginFailed
-                        onLoginSuccess();
-                        // onLoginFailed();
-                        progressDialog.dismiss();
-                    }
-                }, 3000);
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_SIGNUP) {
-            if (resultCode == RESULT_OK) {
-
-                // TODO: Ingresar a principal
-
-                this.finish();
-            }
-        }
     }
 
     @Override
@@ -112,14 +90,13 @@ public class LoginActivity extends AppCompatActivity {
         moveTaskToBack(true);
     }
 
-    private void onLoginSuccess() {
-        boton_login.setEnabled(true);
-        //finish();
+    public void onLoginSuccess(String session) {
+        progressDialog.dismiss();
+        finish();
     }
 
-    private void onLoginFailed() {
-        Toast.makeText(getBaseContext(), "Error en el Login", Toast.LENGTH_LONG).show();
-
+    public void onLoginFailed() {
+        progressDialog.dismiss();
         boton_login.setEnabled(true);
     }
 

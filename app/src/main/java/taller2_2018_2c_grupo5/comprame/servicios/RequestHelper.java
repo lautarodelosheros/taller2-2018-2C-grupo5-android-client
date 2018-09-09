@@ -13,28 +13,20 @@ import com.android.volley.VolleyError;
 class RequestHelper {
     public static Pair<Integer, String> getError(VolleyError error) {
         String errorDesc;
-        Integer codError = 0;
+        int codError = error.networkResponse.statusCode;
 
         if (error instanceof TimeoutError || error instanceof NoConnectionError) {
 
-            errorDesc = "El servidor tardo mucho en responder";
+            errorDesc = "El servidor no responde o está lento";
 
         } else if (error instanceof AuthFailureError) {
 
-            errorDesc = "Error de authentication";
+            errorDesc = "Error de autenticación";
 
         } else if (error instanceof ServerError) {
 
-            codError = error.networkResponse.statusCode;
+            errorDesc = new String(error.networkResponse.data);
 
-            switch (codError) {
-                case 404:
-                    errorDesc = "La url invocada no corresponde a un servicio valido";
-                    break;
-                default:
-                    errorDesc = new String(error.networkResponse.data);
-
-            }
         } else if (error instanceof NetworkError) {
 
             errorDesc = "Error de red";

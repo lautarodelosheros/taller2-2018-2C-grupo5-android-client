@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONObject;
 
@@ -31,6 +30,8 @@ public class RegistrarseActivity extends AppCompatActivity {
     private EditText campo_password;
     private Button boton_registrarse;
     private TextView link_login;
+
+    private ProgressDialog progressDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,13 +62,12 @@ public class RegistrarseActivity extends AppCompatActivity {
         Log.d(TAG, "Registrarse");
 
         if (!validate()) {
-            onSignupFailed();
             return;
         }
 
         boton_registrarse.setEnabled(false);
 
-        final ProgressDialog progressDialog = new ProgressDialog(RegistrarseActivity.this,
+        progressDialog = new ProgressDialog(RegistrarseActivity.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Registrando nuevo Usuario...");
@@ -87,28 +87,16 @@ public class RegistrarseActivity extends AppCompatActivity {
 
         registrarUsuario(new Usuario(nombreUsuario, nombre, apellido, password, email));
 
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        // On complete call either onSignupSuccess or onSignupFailed
-                        // depending on success
-                        onSignupSuccess();
-                        // onSignupFailed();
-                        progressDialog.dismiss();
-                    }
-                }, 3000);
     }
 
 
-    private void onSignupSuccess() {
-        boton_registrarse.setEnabled(true);
-        setResult(RESULT_OK, null);
-        //finish();
+    public void onSignupSuccess(String session) {
+        progressDialog.dismiss();
+        finish();
     }
 
-    private void onSignupFailed() {
-        Toast.makeText(getBaseContext(), "Registro fallido", Toast.LENGTH_LONG).show();
-
+    public void onSignupFailed() {
+        progressDialog.dismiss();
         boton_registrarse.setEnabled(true);
     }
 

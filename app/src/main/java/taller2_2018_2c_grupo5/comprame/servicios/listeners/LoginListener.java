@@ -1,18 +1,19 @@
 package taller2_2018_2c_grupo5.comprame.servicios.listeners;
 
-import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import taller2_2018_2c_grupo5.comprame.actividades.LoginActivity;
 import taller2_2018_2c_grupo5.comprame.servicios.ResponseListener;
 
 public class LoginListener implements ResponseListener {
 
-    private final Context context;
+    private final LoginActivity context;
 
-    public LoginListener(Context context) {
+    public LoginListener(LoginActivity context) {
         this.context = context;
     }
 
@@ -22,17 +23,34 @@ public class LoginListener implements ResponseListener {
         Log.d("LoginListener", response.toString());
 
         JSONObject jsonObject = (JSONObject) response;
+        String session;
 
-        Log.d("LoginListener", response.toString());
-
-        Toast.makeText(context, "Respuesta: " + jsonObject.toString(), Toast.LENGTH_SHORT).show();
+        try {
+            session = jsonObject.getString("session");
+            context.onLoginSuccess(session);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            context.onLoginFailed();
+        }
 
     }
 
     @Override
     public void onRequestError(int codError, String errorMessage) {
         Log.d("LoginListener", errorMessage + codError);
-        Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show();
+
+        switch (codError) {
+            case 404:
+                Toast.makeText(context, "El Usuario ingresado no existe. Si aún no está registrado ingrese al link debajo", Toast.LENGTH_LONG).show();
+                break;
+            case 406:
+                Toast.makeText(context, "La contraseña es incorrecta, inténtelo nuevamente", Toast.LENGTH_LONG).show();
+                break;
+            default:
+                Toast.makeText(context, "Error en el Login, reintente en unos minutos", Toast.LENGTH_LONG).show();
+        }
+
+        context.onLoginFailed();
     }
 
 
