@@ -54,7 +54,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Ir a Registrarse
                 Intent intent = new Intent(getApplicationContext(), RegistrarseActivity.class);
-                startActivityForResult(intent, REQUEST_SIGNUP);
+                startActivity(intent);
+                finish();
             }
         });
     }

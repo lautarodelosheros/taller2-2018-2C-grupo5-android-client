@@ -1,6 +1,7 @@
 package taller2_2018_2c_grupo5.comprame.actividades;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -52,7 +53,9 @@ public class RegistrarseActivity extends AppCompatActivity {
         link_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Retornar al Login
+                // Ir a Login
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
                 finish();
             }
         });
