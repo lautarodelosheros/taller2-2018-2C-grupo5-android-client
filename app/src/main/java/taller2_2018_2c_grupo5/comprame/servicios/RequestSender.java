@@ -3,6 +3,7 @@ package taller2_2018_2c_grupo5.comprame.servicios;
 import android.app.Activity;
 import android.util.Log;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonRequest;
@@ -11,6 +12,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONObject;
 
 public class RequestSender {
+    private static final int MY_SOCKET_TIMEOUT_MS = 15000;
 
     private final RequestQueue queue;
 
@@ -19,6 +21,11 @@ public class RequestSender {
     }
 
     private void doRequest(JsonRequest request){
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                MY_SOCKET_TIMEOUT_MS,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
         queue.add(request);
     }
 

@@ -10,7 +10,6 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonArrayRequest;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 public class CustomJsonArrayRequest extends JsonArrayRequest {
 
