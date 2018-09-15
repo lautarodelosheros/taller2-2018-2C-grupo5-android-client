@@ -16,4 +16,14 @@
     <string name="apellido_hint">Apellido</string>
     <string name="apellido_error">El apellido debe tener al menos 2 caracteres</string>
     <string name="userName_hint">Nombre de Usuario</string>
+    <string name="nav_header_desc">Encabezado</string>
+    <string name="nav_header_title">Opciones</string>
+    <string name="nav_header_subtitle">Subtitulo</string>
+    <string name="navigation_drawer_open">Abrir menu</string>
+    <string name="navigation_drawer_close">Cerrar menu</string>
+    <string name="menu_title1">Ver mi Perfil</string>
+    <string name="menu_title2">Buscar publicaciones</string>
+    <string name="menu2_title1">Notificaciones</string>
+    <string name="menu2_title2">Ayuda</string>
+    <string name="menu_2">Menu 2</string>
 </resources>
