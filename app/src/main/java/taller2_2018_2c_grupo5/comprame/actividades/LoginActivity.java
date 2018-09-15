@@ -58,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
         });
+        
     }
 
     private void login() {
@@ -85,19 +86,17 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onBackPressed() {
-        // disable going back to the MainActivity
-        moveTaskToBack(true);
-    }
-
     public void onLoginSuccess(String session) {
-        progressDialog.dismiss();
+        if (progressDialog != null)
+            progressDialog.dismiss();
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
         finish();
     }
 
     public void onLoginFailed() {
-        progressDialog.dismiss();
+        if (progressDialog != null)
+            progressDialog.dismiss();
         boton_login.setEnabled(true);
     }
 

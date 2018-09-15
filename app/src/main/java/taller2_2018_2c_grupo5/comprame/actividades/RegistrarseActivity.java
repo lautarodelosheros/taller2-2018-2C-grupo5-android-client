@@ -95,6 +95,8 @@ public class RegistrarseActivity extends AppCompatActivity {
 
     public void onSignupSuccess(String session) {
         progressDialog.dismiss();
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
         finish();
     }
 
