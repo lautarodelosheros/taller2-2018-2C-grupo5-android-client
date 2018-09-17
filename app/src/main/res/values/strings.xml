@@ -26,4 +26,5 @@
     <string name="menu2_title1">Notificaciones</string>
     <string name="menu2_title2">Ayuda</string>
     <string name="menu_2">Menu 2</string>
+    <string name="imagen_item_desc">Imagen Item</string>
 </resources>
