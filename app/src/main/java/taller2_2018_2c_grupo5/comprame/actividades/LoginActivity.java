@@ -90,6 +90,7 @@ public class LoginActivity extends AppCompatActivity {
         if (progressDialog != null)
             progressDialog.dismiss();
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.putExtra("session", session);
         startActivity(intent);
         finish();
     }

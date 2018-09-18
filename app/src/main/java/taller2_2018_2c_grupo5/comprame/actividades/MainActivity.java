@@ -1,5 +1,6 @@
 package taller2_2018_2c_grupo5.comprame.actividades;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -18,6 +19,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
 
+    private String session;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +37,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        FragmentLoader.load(this, BuscarItemsFragment.newInstance("aSessionToken"), "BuscarItems");
+        Intent intent = this.getIntent();
+        Bundle bundle = intent.getExtras();
+
+        if (bundle != null) {
+            session = bundle.getString("session");
+        }
+
+        FragmentLoader.load(this, BuscarItemsFragment.newInstance(session), "BuscarItems");
 
     }
 
