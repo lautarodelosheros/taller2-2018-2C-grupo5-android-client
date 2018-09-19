@@ -10,10 +10,6 @@ import taller2_2018_2c_grupo5.comprame.R;
 public class FragmentLoader {
 
     public static void load(AppCompatActivity activity, Fragment fragment, String name) {
-        Bundle bundle = new Bundle();
-
-        fragment.setArguments(bundle);
-
         FragmentManager fragmentManager = activity.getSupportFragmentManager();
         int stackCount = fragmentManager.getBackStackEntryCount();
         String previous = getFragmentName(fragmentManager, stackCount - 1);

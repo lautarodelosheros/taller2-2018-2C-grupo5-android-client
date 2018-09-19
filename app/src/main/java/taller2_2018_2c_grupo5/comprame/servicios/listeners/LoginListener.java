@@ -3,6 +3,7 @@ package taller2_2018_2c_grupo5.comprame.servicios.listeners;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -23,6 +24,7 @@ public class LoginListener implements ResponseListener {
         Log.d("LoginListener", response.toString());
 
         JSONObject jsonObject = (JSONObject) response;
+
         String session;
 
         try {
