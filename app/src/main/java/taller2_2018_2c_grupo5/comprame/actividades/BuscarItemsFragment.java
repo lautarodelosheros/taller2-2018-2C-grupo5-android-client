@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +18,7 @@ import taller2_2018_2c_grupo5.comprame.dominio.Item;
 import taller2_2018_2c_grupo5.comprame.dominio.MetodoDePago;
 import taller2_2018_2c_grupo5.comprame.vista.ItemsAdapter;
 
-public class BuscarItemsFragment extends Fragment {
+public class BuscarItemsFragment extends RecyclerFragment {
     private static final String ARG_PARAM1 = "session";
 
     private String session;
@@ -36,6 +37,17 @@ public class BuscarItemsFragment extends Fragment {
         args.putString(ARG_PARAM1, session);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    protected RecyclerView.LayoutManager getLayoutManager() {
+        return new LinearLayoutManager(getActivity());
+    }
+
+    @Override
+    protected void configureAdapter() {
+        ItemsAdapter itemsAdapter = new ItemsAdapter(items);
+        this.setConfiguredAdapter(itemsAdapter);
     }
 
     @Override
@@ -60,8 +72,6 @@ public class BuscarItemsFragment extends Fragment {
 
         //TODO: Reemplazar por un llamado al server
         mockearItems();
-
-        recyclerView.setAdapter(new ItemsAdapter(items));
 
         fab = view.findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(new View.OnClickListener() {
