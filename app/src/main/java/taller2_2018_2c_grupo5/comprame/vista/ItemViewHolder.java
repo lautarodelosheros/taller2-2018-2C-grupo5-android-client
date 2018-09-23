@@ -44,7 +44,7 @@ public class ItemViewHolder extends RecyclerView.ViewHolder
             .into(imageViewFoto);
 
         textViewNombre.setText(item.getNombre());
-        textViewPrecio.setText(String.format(Locale.getDefault(), "$%f2", item.getPrecioUnitario()));
+        textViewPrecio.setText(String.format(Locale.getDefault(), "$%.2f", item.getPrecioUnitario()));
     }
 
     @Override

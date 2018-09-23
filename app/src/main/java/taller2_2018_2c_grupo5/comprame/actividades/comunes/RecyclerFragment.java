@@ -1,4 +1,4 @@
-package taller2_2018_2c_grupo5.comprame.actividades;
+package taller2_2018_2c_grupo5.comprame.actividades.comunes;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -42,6 +42,7 @@ public abstract class RecyclerFragment extends Fragment implements View.OnClickL
 
         mList = rootView.findViewById(R.id.section_list);
         mList.setLayoutManager(getLayoutManager());
+        mList.addItemDecoration(getItemDecoration());
 
         mList.getItemAnimator().setAddDuration(1000);
         mList.getItemAnimator().setChangeDuration(1000);
@@ -62,6 +63,10 @@ public abstract class RecyclerFragment extends Fragment implements View.OnClickL
     @Override
     public void onClick(View v) {
 
+    }
+
+    public RecyclerView.ItemDecoration getItemDecoration() {
+        return new InsertDecoration(getActivity());
     }
 
 }

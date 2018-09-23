@@ -1,4 +1,4 @@
-package taller2_2018_2c_grupo5.comprame.actividades;
+package taller2_2018_2c_grupo5.comprame.actividades.comunes;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
