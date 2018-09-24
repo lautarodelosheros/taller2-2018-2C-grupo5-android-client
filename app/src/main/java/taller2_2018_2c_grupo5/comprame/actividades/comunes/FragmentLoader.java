@@ -2,7 +2,6 @@ package taller2_2018_2c_grupo5.comprame.actividades.comunes;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import taller2_2018_2c_grupo5.comprame.R;

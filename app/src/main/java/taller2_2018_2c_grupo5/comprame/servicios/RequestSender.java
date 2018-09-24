@@ -41,4 +41,11 @@ public class RequestSender {
         doRequest(request);
     }
 
+    public void doGet_expectArray(final ResponseListener listener, String url){
+        Log.d("RequestSender", "Sending get to " + url );
+
+        doRequest(new CustomJsonArrayRequest(url, listener));
+
+    }
+
 }

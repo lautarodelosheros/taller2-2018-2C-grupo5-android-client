@@ -76,12 +76,6 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Ingresando...");
         progressDialog.show();
 
-        //TODO: Borrar bypass de Login
-        if (validate()) {
-            onLoginSuccess("aSessionToken");
-            return;
-        }
-
         campo_nombreUsuario = findViewById(R.id.input_userName);
         campo_password = findViewById(R.id.input_password);
 

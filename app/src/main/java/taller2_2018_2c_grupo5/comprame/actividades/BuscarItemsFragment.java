@@ -1,5 +1,6 @@
 package taller2_2018_2c_grupo5.comprame.actividades;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -8,10 +9,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import taller2_2018_2c_grupo5.comprame.R;
 import taller2_2018_2c_grupo5.comprame.actividades.comunes.RecyclerFragment;
 import taller2_2018_2c_grupo5.comprame.dominio.Item;
-import taller2_2018_2c_grupo5.comprame.dominio.MetodoDePago;
+import taller2_2018_2c_grupo5.comprame.servicios.RequestSender;
+import taller2_2018_2c_grupo5.comprame.servicios.listeners.BuscarItemsListener;
 import taller2_2018_2c_grupo5.comprame.vista.ItemsAdapter;
 
 public class BuscarItemsFragment extends RecyclerFragment {
@@ -19,6 +23,10 @@ public class BuscarItemsFragment extends RecyclerFragment {
 
     private String session;
     private ArrayList<Item> items = new ArrayList<>();
+
+    private ItemsAdapter mAdapter;
+
+    private ProgressDialog progressDialog;
 
     private FloatingActionButton fab;
 
@@ -41,8 +49,8 @@ public class BuscarItemsFragment extends RecyclerFragment {
 
     @Override
     protected void configureAdapter() {
-        ItemsAdapter itemsAdapter = new ItemsAdapter(items);
-        this.setConfiguredAdapter(itemsAdapter);
+        this.mAdapter = new ItemsAdapter(items);
+        this.setConfiguredAdapter(mAdapter);
     }
 
     @Override
@@ -58,13 +66,28 @@ public class BuscarItemsFragment extends RecyclerFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
-        //TODO: Reemplazar por un llamado al server
-        mockearItems();
+        progressDialog = new ProgressDialog(getActivity(),
+                R.style.AppTheme_Dark_Dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Buscando publicaciones...");
+        progressDialog.show();
+
+        traerItems();
 
 
     }
 
-    private void mockearItems() {
+    private void traerItems() {
+
+        String url = getString(R.string.urlAppServer) + "articulos/";
+
+        BuscarItemsListener listener = new BuscarItemsListener(this);
+
+        RequestSender requestSender = new RequestSender(getActivity());
+        requestSender.doGet_expectArray(listener, url);
+    }
+
+    /*private void mockearItems() {
         final MetodoDePago metodoDePago = new MetodoDePago("Tarjeta", "Visa", 6);
         final MetodoDePago metodoDePago1 = new MetodoDePago("Tarjeta", "MasterCard", 3);
         ArrayList<MetodoDePago> metodosDePago = new ArrayList<MetodoDePago>() {{
@@ -89,6 +112,15 @@ public class BuscarItemsFragment extends RecyclerFragment {
         item2.addFoto("https://cdn.pixabay.com/photo/2016/11/21/15/45/heartache-1846050_960_720.jpg");
         items.add(item1);
         items.add(item2);
+    }*/
+
+    public void onSearchFailed() {
+        progressDialog.dismiss();
     }
 
+    public void onSearchSuccess(List<Item> items) {
+        progressDialog.dismiss();
+        this.items = new ArrayList<>(items);
+        mAdapter.refreshData(this.items);
+    }
 }

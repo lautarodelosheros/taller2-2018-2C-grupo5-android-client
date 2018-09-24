@@ -1,26 +1,36 @@
 package taller2_2018_2c_grupo5.comprame.dominio;
 
-import java.util.ArrayList;
+import com.google.gson.annotations.SerializedName;
 
-public class Item {
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.UUID;
+
+public class Item implements Serializable {
+    private String id;
     private String nombre;
     private String descripcion;
-    private double precioUnitario;
-    private ArrayList<String> fotos = new ArrayList<>();
+    private double precio_unitario;
+    @SerializedName("foto_urls")
+    private ArrayList<String> foto_urls = new ArrayList<>();
     private String vendedor;
-    private String ubicacionGeografica;
-    private ArrayList<MetodoDePago> metodosDePago;
-    private ArrayList<String> categorias;
+    private String ubicacion_geografica;
+    @SerializedName("metodos_pago")
+    private ArrayList<String> metodos_pago;
+    @SerializedName("categorias")
+    private String categorias;
 
-    public Item(String nombre, String descripcion, double precioUnitario,
-                String vendedor, String ubicacionGeografica,
-                ArrayList<MetodoDePago> metodosDePago, ArrayList<String> categorias) {
+    public Item(String nombre, String descripcion, double precio_unitario,
+                String vendedor, String ubicacion_geografica,
+                ArrayList<String> metodos_pago, String categorias) {
+
+        this.id = UUID.randomUUID().toString();
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.precioUnitario = precioUnitario;
+        this.precio_unitario = precio_unitario;
         this.vendedor = vendedor;
-        this.ubicacionGeografica = ubicacionGeografica;
-        this.metodosDePago = metodosDePago;
+        this.ubicacion_geografica = ubicacion_geografica;
+        this.metodos_pago = metodos_pago;
         this.categorias = categorias;
     }
 
@@ -40,12 +50,12 @@ public class Item {
         this.descripcion = descripcion;
     }
 
-    public double getPrecioUnitario() {
-        return precioUnitario;
+    public double getPrecio_unitario() {
+        return precio_unitario;
     }
 
-    public void setPrecioUnitario(double precioUnitario) {
-        this.precioUnitario = precioUnitario;
+    public void setPrecio_unitario(double precio_unitario) {
+        this.precio_unitario = precio_unitario;
     }
 
     public String getVendedor() {
@@ -56,30 +66,46 @@ public class Item {
         this.vendedor = vendedor;
     }
 
-    public String getUbicacionGeografica() {
-        return ubicacionGeografica;
+    public String getUbicacion_geografica() {
+        return ubicacion_geografica;
     }
 
-    public void setUbicacionGeografica(String ubicacionGeografica) {
-        this.ubicacionGeografica = ubicacionGeografica;
+    public void setUbicacion_geografica(String ubicacion_geografica) {
+        this.ubicacion_geografica = ubicacion_geografica;
     }
 
     public void addFoto(String url) {
-        this.fotos.add(url);
-    }
-
-    public void addMetodoDePago(MetodoDePago metodoDePago) {
-        this.metodosDePago.add(metodoDePago);
-    }
-
-    public void addCategoria(String categoria) {
-        this.categorias.add(categoria);
+        this.foto_urls.add(url);
     }
 
     public String getFoto(int i) {
-        if (i < this.fotos.size())
-            return this.fotos.get(i);
+        if (i < this.foto_urls.size())
+            return this.foto_urls.get(i);
         else
             return null;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public ArrayList<String> getMetodos_pago() {
+        return metodos_pago;
+    }
+
+    public void setMetodos_pago(ArrayList<String> metodos_pago) {
+        this.metodos_pago = metodos_pago;
+    }
+
+    public String getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(String categorias) {
+        this.categorias = categorias;
     }
 }

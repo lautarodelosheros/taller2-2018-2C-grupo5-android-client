@@ -38,10 +38,10 @@ public class CustomJsonArrayRequest extends JsonArrayRequest {
     protected Response<JSONArray> parseNetworkResponse(NetworkResponse response) {
 
         if (response.data == null || response.data.length == 0) {
-            Log.d("CustomJsonArrayRequest", "Response is null");
+            Log.d("CustomJsonObjectRequest", "response is null");
             return Response.success(new JSONArray(), HttpHeaderParser.parseCacheHeaders(response));
         } else {
-            return null;
+            return super.parseNetworkResponse(response);
         }
     }
 }
