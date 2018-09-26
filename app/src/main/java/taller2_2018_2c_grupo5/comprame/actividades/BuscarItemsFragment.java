@@ -4,9 +4,21 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +29,8 @@ import taller2_2018_2c_grupo5.comprame.dominio.Item;
 import taller2_2018_2c_grupo5.comprame.servicios.RequestSender;
 import taller2_2018_2c_grupo5.comprame.servicios.listeners.BuscarItemsListener;
 import taller2_2018_2c_grupo5.comprame.vista.ItemsAdapter;
+
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class BuscarItemsFragment extends RecyclerFragment {
     private static final String ARG_PARAM1 = "session";
@@ -59,9 +73,54 @@ public class BuscarItemsFragment extends RecyclerFragment {
         if (getArguments() != null) {
             session = getArguments().getString(ARG_PARAM1);
         }
+        setHasOptionsMenu(true);
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_buscar_items, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.filtro:
+                mostrarPopUpFiltro();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void mostrarPopUpFiltro() {
+        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.popup_filtro, null);
+
+        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
+
+        popupWindow.showAtLocation(this.getView(), Gravity.CENTER, 0, 0);
+
+        final EditText nombreFiltro = popupView.findViewById(R.id.input_nombre_articulo);
+        final EditText descripcionFiltro = popupView.findViewById(R.id.input_descripcion_articulo);
+        final EditText ubicacionFiltro = popupView.findViewById(R.id.input_ubicacion_articulo);
+        Button botonFiltrar = popupView.findViewById(R.id.boton_filtrar);
+
+        // dismiss the popup window when touched
+        botonFiltrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+                traerItems(nombreFiltro.getText().toString(),
+                        descripcionFiltro.getText().toString(),
+                        ubicacionFiltro.getText().toString());
+            }
+        });
+    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -72,14 +131,20 @@ public class BuscarItemsFragment extends RecyclerFragment {
         progressDialog.setMessage("Buscando publicaciones...");
         progressDialog.show();
 
-        traerItems();
-
+        traerItems("", "", "");
 
     }
 
-    private void traerItems() {
+    private void traerItems(String filtroNombre, String filtroDescripcion, String filtroUbicacion) {
 
-        String url = getString(R.string.urlAppServer) + "articulos/";
+        String url = getString(R.string.urlAppServer) + "articulos?limite=1&offset=1";
+
+        if (!filtroNombre.isEmpty())
+            url += "&nombre=" + filtroNombre;
+        if (!filtroDescripcion.isEmpty())
+            url += "&descripcion=" + filtroDescripcion;
+        if (!filtroUbicacion.isEmpty())
+            url += "&ubicacion_geografica=" + filtroUbicacion;
 
         BuscarItemsListener listener = new BuscarItemsListener(this);
 
