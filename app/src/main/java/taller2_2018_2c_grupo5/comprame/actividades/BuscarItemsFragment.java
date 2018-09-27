@@ -6,10 +6,21 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 import taller2_2018_2c_grupo5.comprame.R;
 import taller2_2018_2c_grupo5.comprame.actividades.comunes.RecyclerFragment;
@@ -18,8 +29,11 @@ import taller2_2018_2c_grupo5.comprame.servicios.RequestSender;
 import taller2_2018_2c_grupo5.comprame.servicios.listeners.BuscarItemsListener;
 import taller2_2018_2c_grupo5.comprame.vista.ItemsAdapter;
 
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
+
 public class BuscarItemsFragment extends RecyclerFragment {
     private static final String ARG_PARAM1 = "session";
+    public static final int LIMITE_CANTIDAD_ARTICULOS = 5;
 
     private String session;
     private ArrayList<Item> items = new ArrayList<>();
@@ -29,6 +43,14 @@ public class BuscarItemsFragment extends RecyclerFragment {
     private ProgressDialog progressDialog;
 
     private FloatingActionButton fab;
+
+    private String nombreFiltroAnterior = "";
+    private String descripcionFiltroAnterior = "";
+    private String ubicacionFiltroAnterior = "";
+
+    private int totalItemCount;
+    private int ultimoItemVisible;
+    private boolean cargando;
 
     public BuscarItemsFragment() {
         // Required empty public constructor
@@ -51,6 +73,39 @@ public class BuscarItemsFragment extends RecyclerFragment {
     protected void configureAdapter() {
         this.mAdapter = new ItemsAdapter(items);
         this.setConfiguredAdapter(mAdapter);
+
+        configurarLoadMore();
+    }
+
+    private void configurarLoadMore() {
+
+        RecyclerView recyclerView = mList;
+
+        if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
+
+            final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+
+            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+
+                    totalItemCount = linearLayoutManager.getItemCount();
+                    ultimoItemVisible = linearLayoutManager.findLastVisibleItemPosition();
+                    if (!cargando && totalItemCount <= ultimoItemVisible + 1) {
+                        // Se llego al final de la lista y hay que cargar mas articulos
+                        mAdapter.agregarProgressBar();
+                        traerItems(nombreFiltroAnterior, descripcionFiltroAnterior, ubicacionFiltroAnterior,
+                                LIMITE_CANTIDAD_ARTICULOS, mAdapter.getItemCount() - 1);
+                        cargando = true;
+                    }
+                }
+            });
+        }
+    }
+
+    public void setCargado() {
+        cargando = false;
     }
 
     @Override
@@ -59,27 +114,98 @@ public class BuscarItemsFragment extends RecyclerFragment {
         if (getArguments() != null) {
             session = getArguments().getString(ARG_PARAM1);
         }
+        setHasOptionsMenu(true);
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_buscar_items, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.filtro:
+                mostrarPopUpFiltro();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void mostrarPopUpFiltro() {
+        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = Objects.requireNonNull(inflater).inflate(R.layout.popup_filtro, null);
+
+        int width = LinearLayout.LayoutParams.MATCH_PARENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
+
+        popupWindow.showAtLocation(this.getView(), Gravity.CENTER, 0, 0);
+
+        final EditText nombreFiltro = popupView.findViewById(R.id.input_nombre_articulo);
+        final EditText descripcionFiltro = popupView.findViewById(R.id.input_descripcion_articulo);
+        final EditText ubicacionFiltro = popupView.findViewById(R.id.input_ubicacion_articulo);
+        Button botonFiltrar = popupView.findViewById(R.id.boton_filtrar);
+
+        nombreFiltro.setText(nombreFiltroAnterior);
+        descripcionFiltro.setText(descripcionFiltroAnterior);
+        ubicacionFiltro.setText(ubicacionFiltroAnterior);
+
+        // dismiss the popup window when touched
+        botonFiltrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+                nombreFiltroAnterior = nombreFiltro.getText().toString();
+                descripcionFiltroAnterior = descripcionFiltro.getText().toString();
+                ubicacionFiltroAnterior = ubicacionFiltro.getText().toString();
+                limpiarListaItems();
+
+                progressDialog = new ProgressDialog(getActivity(), R.style.AppTheme_Dark_Dialog);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setMessage("Buscando publicaciones...");
+                progressDialog.show();
+
+                traerItems(nombreFiltroAnterior, descripcionFiltroAnterior, ubicacionFiltroAnterior,
+                        LIMITE_CANTIDAD_ARTICULOS, 0);
+            }
+        });
+    }
+
+    private void limpiarListaItems() {
+        this.items.clear();
+        this.mAdapter.clearItems();
+    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
-        progressDialog = new ProgressDialog(getActivity(),
-                R.style.AppTheme_Dark_Dialog);
+        progressDialog = new ProgressDialog(getActivity(), R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Buscando publicaciones...");
         progressDialog.show();
 
-        traerItems();
-
-
+        traerItems("", "", "",
+                LIMITE_CANTIDAD_ARTICULOS, 0);
     }
 
-    private void traerItems() {
+    private void traerItems(String filtroNombre, String filtroDescripcion, String filtroUbicacion,
+                            int limite, int offset) {
 
-        String url = getString(R.string.urlAppServer) + "articulos/";
+        String url = getString(R.string.urlAppServer)
+                + "articulos/?limite=" + String.format(Locale.getDefault(), "%d", limite)
+                + "&offset=" + String.format(Locale.getDefault(), "%d", offset);
+
+        if (!filtroNombre.isEmpty())
+            url += "&nombre=" + filtroNombre;
+        if (!filtroDescripcion.isEmpty())
+            url += "&descripcion=" + filtroDescripcion;
+        if (!filtroUbicacion.isEmpty())
+            url += "&ubicacion_geografica=" + filtroUbicacion;
 
         BuscarItemsListener listener = new BuscarItemsListener(this);
 
@@ -116,11 +242,15 @@ public class BuscarItemsFragment extends RecyclerFragment {
 
     public void onSearchFailed() {
         progressDialog.dismiss();
+        setCargado();
     }
 
     public void onSearchSuccess(List<Item> items) {
         progressDialog.dismiss();
-        this.items = new ArrayList<>(items);
-        mAdapter.refreshData(this.items);
+        this.items.addAll(items);
+        mAdapter.quitarProgressBar();
+        mAdapter.addItems(this.items);
+        this.items.clear();
+        setCargado();
     }
 }

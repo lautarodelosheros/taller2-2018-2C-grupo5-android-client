@@ -27,4 +27,9 @@
     <string name="menu2_title2">Ayuda</string>
     <string name="menu_2">Menu 2</string>
     <string name="imagen_item_desc">Imagen Item</string>
+    <string name="filtro">Filtro</string>
+    <string name="nombre_articulo_hint">Título de la publicación</string>
+    <string name="descripcion_articulo_hint">Descripción de la Publicación</string>
+    <string name="ubicacion_articulo_hint">Ubicación geográfica</string>
+    <string name="boton_filtrar">Filtrar</string>
 </resources>
