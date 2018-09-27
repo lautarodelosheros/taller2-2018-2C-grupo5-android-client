@@ -13,7 +13,7 @@ import taller2_2018_2c_grupo5.comprame.R;
 
 public abstract class RecyclerFragment extends Fragment implements View.OnClickListener {
 
-    private RecyclerView mList;
+    protected RecyclerView mList;
     private RecyclerView.Adapter mAdapter;
 
     /** Required Overrides for Sample Fragments */
