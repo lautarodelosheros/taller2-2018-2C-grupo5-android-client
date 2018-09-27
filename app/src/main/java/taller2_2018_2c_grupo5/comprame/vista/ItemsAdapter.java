@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import taller2_2018_2c_grupo5.comprame.R;
 import taller2_2018_2c_grupo5.comprame.dominio.Item;
@@ -16,13 +17,12 @@ public class ItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private final int VIEW_ITEM = 1;
     private final int VIEW_PROGRESS_BAR = 0;
 
-    private ArrayList<Item> items;
+    private List<Item> items;
     private int posicionProgressBar;
     private boolean hayProgressBar = false;
 
-    public ItemsAdapter(ArrayList<Item> items) {
+    public ItemsAdapter(List<Item> items) {
         this.items = new ArrayList<>(items);
-
     }
 
     @NonNull
@@ -60,7 +60,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return this.items.size();
     }
 
-    public void addItems(ArrayList<Item> items) {
+    public void addItems(List<Item> items) {
         this.items.addAll(items);
         notifyDataSetChanged();
     }

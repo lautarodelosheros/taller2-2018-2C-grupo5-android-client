@@ -3,13 +3,14 @@ package taller2_2018_2c_grupo5.comprame.servicios.listeners;
 import android.util.Log;
 import android.widget.Toast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.android.volley.ServerError;
+import com.android.volley.VolleyError;
 
 import taller2_2018_2c_grupo5.comprame.actividades.LoginActivity;
-import taller2_2018_2c_grupo5.comprame.servicios.ResponseListener;
+import taller2_2018_2c_grupo5.comprame.dominio.Session;
+import taller2_2018_2c_grupo5.comprame.library.Continuation;
 
-public class LoginListener implements ResponseListener {
+public class LoginListener implements Continuation<Session> {
 
     private final LoginActivity context;
 
@@ -18,41 +19,30 @@ public class LoginListener implements ResponseListener {
     }
 
     @Override
-    public void onRequestCompleted(Object response) {
-
+    public void onSuccess(Session response) {
         Log.d("LoginListener", response.toString());
-
-        JSONObject jsonObject = (JSONObject) response;
-
-        String session;
-
         try {
-            session = jsonObject.getString("session");
-            context.onLoginSuccess(session);
-        } catch (JSONException e) {
+            context.onLoginSuccess(response.getSession());
+        } catch (Exception e) {
             e.printStackTrace();
             context.onLoginFailed();
         }
-
     }
 
     @Override
-    public void onRequestError(int codError, String errorMessage) {
-        Log.d("LoginListener", errorMessage + codError);
-
-        switch (codError) {
-            case 404:
-                Toast.makeText(context, "El Usuario ingresado no existe. Si aún no está registrado ingrese al link debajo", Toast.LENGTH_LONG).show();
-                break;
-            case 406:
-                Toast.makeText(context, "La contraseña es incorrecta, inténtelo nuevamente", Toast.LENGTH_LONG).show();
-                break;
-            default:
-                Toast.makeText(context, "Error en el Login, reintente en unos minutos", Toast.LENGTH_LONG).show();
+    public void onError(VolleyError ex) {
+        Log.d("LoginListener", ex.getMessage());
+        if (ex instanceof ServerError) {
+            switch (ex.networkResponse.statusCode) {
+                case 404:
+                    Toast.makeText(context, "El User ingresado no existe. Si aún no está registrado ingrese al link debajo", Toast.LENGTH_LONG).show();
+                    break;
+                case 406:
+                    Toast.makeText(context, "La contraseña es incorrecta, inténtelo nuevamente", Toast.LENGTH_LONG).show();
+                    break;
+                default:
+            }
         }
-
-        context.onLoginFailed();
+        Toast.makeText(context, "Error en el Login, reintente en unos minutos", Toast.LENGTH_LONG).show();
     }
-
-
 }

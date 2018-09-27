@@ -1,5 +1,6 @@
 package taller2_2018_2c_grupo5.comprame.actividades;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,20 +16,20 @@ import taller2_2018_2c_grupo5.comprame.R;
 import taller2_2018_2c_grupo5.comprame.actividades.comunes.FragmentLoader;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
+    public static Context context;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
-
     private String session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = getApplicationContext();
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        drawerLayout =  findViewById(R.id.drawer_layout);
+        drawerLayout = findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(
                 this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);

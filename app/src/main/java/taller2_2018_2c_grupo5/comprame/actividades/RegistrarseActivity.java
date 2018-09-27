@@ -8,17 +8,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
-
+import taller2_2018_2c_grupo5.comprame.App;
 import taller2_2018_2c_grupo5.comprame.R;
-import taller2_2018_2c_grupo5.comprame.dominio.Usuario;
-import taller2_2018_2c_grupo5.comprame.servicios.RequestSender;
-import taller2_2018_2c_grupo5.comprame.servicios.ResponseListener;
+import taller2_2018_2c_grupo5.comprame.dominio.Session;
+import taller2_2018_2c_grupo5.comprame.dominio.User;
 import taller2_2018_2c_grupo5.comprame.servicios.listeners.RegistrarseListener;
 
 public class RegistrarseActivity extends AppCompatActivity {
@@ -30,9 +24,11 @@ public class RegistrarseActivity extends AppCompatActivity {
     private EditText campo_email;
     private EditText campo_password;
     private Button boton_registrarse;
-    private TextView link_login;
 
     private ProgressDialog progressDialog;
+
+    public RegistrarseActivity() {
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,25 +36,22 @@ public class RegistrarseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_registrarse);
 
         boton_registrarse = findViewById(R.id.btn_signup);
-
         boton_registrarse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signup();
             }
         });
-
-        link_login = findViewById(R.id.link_login);
-
-        link_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Ir a Login
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+        findViewById(R.id.link_login)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Ir a Login
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
     }
 
     private void signup() {
@@ -73,7 +66,7 @@ public class RegistrarseActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(RegistrarseActivity.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Registrando nuevo Usuario...");
+        progressDialog.setMessage("Registrando nuevo User...");
         progressDialog.show();
 
         campo_nombreUsuario = findViewById(R.id.input_userName);
@@ -88,7 +81,9 @@ public class RegistrarseActivity extends AppCompatActivity {
         String email = campo_email.getText().toString();
         String password = campo_password.getText().toString();
 
-        registrarUsuario(new Usuario(nombreUsuario, nombre, apellido, password, email));
+        App.services.signUp.post(new User(nombreUsuario, nombre, apellido, password, email)
+                , new RegistrarseListener(this)
+                , Session.class);
 
     }
 
@@ -158,22 +153,4 @@ public class RegistrarseActivity extends AppCompatActivity {
         return valid;
     }
 
-    private void registrarUsuario(Usuario usuario) {
-        Map<String,String> parametros;
-        parametros = new HashMap<>();
-        RequestSender requestSender = new RequestSender(this);
-        parametros.put("name", usuario.getNombreUsuario());
-        parametros.put("firstname", usuario.getNombre());
-        parametros.put("lastname", usuario.getApellido());
-        parametros.put("password", usuario.getPassword());
-        parametros.put("email", usuario.getEmail());
-
-        JSONObject jsonObject = new JSONObject(parametros);
-
-        String url = getString(R.string.urlAppServer) + "users/signup";
-
-        ResponseListener listener = new RegistrarseListener(this);
-
-        requestSender.doPost(listener, url, jsonObject);
-    }
 }

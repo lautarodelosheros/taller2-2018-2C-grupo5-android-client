@@ -3,9 +3,9 @@ package taller2_2018_2c_grupo5.comprame.actividades;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,17 +16,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.Toast;
+
+import com.android.volley.VolleyError;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
+import taller2_2018_2c_grupo5.comprame.App;
 import taller2_2018_2c_grupo5.comprame.R;
 import taller2_2018_2c_grupo5.comprame.actividades.comunes.RecyclerFragment;
 import taller2_2018_2c_grupo5.comprame.dominio.Item;
-import taller2_2018_2c_grupo5.comprame.servicios.RequestSender;
-import taller2_2018_2c_grupo5.comprame.servicios.listeners.BuscarItemsListener;
+import taller2_2018_2c_grupo5.comprame.library.Continuation;
 import taller2_2018_2c_grupo5.comprame.vista.ItemsAdapter;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
@@ -35,14 +40,10 @@ public class BuscarItemsFragment extends RecyclerFragment {
     private static final String ARG_PARAM1 = "session";
     public static final int LIMITE_CANTIDAD_ARTICULOS = 5;
 
-    private String session;
-    private ArrayList<Item> items = new ArrayList<>();
-
+    private List<Item> items = new ArrayList<>();
     private ItemsAdapter mAdapter;
-
     private ProgressDialog progressDialog;
-
-    private FloatingActionButton fab;
+    private String session;
 
     private String nombreFiltroAnterior = "";
     private String descripcionFiltroAnterior = "";
@@ -53,7 +54,7 @@ public class BuscarItemsFragment extends RecyclerFragment {
     private boolean cargando;
 
     public BuscarItemsFragment() {
-        // Required empty public constructor
+
     }
 
     public static BuscarItemsFragment newInstance(String session) {
@@ -193,24 +194,36 @@ public class BuscarItemsFragment extends RecyclerFragment {
                 LIMITE_CANTIDAD_ARTICULOS, 0);
     }
 
-    private void traerItems(String filtroNombre, String filtroDescripcion, String filtroUbicacion,
-                            int limite, int offset) {
+    private void traerItems(String filtroNombre
+            , String filtroDescripcion
+            , String filtroUbicacion
+            , int limite
+            , int offset) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("limite", limite);
+        params.put("offset", offset);
+        params.put("nombre", filtroNombre);
+        params.put("description", filtroDescripcion);
+        params.put("ubicacion_geografica", filtroUbicacion);
 
-        String url = getString(R.string.urlAppServer)
-                + "articulos/?limite=" + String.format(Locale.getDefault(), "%d", limite)
-                + "&offset=" + String.format(Locale.getDefault(), "%d", offset);
+        App.services.items.get(new HashMap<String, Object>()
+                , new Continuation<Item[]>() {
+                    @Override
+                    public void onSuccess(Item[] items) {
+                        onSearchSuccess(Arrays.asList(items));
+                    }
 
-        if (!filtroNombre.isEmpty())
-            url += "&nombre=" + filtroNombre;
-        if (!filtroDescripcion.isEmpty())
-            url += "&descripcion=" + filtroDescripcion;
-        if (!filtroUbicacion.isEmpty())
-            url += "&ubicacion_geografica=" + filtroUbicacion;
-
-        BuscarItemsListener listener = new BuscarItemsListener(this);
-
-        RequestSender requestSender = new RequestSender(getActivity());
-        requestSender.doGet_expectArray(listener, url);
+                    @Override
+                    public void onError(VolleyError ex) {
+                        Log.d("BuscarItemsListener", "Recuperando Items", ex);
+                        Toast.makeText(getActivity()
+                                , "Error al buscar las publicaciones en el servidor"
+                                , Toast.LENGTH_LONG)
+                                .show();
+                        onSearchFailed();
+                    }
+                }
+                , Item[].class);
     }
 
     /*private void mockearItems() {

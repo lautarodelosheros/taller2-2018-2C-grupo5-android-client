@@ -11,13 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
-
+import taller2_2018_2c_grupo5.comprame.App;
 import taller2_2018_2c_grupo5.comprame.R;
-import taller2_2018_2c_grupo5.comprame.servicios.RequestSender;
+import taller2_2018_2c_grupo5.comprame.dominio.Session;
+import taller2_2018_2c_grupo5.comprame.dominio.User;
 import taller2_2018_2c_grupo5.comprame.servicios.listeners.LoginListener;
 
 public class LoginActivity extends AppCompatActivity {
@@ -28,16 +25,13 @@ public class LoginActivity extends AppCompatActivity {
     private EditText campo_password;
     private Button boton_login;
     private TextView link_registrarse;
-
     private ProgressDialog progressDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         boton_login = findViewById(R.id.btn_login);
-
         boton_login.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -45,9 +39,7 @@ public class LoginActivity extends AppCompatActivity {
                 login();
             }
         });
-
         link_registrarse = findViewById(R.id.link_signup);
-
         link_registrarse.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -58,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
         });
-        
+
     }
 
     private void login() {
@@ -82,7 +74,9 @@ public class LoginActivity extends AppCompatActivity {
         String nombreUsuario = campo_nombreUsuario.getText().toString();
         String password = campo_password.getText().toString();
 
-        loginUsuario(nombreUsuario, password);
+        App.services.login.post(new User(nombreUsuario, null, null, password, null)
+                , new LoginListener(this)
+                , Session.class);
 
     }
 
@@ -127,19 +121,4 @@ public class LoginActivity extends AppCompatActivity {
         return valid;
     }
 
-    private void loginUsuario(String nombreUsuario, String password) {
-        Map<String,String> parametros;
-        parametros = new HashMap<>();
-        RequestSender requestSender = new RequestSender(this);
-        parametros.put("name", nombreUsuario);
-        parametros.put("password", password);
-
-        JSONObject jsonObject = new JSONObject(parametros);
-
-        String url = getString(R.string.urlAppServer) + "users/login";
-
-        LoginListener listener = new LoginListener(this);
-
-        requestSender.doPost(listener, url, jsonObject);
-    }
 }
