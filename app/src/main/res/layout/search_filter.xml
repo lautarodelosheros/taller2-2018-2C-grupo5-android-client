@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/search_filter_layout"
+    tools:context="com.comprame.search.SearchFragment">
+
+    <data>
+        <variable
+            name="owner"
+            type="com.comprame.search.SearchFilterPopUp" />
+        <variable
+            name="searchViewModel"
+            type="com.comprame.search.SearchViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingLeft="24dp"
+            android:paddingTop="8dp"
+            android:paddingRight="24dp">
+
+            <!-- Filtro nombre -->
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+
+                <EditText
+                    android:id="@+id/search_filter_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/nombre_articulo_hint"
+                    android:inputType="textAutoComplete"
+                    android:text="@={searchViewModel.filter.name}" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!-- Filtro descripcion -->
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+
+                <EditText
+                    android:id="@+id/search_filter_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/descripcion_articulo_hint"
+                    android:inputType="text"
+                    android:text="@={searchViewModel.filter.description}" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!-- Filtro ubicacion -->
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+
+                <EditText
+                    android:id="@+id/search_filter_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/ubicacion_articulo_hint"
+                    android:inputType="text"
+                    android:text="@={searchViewModel.filter.location}" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/search_filter_btn"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="24dp"
+                android:background="@color/colorPrimary"
+                android:padding="12dp"
+                android:text="@string/boton_filtrar"
+                android:textColor="@color/white"
+                android:onClick="@{owner::search}"/>
+
+        </LinearLayout>
+    </ScrollView>
+</layout>
