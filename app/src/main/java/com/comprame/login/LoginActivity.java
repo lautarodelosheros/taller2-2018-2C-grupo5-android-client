@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import com.comprame.R;
 
 public class LoginActivity extends AppCompatActivity {
-    public static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

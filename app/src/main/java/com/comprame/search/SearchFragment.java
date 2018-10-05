@@ -28,9 +28,12 @@ import com.comprame.library.rest.Query;
 import java.util.Arrays;
 
 public class SearchFragment extends Fragment {
+    private static final int ITEM_OFFSET = 5;
+
     private String session;
     private SearchViewModel searchViewModel;
     private SearchFilterPopUp searchFilterPopUp;
+    private RecyclerView recyclerView;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -55,7 +58,7 @@ public class SearchFragment extends Fragment {
                         , container
                         , false);
 
-        RecyclerView recyclerView = view.getRoot().findViewById(R.id.search_items);
+        recyclerView = view.getRoot().findViewById(R.id.search_items);
         recyclerView.getItemAnimator().setAddDuration(1000);
         recyclerView.getItemAnimator().setChangeDuration(1000);
         recyclerView.getItemAnimator().setMoveDuration(1000);
@@ -68,9 +71,10 @@ public class SearchFragment extends Fragment {
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                int visibleItem = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
-                if (visibleItem > 1 /* hasMoreItems */) {
-                    searchViewModel.incOffset(5);
+                int numberOfItems = linearLayoutManager.getItemCount();
+                int visibleItem = linearLayoutManager.findLastCompletelyVisibleItemPosition();
+                if (visibleItem >= numberOfItems - 1 /* hasMoreItems */) {
+                    searchViewModel.incOffset(ITEM_OFFSET);
                     fetchItems(recyclerView);
                 }
             }
@@ -78,8 +82,15 @@ public class SearchFragment extends Fragment {
 
         searchFilterPopUp = new SearchFilterPopUp(this
                 , searchViewModel
-                , this::fetchItems);
+                , this::filterItems);
         return view.getRoot();
+    }
+
+    private void filterItems(View view) {
+        recyclerView.scrollToPosition(1);
+        searchViewModel.setOffset(0);
+        searchViewModel.removeAllItems();
+        fetchItems(view);
     }
 
     @Override
@@ -126,7 +137,7 @@ public class SearchFragment extends Fragment {
                                         , "Sin Resultados"
                                         , Toast.LENGTH_SHORT)
                                         .show();
-                            searchViewModel.setItems(Arrays.asList(items));
+                            searchViewModel.addItems(Arrays.asList(items));
                         }
                         , (Exception ex) -> {
                             Log.d("BuscarItemsListener", "Recuperando Items", ex);

@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Comprame</string>
-    <string name="action_settings">Settings</string>
     <string name="logo_desc">Logo</string>
     <string name="email_hint">Email</string>
     <string name="password_hint">Contraseña</string>

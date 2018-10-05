@@ -52,9 +52,25 @@ public class SearchViewModel extends ViewModel {
         this.filter.postValue(value);
     }
 
+    public void setOffset(int i) {
+        SearchFilter value = this.filter.getValue();
+        value.offset = i;
+        this.filter.postValue(value);
+    }
+
+    public void addItems(List<Item> items) {
+        this.items.getValue().addAll(items);
+        setItems(this.items.getValue());
+    }
+
     public void setItems(List<Item> items) {
         this.items.setValue(items);
     }
+
+    public void removeAllItems() {
+        this.items.getValue().clear();
+    }
+
     public SearchFilter filter() {
         return filter.getValue();
     }
