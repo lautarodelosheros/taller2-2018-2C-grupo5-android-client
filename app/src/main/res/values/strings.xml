@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">Comprame</string>
-    <string name="urlAppServer">http://192.168.0.15:5000/</string>
-    <string name="action_settings">Settings</string>
     <string name="logo_desc">Logo</string>
     <string name="email_hint">Email</string>
     <string name="password_hint">Contraseña</string>
@@ -12,7 +10,7 @@
     <string name="already_user_text">¿Ya está registrado? Ingrese aquí</string>
     <string name="password_error">La contraseña debe tener entre 4 y 10 caracteres alfanuméricos</string>
     <string name="email_error">Ingrese un email válido</string>
-    <string name="nombre_error">El nombre debe tener al menos 2 caracteres</string>
+    <string name="name_error">El nombre debe tener al menos 2 caracteres</string>
     <string name="apellido_hint">Apellido</string>
     <string name="apellido_error">El apellido debe tener al menos 2 caracteres</string>
     <string name="userName_hint">Nombre de Usuario</string>
