@@ -24,6 +24,7 @@ import com.comprame.App;
 import com.comprame.R;
 import com.comprame.domain.Item;
 import com.comprame.library.rest.Query;
+import com.comprame.library.view.ProgressPopup;
 
 import java.util.Arrays;
 
@@ -113,11 +114,8 @@ public class SearchFragment extends Fragment {
     }
 
     public void fetchItems(View view) {
-        ProgressDialog progressDialog = new ProgressDialog(getActivity()
-                , R.style.AppTheme_Dark_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Buscando publicaciones...");
-        progressDialog.show();
+        ProgressPopup progressPopup = new ProgressPopup("Buscando publicaciones...", getContext());
+        progressPopup.show();
 
         SearchViewModel.SearchFilter filter = searchViewModel
                 .filter();
@@ -129,7 +127,7 @@ public class SearchFragment extends Fragment {
                         .and("ubicacion_geografica", filter.location)
 
                 , Item[].class)
-                .onDone((i, ex) -> progressDialog.dismiss())
+                .onDone((i, ex) -> progressPopup.dismiss())
                 .run(
                         (Item[] items) -> {
                             if (items.length == 0)

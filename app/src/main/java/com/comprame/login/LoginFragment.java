@@ -21,6 +21,7 @@ import com.comprame.databinding.LoginFragmentBinding;
 import com.comprame.domain.Session;
 import com.comprame.domain.User;
 import com.comprame.MainActivity;
+import com.comprame.library.view.ProgressPopup;
 
 public class LoginFragment extends Fragment {
 
@@ -51,18 +52,15 @@ public class LoginFragment extends Fragment {
     public void logIn(View view) {
         LoginViewModel model = ViewModelProviders.of(this)
                 .get(LoginViewModel.class);
-        ProgressDialog progressDialog = new ProgressDialog(view.getContext()
-                , R.style.AppTheme_Dark_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Ingresando...");
-        progressDialog.show();
+        ProgressPopup progressPopup = new ProgressPopup("Ingresando...", getContext());
+        progressPopup.show();
         App.login.post(new User(model.name.getValue()
                         , null
                         , null
                         , model.password.getValue()
                         , null)
                 , Session.class)
-                .onDone((s, ex) -> progressDialog.dismiss())
+                .onDone((s, ex) -> progressPopup.dismiss())
                 .run(s -> search(model, s)
                         , this::showToastError);
 

@@ -17,6 +17,7 @@ import com.comprame.R;
 import com.comprame.databinding.LoginSignupFragmentBinding;
 import com.comprame.domain.Session;
 import com.comprame.MainActivity;
+import com.comprame.library.view.ProgressPopup;
 
 public class SignUpFragment extends Fragment {
 
@@ -48,14 +49,11 @@ public class SignUpFragment extends Fragment {
     public void signUp(View view) {
         SignUpViewModel model = ViewModelProviders.of(this)
                 .get(SignUpViewModel.class);
-        ProgressDialog progressDialog = new ProgressDialog(view.getContext(),
-                R.style.AppTheme_Dark_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Registrando nuevo User...");
-        progressDialog.show();
+        ProgressPopup progressPopup = new ProgressPopup("Registrando nuevo usuario...", getContext());
+        progressPopup.show();
         App.signUp.post(model.asUser()
                 , Session.class)
-                .onDone((s, ex) -> progressDialog.dismiss())
+                .onDone((s, ex) -> progressPopup.dismiss())
                 .run(s -> search(model, s)
                         , ex -> {
                             Toast.makeText(getContext()
