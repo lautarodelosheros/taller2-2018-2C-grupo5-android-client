@@ -1,86 +1,86 @@
 package com.comprame.domain;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.UUID;
 
 public class Item implements Serializable {
     private String id;
-    private String nombre;
-    private String descripcion;
-    private double precio_unitario;
-    @SerializedName("foto_urls")
-    private ArrayList<String> foto_urls = new ArrayList<>();
-    private String vendedor;
-    private String ubicacion_geografica;
-    @SerializedName("metodos_pago")
-    private ArrayList<String> metodos_pago;
-    @SerializedName("categorias")
-    private String categorias;
+    private String name;
+    private String description;
+    private double unitPrice;
+    private ArrayList<String> imageUrls = new ArrayList<>();
+    private String seller;
+    private String location;
+    private ArrayList<String> paymentMethods;
+    private String categories;
 
-    public Item(String nombre, String descripcion, double precio_unitario,
-                String vendedor, String ubicacion_geografica,
-                ArrayList<String> metodos_pago, String categorias) {
+    public Item(String id
+            , String name
+            , String description
+            , double unitPrice
+            , String seller
+            , String location
+            , ArrayList<String> paymentMethods
+            , String categories) {
 
-        this.id = UUID.randomUUID().toString();
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.precio_unitario = precio_unitario;
-        this.vendedor = vendedor;
-        this.ubicacion_geografica = ubicacion_geografica;
-        this.metodos_pago = metodos_pago;
-        this.categorias = categorias;
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.unitPrice = unitPrice;
+        this.seller = seller;
+        this.location = location;
+        this.paymentMethods = paymentMethods;
+        this.categories = categories;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public double getPrecio_unitario() {
-        return precio_unitario;
+    public double getUnitPrice() {
+        return unitPrice;
     }
 
-    public void setPrecio_unitario(double precio_unitario) {
-        this.precio_unitario = precio_unitario;
+    public void setUnitPrice(double unitPrice) {
+        this.unitPrice = unitPrice;
     }
 
-    public String getVendedor() {
-        return vendedor;
+    public String getSeller() {
+        return seller;
     }
 
-    public void setVendedor(String vendedor) {
-        this.vendedor = vendedor;
+    public void setSeller(String seller) {
+        this.seller = seller;
     }
 
-    public String getUbicacion_geografica() {
-        return ubicacion_geografica;
+    public String getLocation() {
+        return location;
     }
 
-    public void setUbicacion_geografica(String ubicacion_geografica) {
-        this.ubicacion_geografica = ubicacion_geografica;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
-    public void addFoto(String url) {
-        this.foto_urls.add(url);
+    public void addImage(String url) {
+        this.imageUrls.add(url);
     }
 
-    public String getFoto(int i) {
-        if (i < this.foto_urls.size())
-            return this.foto_urls.get(i);
+    public String getImage(int i) {
+        if (i < this.imageUrls.size())
+            return this.imageUrls.get(i);
         else
             return null;
     }
@@ -93,19 +93,19 @@ public class Item implements Serializable {
         return id;
     }
 
-    public ArrayList<String> getMetodos_pago() {
-        return metodos_pago;
+    public ArrayList<String> getPaymentMethods() {
+        return paymentMethods;
     }
 
-    public void setMetodos_pago(ArrayList<String> metodos_pago) {
-        this.metodos_pago = metodos_pago;
+    public void setPaymentMethods(ArrayList<String> paymentMethods) {
+        this.paymentMethods = paymentMethods;
     }
 
-    public String getCategorias() {
-        return categorias;
+    public String getCategories() {
+        return categories;
     }
 
-    public void setCategorias(String categorias) {
-        this.categorias = categorias;
+    public void setCategories(String categories) {
+        this.categories = categories;
     }
 }

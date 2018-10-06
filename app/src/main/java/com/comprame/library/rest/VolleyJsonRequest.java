@@ -10,6 +10,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonRequest;
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 
 import java.io.ByteArrayInputStream;
@@ -19,10 +20,15 @@ import java.util.Map;
 
 import com.comprame.library.fun.Async;
 import com.comprame.library.fun.Consumer;
+import com.google.gson.GsonBuilder;
 
 
 public class VolleyJsonRequest<T> implements Async<T> {
-    private static final Gson gson = new Gson();
+
+    private static final Gson gson = new GsonBuilder()
+            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+            .create();
+
     private RequestQueue queue;
     private final int method;
     private final String url;
@@ -63,10 +69,10 @@ public class VolleyJsonRequest<T> implements Async<T> {
                     T result = gson.fromJson(responseBody
                             , clazz);
                     Cache.Entry entry = HttpHeaderParser.parseCacheHeaders(response);
-                   // if (Log.isLoggable("Rest", Log.DEBUG))
-                        Log.d("Rest", url
-                                + "\n Request:" + requestBody
-                                + "\n Response:" + responseBody);
+                    // if (Log.isLoggable("Rest", Log.DEBUG))
+                    Log.d("Rest", url
+                            + "\n Request:" + requestBody
+                            + "\n Response:" + responseBody);
                     return Response.success(result, entry);
                 } catch (Exception e) {
                     Log.e("Rest", url, e);

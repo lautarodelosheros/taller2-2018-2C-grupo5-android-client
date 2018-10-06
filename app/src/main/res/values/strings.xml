@@ -46,6 +46,7 @@
     <string name="item_units">Unidades</string>
     <string name="item_description">Descripción</string>
     <string name="item_name">Nombre</string>
+    <string name="buy">Comprar</string>
     <string-array name="payment_methods">
         <item>Crédito</item>
         <item>Débito</item>

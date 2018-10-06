@@ -1,6 +1,5 @@
 package com.comprame.search;
 
-import android.app.ProgressDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
@@ -121,11 +120,11 @@ public class SearchFragment extends Fragment {
                 .filter();
         App.appServer.get(
                 Query.query("/item")
-                        .and("limite", filter.size)
+                        .and("limit", filter.size)
                         .and("offset", filter.offset)
-                        .and("nombre", filter.name)
+                        .and("name", filter.name)
                         .and("description", filter.description)
-                        .and("ubicacion_geografica", filter.location)
+                        .and("location", filter.location)
 
                 , Item[].class)
                 .onDone((i, ex) -> progressPopup.dismiss())

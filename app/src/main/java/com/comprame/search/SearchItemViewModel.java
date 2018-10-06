@@ -12,19 +12,19 @@ public class SearchItemViewModel extends ViewModel {
 
     public SearchItemViewModel(Item item) {
         this.item = item;
-        imageUrl.setValue(item.getFoto(0));
+        imageUrl.setValue(item.getImage(0));
     }
 
     public String getDescription() {
-        return item.getDescripcion();
+        return item.getDescription();
     }
 
     public String getName() {
-        return item.getNombre();
+        return item.getName();
     }
 
     public String getPrice() {
-        return String.valueOf(item.getPrecio_unitario());
+        return String.valueOf(item.getUnitPrice());
     }
 
     public LiveData<String> getImageUrl() {

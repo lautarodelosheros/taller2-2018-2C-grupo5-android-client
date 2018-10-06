@@ -26,7 +26,7 @@
             android:paddingTop="8dp"
             android:paddingRight="24dp">
 
-            <!-- Filtro nombre -->
+            <!-- Filtro name -->
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
                     android:text="@={searchViewModel.filter.name}" />
             </android.support.design.widget.TextInputLayout>
 
-            <!-- Filtro descripcion -->
+            <!-- Filtro description -->
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

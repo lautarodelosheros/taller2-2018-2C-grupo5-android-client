@@ -1,6 +1,5 @@
 package com.comprame.sell;
 
-import android.app.ProgressDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,6 +13,7 @@ import com.comprame.App;
 import com.comprame.R;
 import com.comprame.databinding.SellFragmentBinding;
 import com.comprame.domain.Session;
+import com.comprame.library.view.ProgressPopup;
 import com.comprame.search.SearchFragment;
 
 public class SellFragment extends Fragment {
@@ -33,14 +33,12 @@ public class SellFragment extends Fragment {
     }
 
 
-
     public void sell(View view) {
-        ProgressDialog progressDialog = new ProgressDialog(view.getContext()
-                , R.style.AppTheme_Dark_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Procesando...");
+        ProgressPopup progressDialog = new ProgressPopup("Procesando...", this.getContext());
         progressDialog.show();
-        App.appServer.post("", model.asSellItem(), Session.class)
+        App.appServer.post("/sell"
+                , model.asSellItem()
+                , Session.class)
                 .onDone((s, ex) -> progressDialog.dismiss())
                 .run(s -> search()
                         , this::showToastError);
@@ -52,7 +50,7 @@ public class SellFragment extends Fragment {
                 , Toast.LENGTH_LONG).show();
     }
 
-    private  void search() {
+    private void search() {
         getActivity()
                 .getSupportFragmentManager()
                 .beginTransaction()
