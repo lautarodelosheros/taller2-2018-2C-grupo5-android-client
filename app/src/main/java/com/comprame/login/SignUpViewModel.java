@@ -65,7 +65,7 @@ public class SignUpViewModel extends AndroidViewModel {
         if (apellido == null
                 || apellido.isEmpty()
                 || apellido.length() < 2) {
-            return getString(R.string.apellido_error);
+            return getString(R.string.lastname_error);
         }
         return null;
     }

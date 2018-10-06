@@ -89,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
                 android:gravity="center"
-                android:onClick="@{fragment::signUp}"
+                android:onClick="signUpFragment"
                 android:text="@string/link_registrarse"
                 android:textSize="16sp" />
 

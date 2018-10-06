@@ -1,33 +1,54 @@
 <resources>
     <string name="app_name">Comprame</string>
+    <string name="action_settings">Settings</string>
     <string name="logo_desc">Logo</string>
     <string name="email_hint">Email</string>
     <string name="password_hint">Contraseña</string>
     <string name="login_button">Login</string>
     <string name="link_registrarse">¿Todavía no está registrado? Regístrese aquí</string>
     <string name="name_hint">Nombre</string>
-    <string name="registrarse_text">Registrarse</string>
+    <string name="signup">Registrarse</string>
+
     <string name="already_user_text">¿Ya está registrado? Ingrese aquí</string>
     <string name="password_error">La contraseña debe tener entre 4 y 10 caracteres alfanuméricos</string>
     <string name="email_error">Ingrese un email válido</string>
     <string name="name_error">El nombre debe tener al menos 2 caracteres</string>
-    <string name="apellido_hint">Apellido</string>
-    <string name="apellido_error">El apellido debe tener al menos 2 caracteres</string>
+
+    <string name="lastname">Apellido</string>
+
+    <string name="lastname_error">El apellido debe tener al menos 2 caracteres</string>
     <string name="userName_hint">Nombre de Usuario</string>
+
     <string name="nav_header_desc">Encabezado</string>
     <string name="nav_header_title">Opciones</string>
     <string name="nav_header_subtitle">Subtitulo</string>
     <string name="navigation_drawer_open">Abrir menu</string>
     <string name="navigation_drawer_close">Cerrar menu</string>
-    <string name="menu_title1">Ver mi Perfil</string>
-    <string name="menu_title2">Buscar publicaciones</string>
-    <string name="menu2_title1">Notificaciones</string>
-    <string name="menu2_title2">Ayuda</string>
-    <string name="menu_2">Menu 2</string>
+
+    <string name="profile">Perfil</string>
+    <string name="sell">Vender</string>
+
+    <string name="search">Buscar</string>
+    <string name="purchase">Compras</string>
+    <string name="help">Ayuda</string>
+
     <string name="imagen_item_desc">Imagen Item</string>
     <string name="filtro">Filtro</string>
     <string name="nombre_articulo_hint">Título de la publicación</string>
     <string name="descripcion_articulo_hint">Descripción de la Publicación</string>
     <string name="ubicacion_articulo_hint">Ubicación geográfica</string>
     <string name="boton_filtrar">Filtrar</string>
+
+    <string name="item_payment_methods">Metodos de Pago</string>
+    <string name="item_category">Categorias</string>
+    <string name="item_location">Ubicación</string>
+    <string name="item_unit_price">Precio Unitario</string>
+    <string name="item_units">Unidades</string>
+    <string name="item_description">Descripción</string>
+    <string name="item_name">Nombre</string>
+    <string-array name="payment_methods">
+        <item>Crédito</item>
+        <item>Débito</item>
+    </string-array>
+
 </resources>

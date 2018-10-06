@@ -119,8 +119,9 @@ public class SearchFragment extends Fragment {
 
         SearchViewModel.SearchFilter filter = searchViewModel
                 .filter();
-        App.items.get(Query
-                        .query("limite", filter.size)
+        App.appServer.get(
+                Query.query("/item")
+                        .and("limite", filter.size)
                         .and("offset", filter.offset)
                         .and("nombre", filter.name)
                         .and("description", filter.description)

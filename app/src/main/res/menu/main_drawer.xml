@@ -5,26 +5,30 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_oferta_horaria"
+            android:id="@+id/nav_profile"
             android:icon="@drawable/ic_launcher_foreground"
-            android:title="@string/menu_title1" />
+            android:title="@string/profile" />
         <item
-            android:id="@+id/nav_inscribirme"
+            android:id="@+id/nav_sell"
             android:icon="@drawable/ic_launcher_foreground"
-            android:title="@string/menu_title2" />
+            android:title="@string/sell" />
+        <!--android:onClick="@{(v) -> sellFragment()}"-->
     </group>
 
-    <item android:title="@string/menu_2">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_launcher_foreground"
-                android:title="@string/menu2_title1" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_launcher_foreground"
-                android:title="@string/menu2_title2" />
-        </menu>
-    </item>
-
+    <group>
+        <item
+            android:id="@+id/nav_search"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="@string/search" />
+        <!--android:onClick="@{(v) -> searchFragment()}"-->
+        <item
+            android:id="@+id/nav_purchase"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="@string/purchase" />
+        <!--android:onClick="@{(v) -> buyFragment()}"-->
+        <item
+            android:id="@+id/nav_help"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="@string/help" />
+    </group>
 </menu>

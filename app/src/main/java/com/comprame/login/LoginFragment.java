@@ -1,65 +1,52 @@
 package com.comprame.login;
 
-import android.app.ProgressDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.android.volley.ServerError;
-
 import com.comprame.App;
+import com.comprame.MainActivity;
 import com.comprame.R;
 import com.comprame.databinding.LoginFragmentBinding;
 import com.comprame.domain.Session;
 import com.comprame.domain.User;
-import com.comprame.MainActivity;
 import com.comprame.library.view.ProgressPopup;
 
 public class LoginFragment extends Fragment {
+
+    private LoginViewModel model;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater
             , @Nullable ViewGroup container
             , @Nullable Bundle savedInstanceState) {
+        model = ViewModelProviders.of(this)
+                .get(LoginViewModel.class);
         LoginFragmentBinding binding = DataBindingUtil.inflate(inflater
                 , R.layout.login_fragment
                 , container
                 , false);
-        binding.setLoginModel(ViewModelProviders.of(this)
-                .get(LoginViewModel.class));
+        binding.setLoginModel(model);
         binding.setFragment(this);
         binding.setLifecycleOwner(this);
         return binding.getRoot();
     }
 
-    public void signUp(View view) {
-        getActivity()
-                .getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.login_activity, new SignUpFragment())
-                .commit();
-    }
-
     public void logIn(View view) {
-        LoginViewModel model = ViewModelProviders.of(this)
-                .get(LoginViewModel.class);
         ProgressPopup progressPopup = new ProgressPopup("Ingresando...", getContext());
         progressPopup.show();
-        App.login.post(new User(model.name.getValue()
-                        , null
-                        , null
-                        , model.password.getValue()
-                        , null)
-                , Session.class)
+        App.appServer.post(
+                "/user/login"
+                , model.asUser(), Session.class)
                 .onDone((s, ex) -> progressPopup.dismiss())
                 .run(s -> search(model, s)
                         , this::showToastError);

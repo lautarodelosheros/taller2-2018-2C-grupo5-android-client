@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 
 import com.comprame.R;
 import com.comprame.domain.Session;
+import com.comprame.domain.User;
 
 public class LoginViewModel extends AndroidViewModel {
     public final MutableLiveData<Session> session;
@@ -52,5 +53,13 @@ public class LoginViewModel extends AndroidViewModel {
 
     private boolean isEnabled() {
         return (nameError() == null && passwordError() == null);
+    }
+
+    public User asUser() {
+        return new User(name.getValue()
+                , null
+                , null
+                , password.getValue()
+                , null);
     }
 }

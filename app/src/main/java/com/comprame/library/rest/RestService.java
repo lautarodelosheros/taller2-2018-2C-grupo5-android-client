@@ -14,32 +14,33 @@ public class RestService {
         this.queue = queue;
     }
 
-    public <T> Async<T> post(Object request
+    public <T> Async<T> post(String path
+            , Object request
             , Class<T> responseClass) {
         return new VolleyJsonRequest<>(queue
                 , Request.Method.POST
-                , url
+                , url + path
                 , request
                 , responseClass
         );
     }
 
-    public <T> Async<T> put(String id
+    public <T> Async<T> put(String path
             , Object request
             , Class<T> responseClass) {
         return new VolleyJsonRequest<>(queue
                 , Request.Method.PUT
-                , url + "/" + id
+                , url + "/" + path
                 , request
                 , responseClass
         );
     }
 
-    public <T> Async<T> get(Object id
+    public <T> Async<T> get(String path
             , Class<T> responseClass) {
         return new VolleyJsonRequest<>(queue
                 , Request.Method.GET
-                , url + "/" + id
+                , url + "/" + path
                 , null
                 , responseClass
         );
@@ -49,7 +50,7 @@ public class RestService {
             , Class<T> responseClass) {
         return new VolleyJsonRequest<>(queue
                 , Request.Method.GET
-                , url + "?" + queryParams.string
+                , url + queryParams.string
                 , null
                 , responseClass
         );

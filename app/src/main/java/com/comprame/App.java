@@ -49,9 +49,7 @@ class Config {
 
 public class App extends Application {
     public static final String BASE_URL = Config.compraMeUrl();
-    public static RestService login;
-    public static RestService items;
-    public static RestService signUp;
+    public static RestService appServer;
 
     static {
         Config.setupNetwork();
@@ -62,11 +60,7 @@ public class App extends Application {
         super.onCreate();
         Context context = getApplicationContext();
         RequestQueue volleyQueue = Volley.newRequestQueue(context);
-        login = new RestService(BASE_URL + "/users/login"
-                , volleyQueue);
-        items = new RestService(BASE_URL + "/articulos"
-                , volleyQueue);
-        signUp = new RestService(BASE_URL + "/users/signup"
-                , volleyQueue);
+        appServer = new RestService(BASE_URL, volleyQueue);
+
     }
 }
