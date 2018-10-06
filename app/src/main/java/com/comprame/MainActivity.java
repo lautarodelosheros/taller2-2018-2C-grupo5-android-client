@@ -1,5 +1,6 @@
 package com.comprame;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -10,6 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.comprame.R;
+import com.comprame.domain.Session;
+import com.comprame.profile.ProfileFragment;
 import com.comprame.search.SearchFragment;
 import com.comprame.sell.SellFragment;
 
@@ -18,12 +22,21 @@ public class MainActivity extends AppCompatActivity
 
     private DrawerLayout drawerLayout;
 
+    public Session session;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
         configureDrawerActionBar();
         configureNavigationView();
+
+        session = new Session();
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle != null)
+            session.setSession((String) bundle.get("session"));
+
         searchFragment();
     }
 
@@ -73,7 +86,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void profileFragment() {
-        throw new IllegalArgumentException("Unhandled Menu item");
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_container, new ProfileFragment())
+                .commit();
     }
 
     public void buyFragment() {

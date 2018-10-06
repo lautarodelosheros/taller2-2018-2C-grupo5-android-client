@@ -52,4 +52,5 @@
         <item>Débito</item>
     </string-array>
 
+    <string name="update_profile_text">Actualizar Perfil</string>
 </resources>
