@@ -78,7 +78,7 @@
                 android:layout_marginBottom="24dp"
                 android:background="@color/colorPrimary"
                 app:btn_enable="@{loginModel.enabled}"
-                android:onClick="@{fragment::logIn}"
+                android:onClick="@{fragment.logIn}"
                 android:padding="12dp"
                 android:text="@string/login_button"
                 android:textColor="@color/white" />
@@ -89,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
                 android:gravity="center"
-                android:onClick="@{fragment::signUp}"
+                android:onClick="signUpFragment"
                 android:text="@string/link_registrarse"
                 android:textSize="16sp" />
 

@@ -20,6 +20,8 @@ import com.comprame.MainActivity;
 
 public class SignUpFragment extends Fragment {
 
+    private SignUpViewModel model;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater
@@ -29,25 +31,14 @@ public class SignUpFragment extends Fragment {
                 , R.layout.login_signup_fragment
                 , container
                 , false);
-        SignUpViewModel signUpViewModel = ViewModelProviders.of(this)
+        model = ViewModelProviders.of(this)
                 .get(SignUpViewModel.class);
-        inflate.setSignUpModel(signUpViewModel);
+        inflate.setSignUpModel(model);
         inflate.setFragment(this);
         return inflate.getRoot();
     }
 
-    public void logIn(View view) {
-        getActivity()
-                .getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.login_activity, new LoginFragment())
-                .commit();
-
-    }
-
     public void signUp(View view) {
-        SignUpViewModel model = ViewModelProviders.of(this)
-                .get(SignUpViewModel.class);
         ProgressDialog progressDialog = new ProgressDialog(view.getContext(),
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
@@ -64,7 +55,7 @@ public class SignUpFragment extends Fragment {
                         });
     }
 
-    private void search(SignUpViewModel model, Session s) {
+    public void search(SignUpViewModel model, Session s) {
         model.session.setValue(s);
         Intent intent = new Intent(getContext(), MainActivity.class);
         intent.putExtra("session", s.getSession());

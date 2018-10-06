@@ -9,9 +9,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
-import com.comprame.R;
+import com.comprame.login.LoginFragment;
+import com.comprame.login.SignUpFragment;
 import com.comprame.search.SearchFragment;
+import com.comprame.sell.SellFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -22,10 +25,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.main_activity);
         configureDrawerActionBar();
         configureNavigationView();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_container, new SearchFragment())
-                .commit();
+        toSearchFragment();
     }
 
     private void configureNavigationView() {
@@ -50,6 +50,31 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void buyFragment(Object item) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_container, new SellFragment())
+                .commit();
+    }
+
+    public void sellFragment(Object item) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_container, new SellFragment())
+                .commit();
+    }
+
+    public void searchFragment(Object item) {
+        toSearchFragment();
+    }
+
+    private void toSearchFragment() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_container, new SearchFragment())
+                .commit();
     }
 
 }

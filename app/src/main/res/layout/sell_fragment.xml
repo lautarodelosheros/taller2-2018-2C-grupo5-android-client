@@ -2,43 +2,33 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/signup_fragment"
-    tools:context=".login.LoginActivity">
+    android:id="@+id/search_filter_layout"
+    tools:context="com.comprame.sell.SellFragment">
 
     <data>
 
         <variable
-            name="signUpModel"
-            type="com.comprame.login.SignUpViewModel" />
+            name="fragment"
+            type="com.comprame.sell.SellFragment" />
 
         <variable
-            name="fragment"
-            type="com.comprame.login.SignUpFragment" />
-
+            name="data"
+            type="com.comprame.sell.SellViewModel" />
     </data>
 
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:fitsSystemWindows="true">
+        android:layout_height="fill_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:orientation="vertical"
             android:paddingLeft="24dp"
             android:paddingTop="8dp"
             android:paddingRight="24dp">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="24dp"
-                android:contentDescription="@string/logo_desc"
-                android:src="@drawable/logo" />
-
-            <!--  Nombre User -->
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -46,16 +36,14 @@
                 android:layout_marginBottom="8dp">
 
                 <EditText
-                    android:id="@+id/singup_name"
+                    android:id="@+id/sell_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/userName_hint"
-                    android:inputType="textCapWords"
-                    android:text="@={signUpModel.name}"
-                    app:validation="@{()-> signUpModel.nameError}" />
+                    android:hint="@string/item_name"
+                    android:inputType="textAutoComplete"
+                    android:text="@={data.name}" />
             </android.support.design.widget.TextInputLayout>
 
-            <!--  Nombre -->
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -63,16 +51,16 @@
                 android:layout_marginBottom="8dp">
 
                 <EditText
-                    android:id="@+id/singup_firstname"
+                    android:id="@+id/sell_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/name_hint"
-                    android:inputType="textCapWords"
-                    android:text="@={signUpModel.firstname}"
-                    app:validation="@{()-> signUpModel.firstnameError}" />
+                    android:hint="@string/item_description"
+                    android:inputType="text"
+                    android:text="@={data.description}" />
+
+
             </android.support.design.widget.TextInputLayout>
 
-            <!--  Apellido -->
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -80,16 +68,15 @@
                 android:layout_marginBottom="8dp">
 
                 <EditText
-                    android:id="@+id/singup_lastname"
+                    android:id="@+id/sell_units"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/lastname"
-                    android:inputType="textCapWords"
-                    android:text="@={signUpModel.lastname}"
-                    app:validation="@{()-> signUpModel.lastnameError}" />
+                    android:digits="0123456789."
+                    android:hint="@string/item_units"
+                    android:inputType="numberDecimal"
+                    android:text="@={data.units}" />
             </android.support.design.widget.TextInputLayout>
 
-            <!-- Email -->
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -97,16 +84,14 @@
                 android:layout_marginBottom="8dp">
 
                 <EditText
-                    android:id="@+id/singup_email"
+                    android:id="@+id/sell_unit_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/email_hint"
-                    android:inputType="textEmailAddress"
-                    android:text="@={signUpModel.email}"
-                    app:validation="@{()-> signUpModel.emailError}" />
+                    android:hint="@string/item_unit_price"
+                    android:inputType="text"
+                    android:text="@={data.price}" />
             </android.support.design.widget.TextInputLayout>
 
-            <!-- Password -->
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -114,39 +99,53 @@
                 android:layout_marginBottom="8dp">
 
                 <EditText
-                    android:id="@+id/singup_password"
+                    android:id="@+id/sell_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/password_hint"
-                    android:inputType="textPassword"
-                    android:text="@={signUpModel.password}"
-                    app:validation="@{()-> signUpModel.passwordError}" />
+                    android:hint="@string/item_location"
+                    android:inputType="text"
+                    android:text="@={data.location}" />
             </android.support.design.widget.TextInputLayout>
 
-            <!-- Boton -->
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+
+                <EditText
+                    android:id="@+id/sell_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/item_category"
+                    android:inputType="text" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/payment_methods"
+                    android:hint="@string/item_payment_methods" />
+            </android.support.design.widget.TextInputLayout>
+
             <android.support.v7.widget.AppCompatButton
-                android:id="@+id/singup_btn"
+                android:id="@+id/sell_button"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="24dp"
                 android:background="@color/colorPrimary"
-                android:onClick="@{fragment.signUp}"
+                android:onClick="@{fragment::sell}"
                 android:padding="12dp"
-                android:text="@string/signup"
+                android:text="@string/sell"
                 android:textColor="@color/white"
-                app:btn_enable="@{signUpModel.enabled}" />
-
-            <TextView
-                android:id="@+id/login_link"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:gravity="center"
-                android:onClick="logInFragment"
-                android:text="@string/already_user_text"
-                android:textSize="16sp" />
-
+                app:btn_enable="@{data.enabled}" />
         </LinearLayout>
     </ScrollView>
 </layout>

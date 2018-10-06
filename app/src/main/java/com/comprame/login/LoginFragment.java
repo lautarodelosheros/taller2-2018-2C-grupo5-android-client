@@ -24,33 +24,26 @@ import com.comprame.MainActivity;
 
 public class LoginFragment extends Fragment {
 
+    private LoginViewModel model;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater
             , @Nullable ViewGroup container
             , @Nullable Bundle savedInstanceState) {
+        model = ViewModelProviders.of(this)
+                .get(LoginViewModel.class);
         LoginFragmentBinding binding = DataBindingUtil.inflate(inflater
                 , R.layout.login_fragment
                 , container
                 , false);
-        binding.setLoginModel(ViewModelProviders.of(this)
-                .get(LoginViewModel.class));
+        binding.setLoginModel(model);
         binding.setFragment(this);
         binding.setLifecycleOwner(this);
         return binding.getRoot();
     }
 
-    public void signUp(View view) {
-        getActivity()
-                .getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.login_activity, new SignUpFragment())
-                .commit();
-    }
-
     public void logIn(View view) {
-        LoginViewModel model = ViewModelProviders.of(this)
-                .get(LoginViewModel.class);
         ProgressDialog progressDialog = new ProgressDialog(view.getContext()
                 , R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
