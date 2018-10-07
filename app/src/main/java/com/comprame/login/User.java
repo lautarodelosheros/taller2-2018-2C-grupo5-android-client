@@ -1,4 +1,4 @@
-package com.comprame.domain;
+package com.comprame.login;
 
 public class User {
 

@@ -4,27 +4,29 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
-import com.comprame.domain.Item;
+import java.util.List;
 
 public class SearchItemViewModel extends ViewModel {
-    public final Item item;
+    public final SearchItem searchItem;
     public final MutableLiveData<String> imageUrl = new MutableLiveData<>();
 
-    public SearchItemViewModel(Item item) {
-        this.item = item;
-        imageUrl.setValue(item.getImage(0));
+    public SearchItemViewModel(SearchItem searchItem) {
+        this.searchItem = searchItem;
+        if (searchItem.imageUrls != null &&!searchItem.imageUrls.isEmpty()) {
+            imageUrl.setValue(searchItem.imageUrls.get(0));
+        }
     }
 
     public String getDescription() {
-        return item.getDescription();
+        return searchItem.description;
     }
 
     public String getName() {
-        return item.getName();
+        return searchItem.name;
     }
 
     public String getPrice() {
-        return String.valueOf(item.getUnitPrice());
+        return String.valueOf(searchItem.unitPrice);
     }
 
     public LiveData<String> getImageUrl() {

@@ -55,9 +55,6 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_profile:
                 profileFragment();
                 return true;
-            case R.id.nav_purchase:
-                buyFragment();
-                return true;
             case R.id.nav_search:
                 searchFragment();
                 return true;
@@ -65,23 +62,17 @@ public class MainActivity extends AppCompatActivity
                 helpFragment();
                 return true;
         }
-        throw new IllegalArgumentException("Unhandled Menu item");
+        throw new IllegalArgumentException("Unhandled Menu searchItem");
     }
 
     private void helpFragment() {
-        throw new IllegalArgumentException("Unhandled Menu item");
+        throw new IllegalArgumentException("Unhandled Menu searchItem");
     }
 
     private void profileFragment() {
-        throw new IllegalArgumentException("Unhandled Menu item");
+        throw new IllegalArgumentException("Unhandled Menu searchItem");
     }
 
-    public void buyFragment() {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_container, new SellFragment())
-                .commit();
-    }
 
     public void sellFragment() {
         getSupportFragmentManager()
@@ -97,5 +88,5 @@ public class MainActivity extends AppCompatActivity
                 .commit();
     }
 
-}
 
+}

@@ -4,15 +4,13 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
 
-import com.comprame.domain.SellItem;
-
 import java.util.List;
 
 public class SellViewModel extends AndroidViewModel {
     public final MutableLiveData<String> name = new MutableLiveData<>();
     public final MutableLiveData<String> description = new MutableLiveData<>();
     public final MutableLiveData<String> units = new MutableLiveData<>();
-    public final MutableLiveData<String> price = new MutableLiveData<>();
+    public final MutableLiveData<String> unitPrice = new MutableLiveData<>();
     public final MutableLiveData<String> location = new MutableLiveData<>();
     public final MutableLiveData<String> paymentMethod = new MutableLiveData<>();
     public final MutableLiveData<List<String>> categories = new MutableLiveData<>();
@@ -22,11 +20,11 @@ public class SellViewModel extends AndroidViewModel {
         super(app);
         enabled.setValue(false);
         units.setValue("1");
-        price.setValue("0");
+        unitPrice.setValue("0");
         name.observeForever((s) -> enabled.setValue(this.isValid()));
         description.observeForever((s) -> enabled.setValue(this.isValid()));
         units.observeForever((s) -> enabled.setValue(this.isValid()));
-        price.observeForever((s) -> enabled.setValue(this.isValid()));
+        unitPrice.observeForever((s) -> enabled.setValue(this.isValid()));
     }
 
 
@@ -46,10 +44,26 @@ public class SellViewModel extends AndroidViewModel {
         return null;
     }
 
-    public String unitPrice() {
-        String unitPriceValue = price.getValue();
-        if (unitPriceValue == null || Double.valueOf(unitPriceValue) <= 1) {
+    public String unitPriceError() {
+        String unitPriceValue = unitPrice.getValue();
+        try {
+            if (unitPriceValue == null || Double.valueOf(unitPriceValue) <= 1) {
+                return "Debe ingresar un precio mayor a uno.";
+            }
+        } catch (NumberFormatException e) {
             return "Debe ingresar un precio mayor a uno.";
+        }
+        return null;
+    }
+
+    public String unitsError() {
+        String units = this.units.getValue();
+        try {
+            if (units == null || Double.valueOf(units) < 1) {
+                return "Debe ingresar un unidades mayor a uno.";
+            }
+        } catch (NumberFormatException e) {
+            return "Debe ingresar un unidades mayor a uno.";
         }
         return null;
     }
@@ -57,14 +71,14 @@ public class SellViewModel extends AndroidViewModel {
     boolean isValid() {
         return descriptionError() == null
                 && nameError() == null
-                && unitPrice() == null;
+                && unitPriceError() == null;
     }
 
     public SellItem asSellItem() {
         return new SellItem(name.getValue()
                 , description.getValue()
                 , Integer.valueOf(units.getValue())
-                , Double.valueOf(price.getValue())
+                , Double.valueOf(unitPrice.getValue())
                 , location.getValue()
                 , paymentMethod.getValue()
                 , categories.getValue());

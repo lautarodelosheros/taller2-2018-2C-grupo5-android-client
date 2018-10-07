@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.comprame.App;
 import com.comprame.R;
 import com.comprame.databinding.SellFragmentBinding;
-import com.comprame.domain.Session;
+import com.comprame.login.Session;
 import com.comprame.library.view.ProgressPopup;
 import com.comprame.search.SearchFragment;
 
@@ -36,7 +36,7 @@ public class SellFragment extends Fragment {
     public void sell(View view) {
         ProgressPopup progressDialog = new ProgressPopup("Procesando...", this.getContext());
         progressDialog.show();
-        App.appServer.post("/sell"
+        App.appServer.post("/item/"
                 , model.asSellItem()
                 , Session.class)
                 .onDone((s, ex) -> progressDialog.dismiss())

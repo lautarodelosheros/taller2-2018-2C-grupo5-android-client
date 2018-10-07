@@ -6,8 +6,6 @@ import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.Nullable;
 
 import com.comprame.R;
-import com.comprame.domain.Session;
-import com.comprame.domain.User;
 
 public class LoginViewModel extends AndroidViewModel {
     public final MutableLiveData<Session> session;

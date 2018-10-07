@@ -32,7 +32,7 @@
     <string name="purchase">Compras</string>
     <string name="help">Ayuda</string>
 
-    <string name="imagen_item_desc">Imagen Item</string>
+    <string name="imagen_item_desc">Imagen SearchItem</string>
     <string name="filtro">Filtro</string>
     <string name="nombre_articulo_hint">Título de la publicación</string>
     <string name="descripcion_articulo_hint">Descripción de la Publicación</string>
@@ -47,6 +47,15 @@
     <string name="item_description">Descripción</string>
     <string name="item_name">Nombre</string>
     <string name="buy">Comprar</string>
+    <string name="total">Total</string>
+    <string name="units">Unidades</string>
+    <string name="plus">+</string>
+    <string name="minus">-</string>
+    <string name="card_number">Número</string>
+    <string name="card_owner">Nombre</string>
+    <string name="card_expiration_month">Mes de Expiración</string>
+    <string name="card_expiration_year">Año Expiración</string>
+    <string name="card_security_code">Código Seguridad</string>
     <string-array name="payment_methods">
         <item>Crédito</item>
         <item>Débito</item>

@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/search_filter_layout"
+    android:id="@+id/buy_fragment_layout"
     tools:context="com.comprame.buy.BuyFragment">
 
     <data>
@@ -10,10 +10,6 @@
         <variable
             name="fragment"
             type="com.comprame.buy.BuyFragment" />
-
-        <variable
-            name="item"
-            type="com.comprame.domain.Item" />
 
         <variable
             name="data"
@@ -34,61 +30,163 @@
             android:paddingRight="24dp">
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/buy_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:src="@tools:sample/avatars" />
 
             <TextView
+                android:id="@+id/buy_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{item.name}" />
+                android:text="@{data.item.name}" />
 
             <TextView
+                android:id="@+id/buy_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{item.description}" />
+                android:text="@{data.item.description}" />
 
             <TextView
+                android:id="@+id/buy_unit_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{String.valueOf(item.unitPrice)}" />
+                android:text="@{String.valueOf(data.item.unitPrice)}" />
 
             <TextView
+                android:id="@+id/buy_seller"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{item.seller}" />
+                android:text="@{data.item.seller}" />
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </android.support.design.widget.TextInputLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="Unidades">
+                <TextView
+                    android:id="@+id/buy_units"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:text="@string/units" />
 
-                    <Spinner
-                        android:id="@+id/spinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".1"
+                    android:onClick="@{(v) -> data.dec()}"
+                    android:text="@string/minus" />
 
-                </android.support.design.widget.TextInputLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    app:read="@{data.units}"
+                    />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".1"
+                    android:onClick="@{(v) -> data.inc()}"
+                    android:text="@string/plus" />
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView6"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:text="@string/total" />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    app:read="@{data.total}" />
+            </LinearLayout>
+
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Total:" />
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@{data.item.paymentMethods}"
+                    android:hint="@string/item_payment_methods" />
+            </android.support.design.widget.TextInputLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible" />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/card_number"
+                    android:text="@={data.card.number}"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/card_owner"
+                    android:text="@={data.card.ownerName}"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/card_security_code"
+                    android:text="@={data.card.securityCode}"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/card_expiration_month"
+                    android:text="@={data.card.expirationMonth}"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/card_expiration_year"
+                    android:text="@={data.card.expirationYear}"/>
+            </android.support.design.widget.TextInputLayout>
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/sell_button"
@@ -99,8 +197,9 @@
                 android:background="@color/colorPrimary"
 
                 android:padding="12dp"
-                android:text="Comprar"
-                android:textColor="@color/white" />
+                android:text="@string/buy"
+                android:textColor="@color/white"
+                android:onClick="@{fragment::buy}"/>
 
         </LinearLayout>
     </ScrollView>
