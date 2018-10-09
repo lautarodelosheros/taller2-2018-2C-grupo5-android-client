@@ -68,10 +68,11 @@ public class VolleyJsonRequest<T> implements Async<T> {
                     String responseBody = new String(response.data);
                     T result = gson.fromJson(responseBody
                             , clazz);
+                    Log.d("Rest", url
+                            + "\n Request:" + requestBody);
                     Cache.Entry entry = HttpHeaderParser.parseCacheHeaders(response);
                     // if (Log.isLoggable("Rest", Log.DEBUG))
                     Log.d("Rest", url
-                            + "\n Request:" + requestBody
                             + "\n Response:" + responseBody);
                     return Response.success(result, entry);
                 } catch (Exception e) {

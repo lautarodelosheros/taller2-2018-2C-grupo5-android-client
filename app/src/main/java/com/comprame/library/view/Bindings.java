@@ -1,18 +1,25 @@
-package com.comprame.binding;
+package com.comprame.library.view;
 
 import android.arch.core.util.Function;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.databinding.BindingAdapter;
-import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.comprame.library.fun.Consumer;
 import com.comprame.library.fun.Provider;
+
+import java.util.List;
 
 public class Bindings {
 
@@ -69,4 +76,16 @@ public class Bindings {
                 .load(url)
                 .into(imageView);
     }
+
+    @BindingAdapter({"read"})
+    public static <T> void readWriteText(TextView editText,  MutableLiveData<T> readIn) {
+        if (readIn != null)
+            readIn.observeForever(data -> editText.setText(data.toString()));
+    }
+
+    @BindingAdapter("onItemSelected")
+    public static void setItemSelectedListener(Spinner spinner, AdapterView.OnItemSelectedListener itemSelectedListener) {
+        spinner.setOnItemSelectedListener(itemSelectedListener);
+    }
+
 }

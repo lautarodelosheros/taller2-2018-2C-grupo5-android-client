@@ -1,5 +1,6 @@
 package com.comprame.search;
 
+import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
@@ -20,8 +21,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.comprame.App;
+import com.comprame.MainActivity;
 import com.comprame.R;
-import com.comprame.domain.Item;
+import com.comprame.buy.BuyFragment;
+import com.comprame.buy.BuyItem;
+import com.comprame.buy.BuyViewModel;
 import com.comprame.library.rest.Query;
 import com.comprame.library.view.ProgressPopup;
 
@@ -65,7 +69,7 @@ public class SearchFragment extends Fragment {
         recyclerView.getItemAnimator().setRemoveDuration(1000);
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext()
                 , DividerItemDecoration.VERTICAL));
-        recyclerView.setAdapter(new SearchItemsAdapter(searchViewModel));
+        recyclerView.setAdapter(new SearchItemsAdapter(searchViewModel, this));
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -126,16 +130,16 @@ public class SearchFragment extends Fragment {
                         .and("description", filter.description)
                         .and("location", filter.location)
 
-                , Item[].class)
+                , SearchItem[].class)
                 .onDone((i, ex) -> progressPopup.dismiss())
                 .run(
-                        (Item[] items) -> {
-                            if (items.length == 0)
+                        (SearchItem[] searchItems) -> {
+                            if (searchItems.length == 0)
                                 Toast.makeText(view.getContext()
                                         , "Sin Resultados"
                                         , Toast.LENGTH_SHORT)
                                         .show();
-                            searchViewModel.addItems(Arrays.asList(items));
+                            searchViewModel.addItems(Arrays.asList(searchItems));
                         }
                         , (Exception ex) -> {
                             Log.d("BuscarItemsListener", "Recuperando Items", ex);
@@ -145,6 +149,28 @@ public class SearchFragment extends Fragment {
                                     .show();
                         }
                 );
+    }
+
+    public void buyItem(SearchItem item) {
+        App.appServer.get("/item/" + item.id,
+                BuyItem.class)
+                .run((ok) -> {
+                    BuyFragment buyFragment = new BuyFragment();
+                    BuyViewModel t = ViewModelProviders.of(getActivity()).get(BuyViewModel.class);
+                    t.item = ok;
+                    t.total.setValue(ok.getUnitPrice());
+                    getActivity()
+                            .getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.main_container, buyFragment)
+                            .commit();
+                }, (ex) -> {
+                    Log.d("BuscarItemsListener", "Recuperando Item", ex);
+                    Toast.makeText(getActivity()
+                            , "Error al buscar el item"
+                            , Toast.LENGTH_LONG)
+                            .show();
+                });
     }
 
 

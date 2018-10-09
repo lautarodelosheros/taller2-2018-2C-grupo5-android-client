@@ -1,4 +1,4 @@
-package com.comprame.domain;
+package com.comprame.sell;
 
 import java.io.Serializable;
 import java.util.List;

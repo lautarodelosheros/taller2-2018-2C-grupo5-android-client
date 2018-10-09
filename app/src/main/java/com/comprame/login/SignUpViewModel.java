@@ -5,8 +5,6 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
 
 import com.comprame.R;
-import com.comprame.domain.Session;
-import com.comprame.domain.User;
 
 public class SignUpViewModel extends AndroidViewModel {
     public final MutableLiveData<Session> session;

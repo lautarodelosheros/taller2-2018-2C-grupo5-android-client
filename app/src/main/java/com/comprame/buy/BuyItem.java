@@ -1,21 +1,21 @@
-package com.comprame.domain;
+package com.comprame.buy;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.UUID;
+import java.util.List;
 
-public class Item implements Serializable {
+public class BuyItem implements Serializable {
     private String id;
     private String name;
     private String description;
     private double unitPrice;
-    private ArrayList<String> imageUrls = new ArrayList<>();
+    private List<String> imageUrls = new ArrayList<>();
     private String seller;
     private String location;
-    private ArrayList<String> paymentMethods;
+    private List<String> paymentMethods;
     private String categories;
 
-    public Item(String id
+    public BuyItem(String id
             , String name
             , String description
             , double unitPrice
@@ -93,11 +93,11 @@ public class Item implements Serializable {
         return id;
     }
 
-    public ArrayList<String> getPaymentMethods() {
+    public List<String> getPaymentMethods() {
         return paymentMethods;
     }
 
-    public void setPaymentMethods(ArrayList<String> paymentMethods) {
+    public void setPaymentMethods(List<String> paymentMethods) {
         this.paymentMethods = paymentMethods;
     }
 

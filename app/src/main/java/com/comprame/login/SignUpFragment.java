@@ -15,7 +15,6 @@ import com.comprame.App;
 import com.comprame.MainActivity;
 import com.comprame.R;
 import com.comprame.databinding.LoginSignupFragmentBinding;
-import com.comprame.domain.Session;
 import com.comprame.library.view.ProgressPopup;
 
 public class SignUpFragment extends Fragment {

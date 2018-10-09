@@ -41,7 +41,8 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/item_name"
                     android:inputType="textAutoComplete"
-                    android:text="@={data.name}" />
+                    android:text="@={data.name}"
+                    app:validation="@{() -> data.nameError()}" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -56,7 +57,8 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/item_description"
                     android:inputType="text"
-                    android:text="@={data.description}" />
+                    android:text="@={data.description}"
+                    app:validation="@{() -> data.descriptionError()}" />
 
 
             </android.support.design.widget.TextInputLayout>
@@ -74,7 +76,8 @@
                     android:digits="0123456789."
                     android:hint="@string/item_units"
                     android:inputType="numberDecimal"
-                    android:text="@={data.units}" />
+                    android:text="@={data.units}"
+                    app:validation="@{() -> data.unitsError()}" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -87,9 +90,12 @@
                     android:id="@+id/sell_unit_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:digits="0123456789."
                     android:hint="@string/item_unit_price"
-                    android:inputType="text"
-                    android:text="@={data.price}" />
+                    android:inputType="numberDecimal"
+                    android:text="@={data.unitPrice}"
+                    app:validation="@{() -> data.unitPriceError()}" />
+
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -119,19 +125,6 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/item_category"
                     android:inputType="text" />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp">
-
-                <Spinner
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/payment_methods"
-                    android:hint="@string/item_payment_methods" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.v7.widget.AppCompatButton

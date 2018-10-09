@@ -4,8 +4,6 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
 
-import com.comprame.domain.Item;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +18,7 @@ public class SearchViewModel extends ViewModel {
     }
 
     private final MutableLiveData<SearchFilter> filter;
-    private final MutableLiveData<List<Item>> items;
+    private final MutableLiveData<List<SearchItem>> items;
 
     public SearchViewModel() {
         filter = new MutableLiveData<>();
@@ -29,7 +27,7 @@ public class SearchViewModel extends ViewModel {
         filter.setValue(new SearchFilter());
     }
 
-    public void observeForever(Observer<List<Item>> observer) {
+    public void observeForever(Observer<List<SearchItem>> observer) {
         items.observeForever(observer);
     }
 
@@ -37,11 +35,11 @@ public class SearchViewModel extends ViewModel {
         return items.getValue().size();
     }
 
-    public List<Item> items() {
+    public List<SearchItem> items() {
         return items.getValue();
     }
 
-    public Item at(int i) {
+    public SearchItem at(int i) {
         return items.getValue().get(i);
     }
 
@@ -58,13 +56,13 @@ public class SearchViewModel extends ViewModel {
         this.filter.postValue(value);
     }
 
-    public void addItems(List<Item> items) {
-        this.items.getValue().addAll(items);
+    public void addItems(List<SearchItem> searchItems) {
+        this.items.getValue().addAll(searchItems);
         setItems(this.items.getValue());
     }
 
-    public void setItems(List<Item> items) {
-        this.items.setValue(items);
+    public void setItems(List<SearchItem> searchItems) {
+        this.items.setValue(searchItems);
     }
 
     public void removeAllItems() {

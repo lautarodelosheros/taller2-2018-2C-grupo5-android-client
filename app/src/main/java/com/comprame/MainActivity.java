@@ -78,11 +78,11 @@ public class MainActivity extends AppCompatActivity
                 helpFragment();
                 return true;
         }
-        throw new IllegalArgumentException("Unhandled Menu item");
+        throw new IllegalArgumentException("Unhandled Menu searchItem");
     }
 
     private void helpFragment() {
-        throw new IllegalArgumentException("Unhandled Menu item");
+        throw new IllegalArgumentException("Unhandled Menu searchItem");
     }
 
     private void profileFragment() {
@@ -112,5 +112,6 @@ public class MainActivity extends AppCompatActivity
                 .replace(R.id.main_container, new SearchFragment())
                 .commit();
     }
+
 
 }

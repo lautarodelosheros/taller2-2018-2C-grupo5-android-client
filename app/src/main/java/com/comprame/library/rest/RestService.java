@@ -30,7 +30,7 @@ public class RestService {
             , Class<T> responseClass) {
         return new VolleyJsonRequest<>(queue
                 , Request.Method.PUT
-                , url + "/" + path
+                , url + path
                 , request
                 , responseClass
         );
@@ -40,7 +40,7 @@ public class RestService {
             , Class<T> responseClass) {
         return new VolleyJsonRequest<>(queue
                 , Request.Method.GET
-                , url + "/" + path
+                , url + path
                 , null
                 , responseClass
         );
