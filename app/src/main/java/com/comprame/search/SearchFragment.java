@@ -39,6 +39,8 @@ public class SearchFragment extends Fragment {
     private SearchFilterPopUp searchFilterPopUp;
     private RecyclerView recyclerView;
 
+    private boolean moreItemsLeft = true;
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -77,7 +79,7 @@ public class SearchFragment extends Fragment {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 int numberOfItems = linearLayoutManager.getItemCount();
                 int visibleItem = linearLayoutManager.findLastCompletelyVisibleItemPosition();
-                if (visibleItem >= numberOfItems - 1 /* hasMoreItems */) {
+                if (moreItemsLeft && visibleItem >= numberOfItems - 1 /* hasMoreItems */) {
                     searchViewModel.incOffset(ITEM_OFFSET);
                     fetchItems(recyclerView);
                 }
@@ -123,7 +125,7 @@ public class SearchFragment extends Fragment {
         SearchViewModel.SearchFilter filter = searchViewModel
                 .filter();
         App.appServer.get(
-                Query.query("/item")
+                Query.query("/item/")
                         .and("limit", filter.size)
                         .and("offset", filter.offset)
                         .and("name", filter.name)
@@ -140,6 +142,7 @@ public class SearchFragment extends Fragment {
                                         , Toast.LENGTH_SHORT)
                                         .show();
                             searchViewModel.addItems(Arrays.asList(searchItems));
+                            moreItemsLeft = searchItems.length >= ITEM_OFFSET;
                         }
                         , (Exception ex) -> {
                             Log.d("BuscarItemsListener", "Recuperando Items", ex);
