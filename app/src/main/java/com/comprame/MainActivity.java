@@ -11,8 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.comprame.R;
-import com.comprame.domain.Session;
+import com.comprame.login.Session;
 import com.comprame.profile.ProfileFragment;
 import com.comprame.search.SearchFragment;
 import com.comprame.sell.SellFragment;

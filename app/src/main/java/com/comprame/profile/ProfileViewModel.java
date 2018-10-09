@@ -5,8 +5,8 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
 
 import com.comprame.R;
-import com.comprame.domain.Session;
-import com.comprame.domain.User;
+import com.comprame.login.Session;
+import com.comprame.login.User;
 
 public class ProfileViewModel extends AndroidViewModel {
     public final MutableLiveData<Session> session;

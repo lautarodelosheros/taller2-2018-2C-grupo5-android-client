@@ -15,12 +15,9 @@ import com.comprame.App;
 import com.comprame.MainActivity;
 import com.comprame.R;
 import com.comprame.databinding.ProfileFragmentBinding;
-import com.comprame.domain.Item;
-import com.comprame.domain.User;
+import com.comprame.login.User;
 import com.comprame.library.view.ProgressPopup;
-import com.comprame.search.SearchViewModel;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 public class ProfileFragment extends Fragment {
