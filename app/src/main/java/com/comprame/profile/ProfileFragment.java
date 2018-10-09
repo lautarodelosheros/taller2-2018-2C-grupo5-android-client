@@ -52,7 +52,7 @@ public class ProfileFragment extends Fragment {
         ProgressPopup progressPopup = new ProgressPopup("Cargando perfil...", getContext());
         progressPopup.show();
 
-        String path = "user/" + ((MainActivity) Objects.requireNonNull(getActivity())).session.getSession();
+        String path = "/user/" + ((MainActivity) Objects.requireNonNull(getActivity())).session.getSession();
 
         App.appServer.get(path, User.class)
                 .onDone((i, ex) -> progressPopup.dismiss())
@@ -81,19 +81,24 @@ public class ProfileFragment extends Fragment {
         ProgressPopup progressPopup = new ProgressPopup("Actualizando perfil...", getContext());
         progressPopup.show();
 
-        String path = "user/" + ((MainActivity) Objects.requireNonNull(getActivity())).session.getSession();
+        String path = "/user/" + ((MainActivity) Objects.requireNonNull(getActivity())).session.getSession();
 
         App.appServer.put(path, profileViewModel.asUser(), User.class)
                 .onDone((i, ex) -> progressPopup.dismiss())
                 .run(
                         (User user) -> {
                             if (user.getName().isEmpty()) {
+                                Log.d("ProfileListener", "No se encuentra el usuario");
                                 Toast.makeText(getContext()
                                         , "No se encuentra el usuario"
                                         , Toast.LENGTH_SHORT)
                                         .show();
                             } else {
                                 profileViewModel.bindUser(user);
+                                Toast.makeText(getContext()
+                                        , "Perfil actualizado!"
+                                        , Toast.LENGTH_LONG)
+                                        .show();
                             }
                         }
                         , (Exception ex) -> {
