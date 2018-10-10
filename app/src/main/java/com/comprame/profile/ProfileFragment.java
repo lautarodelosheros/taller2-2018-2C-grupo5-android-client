@@ -78,6 +78,11 @@ public class ProfileFragment extends Fragment {
     }
 
     public void updateProfile(View view) {
+        if (profileViewModel.isProfileCorrect())
+            postProfile();
+    }
+
+    private void postProfile() {
         ProgressPopup progressPopup = new ProgressPopup("Actualizando perfil...", getContext());
         progressPopup.show();
 
@@ -110,5 +115,4 @@ public class ProfileFragment extends Fragment {
                         }
                 );
     }
-
 }

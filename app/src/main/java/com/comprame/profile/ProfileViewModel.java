@@ -82,6 +82,10 @@ public class ProfileViewModel extends AndroidViewModel {
                 && lastNameError() == null;
     }
 
+    public boolean isProfileCorrect() {
+        return isEnabled();
+    }
+
     public void bindUser(User user) {
         name.setValue(user.getName());
         firstName.setValue(user.getFirstname());
