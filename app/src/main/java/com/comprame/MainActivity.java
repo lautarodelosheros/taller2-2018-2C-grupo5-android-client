@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void helpFragment() {
-        throw new IllegalArgumentException("Unhandled Menu searchItem");
+        //TODO: Implementar HelpFragment
     }
 
     private void profileFragment() {
