@@ -31,6 +31,11 @@
         <activity
             android:name=".ComprameActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/map_api_key"/>
+
     </application>
 
 </manifest>

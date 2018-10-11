@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,6 +16,8 @@ import com.comprame.login.Session;
 import com.comprame.profile.ProfileFragment;
 import com.comprame.search.SearchFragment;
 import com.comprame.sell.SellFragment;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -37,6 +40,21 @@ public class MainActivity extends AppCompatActivity
             session.setSession((String) bundle.get("session"));
 
         searchFragment();
+    }
+
+    public final static int PLACE_PICKER_REQUEST = 999;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            switch (requestCode){
+                case PLACE_PICKER_REQUEST:
+                    Fragment sellFragment = getSupportFragmentManager().findFragmentByTag("SellFragment");
+                    sellFragment.onActivityResult(requestCode, resultCode, data);
+            }
+        }
     }
 
     private void configureNavigationView() {
@@ -101,7 +119,7 @@ public class MainActivity extends AppCompatActivity
     public void sellFragment() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_container, new SellFragment())
+                .replace(R.id.main_container, new SellFragment(), "SellFragment")
                 .commit();
     }
 

@@ -83,4 +83,8 @@ public class SellViewModel extends AndroidViewModel {
                 , paymentMethod.getValue()
                 , categories.getValue());
     }
+
+    public void setLocation(String location) {
+        this.location.setValue(location);
+    }
 }

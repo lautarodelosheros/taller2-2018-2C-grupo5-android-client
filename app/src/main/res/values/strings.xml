@@ -62,4 +62,6 @@
     </string-array>
 
     <string name="update_profile_text">Actualizar Perfil</string>
+
+    <string name="map_api_key">AIzaSyAtSeTb36nPHGAnXXnJxW-wrQ3_SgGBSKU</string>
 </resources>
