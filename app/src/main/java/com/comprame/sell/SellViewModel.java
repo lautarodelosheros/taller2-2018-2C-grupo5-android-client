@@ -4,6 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SellViewModel extends AndroidViewModel {
@@ -79,6 +80,8 @@ public class SellViewModel extends AndroidViewModel {
                 , description.getValue()
                 , Integer.valueOf(units.getValue())
                 , Double.valueOf(unitPrice.getValue())
+                //TODO: Reemplazar por carga de imagenes
+                , new ArrayList<String>() {{add("https://images.freeimages.com/images/large-previews/25d/eagle-1523807.jpg");}}
                 , location.getValue()
                 , paymentMethod.getValue()
                 , categories.getValue());

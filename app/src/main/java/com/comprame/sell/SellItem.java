@@ -8,6 +8,7 @@ public class SellItem implements Serializable {
     public final String description;
     public final int units;
     public final double unitPrice;
+    public final List<String> imageUrls;
     public final String location;
     public final String paymentMethod;
     public final List<String> categories;
@@ -16,6 +17,7 @@ public class SellItem implements Serializable {
             , String description
             , int units
             , double unitPrice
+            , List<String> imageUrls
             , String location
             , String paymentMethod
             , List<String> categories) {
@@ -23,6 +25,7 @@ public class SellItem implements Serializable {
         this.description = description;
         this.units = units;
         this.unitPrice = unitPrice;
+        this.imageUrls = imageUrls;
         this.location = location;
         this.paymentMethod = paymentMethod;
         this.categories = categories;

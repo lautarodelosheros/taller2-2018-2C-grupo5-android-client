@@ -108,4 +108,8 @@ public class BuyItem implements Serializable {
     public void setCategories(String categories) {
         this.categories = categories;
     }
+
+    public List<String> getImages() {
+        return imageUrls;
+    }
 }

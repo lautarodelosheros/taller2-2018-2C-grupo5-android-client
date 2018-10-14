@@ -40,7 +40,7 @@ public class SearchItemsAdapter extends RecyclerView.Adapter<SearchItemsAdapter.
         holder.searchItem.setSearchItemModel(new SearchItemViewModel(searchItem));
         holder.searchItem
                 .getRoot()
-                .setOnClickListener((l) -> searchFragment.buyItem(searchItem));
+                .setOnClickListener((l) -> searchFragment.overviewItem(searchItem));
     }
 
     @Override

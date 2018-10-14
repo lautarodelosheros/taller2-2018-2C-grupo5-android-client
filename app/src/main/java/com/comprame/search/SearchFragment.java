@@ -1,6 +1,5 @@
 package com.comprame.search;
 
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
@@ -21,13 +20,12 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.comprame.App;
-import com.comprame.MainActivity;
 import com.comprame.R;
-import com.comprame.buy.BuyFragment;
 import com.comprame.buy.BuyItem;
-import com.comprame.buy.BuyViewModel;
 import com.comprame.library.rest.Query;
 import com.comprame.library.view.ProgressPopup;
+import com.comprame.overview.OverviewFragment;
+import com.comprame.overview.OverviewViewModel;
 
 import java.util.Arrays;
 
@@ -154,20 +152,23 @@ public class SearchFragment extends Fragment {
                 );
     }
 
-    public void buyItem(SearchItem item) {
+    public void overviewItem(SearchItem item) {
+        ProgressPopup progressPopup = new ProgressPopup("Cargando publicación...", getContext());
+        progressPopup.show();
         App.appServer.get("/item/" + item.id,
                 BuyItem.class)
                 .run((ok) -> {
-                    BuyFragment buyFragment = new BuyFragment();
-                    BuyViewModel t = ViewModelProviders.of(getActivity()).get(BuyViewModel.class);
-                    t.item = ok;
-                    t.total.setValue(ok.getUnitPrice());
+                    progressPopup.dismiss();
+                    OverviewFragment overviewFragment = new OverviewFragment();
+                    OverviewViewModel overviewViewModel = ViewModelProviders.of(getActivity()).get(OverviewViewModel.class);
+                    overviewViewModel.item = ok;
                     getActivity()
                             .getSupportFragmentManager()
                             .beginTransaction()
-                            .replace(R.id.main_container, buyFragment)
+                            .replace(R.id.main_container, overviewFragment)
                             .commit();
                 }, (ex) -> {
+                    progressPopup.dismiss();
                     Log.d("BuscarItemsListener", "Recuperando Item", ex);
                     Toast.makeText(getActivity()
                             , "Error al buscar el item"
