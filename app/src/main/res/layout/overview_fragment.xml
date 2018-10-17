@@ -14,7 +14,7 @@
             type="com.comprame.overview.OverviewViewModel" />
     </data>
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -33,6 +33,7 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:textSize="24sp"
+                android:textColor="@color/black"
                 android:text="@{model.item.name}" />
 
             <com.daimajia.slider.library.SliderLayout
@@ -75,6 +76,31 @@
                 android:textColor="@color/white"
                 android:onClick="@{fragment::buy}"/>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:text="@string/preguntas"/>
+
+            <LinearLayout
+                android:id="@+id/questions_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/new_question_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="24dp"
+                android:background="@color/colorPrimary"
+                android:padding="12dp"
+                android:text="@string/new_question"
+                android:textColor="@color/white"
+                android:onClick="@{fragment::newQuestion}"/>
+
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 </layout>

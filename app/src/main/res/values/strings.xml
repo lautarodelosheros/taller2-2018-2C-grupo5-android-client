@@ -64,4 +64,6 @@
     <string name="update_profile_text">Actualizar Perfil</string>
 
     <string name="map_api_key">AIzaSyAtSeTb36nPHGAnXXnJxW-wrQ3_SgGBSKU</string>
+    <string name="preguntas">Preguntas</string>
+    <string name="new_question">Hacer una pregunta</string>
 </resources>
