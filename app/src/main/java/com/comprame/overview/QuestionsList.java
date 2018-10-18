@@ -19,25 +19,29 @@ import java.util.List;
 
 public class QuestionsList {
 
-    private List<Question> questions;
-
     private LinearLayout questionsList;
+    private OverviewFragment overviewFragment;
 
-    public QuestionsList(LinearLayout questionsList) {
-        this.questions = new ArrayList<>();
+    public QuestionsList(LinearLayout questionsList, OverviewFragment overviewFragment) {
+        this.overviewFragment = overviewFragment;
         this.questionsList = questionsList;
     }
 
     public void setQuestions(List<Question> questions) {
-        this.questions = questions;
         questionsList.removeAllViews();
         LayoutInflater inflater = LayoutInflater.from(questionsList.getContext());
         for (Question question : questions) {
             View view  = inflater.inflate(R.layout.question_item, questionsList, false);
+            ((TextView) view.findViewById(R.id.question_id)).setText(question.id);
             ((TextView) view.findViewById(R.id.question)).setText(question.question);
             ((TextView) view.findViewById(R.id.questioner)).setText(question.questioner);
             ((TextView) view.findViewById(R.id.answer)).setText(question.answer);
             ((TextView) view.findViewById(R.id.responder)).setText(question.responder);
+            if (question.answer == null) {
+                view.findViewById(R.id.answer).setVisibility(View.GONE);
+                view.findViewById(R.id.responder).setVisibility(View.GONE);
+            }
+            view.setOnClickListener(overviewFragment::answerQuestion);
             questionsList.addView(view);
         }
     }

@@ -1,29 +1,24 @@
 package com.comprame.overview;
 
+import android.app.Application;
+import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModel;
-import android.support.annotation.Nullable;
 
+import com.comprame.MainActivity;
 import com.comprame.R;
-import com.comprame.login.User;
-import com.comprame.search.SearchItem;
 
-import java.util.ArrayList;
-import java.util.List;
+public class NewQuestionPopupViewModel extends AndroidViewModel {
 
-public class NewQuestionPopupViewModel extends ViewModel {
-
-    private final MutableLiveData<String> question;
-    private final MutableLiveData<String> questioner;
+    public final MutableLiveData<String> question;
+    public final MutableLiveData<String> questioner;
     public final MutableLiveData<Boolean> enabled;
 
-    public NewQuestionPopupViewModel() {
+    public NewQuestionPopupViewModel(Application application) {
+        super(application);
         question = new MutableLiveData<>();
         questioner = new MutableLiveData<>();
         enabled = new MutableLiveData<>();
         question.observeForever((s) -> enabled.setValue(this.isEnabled()));
-        questioner.observeForever((s) -> enabled.setValue(this.isEnabled()));
     }
 
     public String questionError() {

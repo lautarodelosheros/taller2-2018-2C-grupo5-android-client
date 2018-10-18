@@ -7,10 +7,10 @@
     <data>
         <variable
             name="owner"
-            type="com.comprame.overview.NewQuestionPopup" />
+            type="com.comprame.overview.AnswerQuestionPopup" />
         <variable
-            name="newQuestionPopupViewModel"
-            type="com.comprame.overview.NewQuestionPopupViewModel" />
+            name="answerQuestionPopupViewModel"
+            type="com.comprame.overview.AnswerQuestionPopupViewModel" />
     </data>
 
     <ScrollView
@@ -26,6 +26,25 @@
             android:paddingTop="8dp"
             android:paddingRight="24dp">
 
+            <TextView
+                android:id="@+id/question"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:textColor="@color/black"
+                android:text="@{answerQuestionPopupViewModel.question}"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/questioner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:textAlignment="textEnd"
+                android:textSize="12sp"
+                android:text="@{answerQuestionPopupViewModel.questioner}"
+                android:textStyle="italic"/>
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -36,9 +55,9 @@
                     android:id="@+id/search_filter_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/pregunta"
+                    android:hint="@string/answer"
                     android:inputType="textAutoComplete"
-                    android:text="@={newQuestionPopupViewModel.question}" />
+                    android:text="@={answerQuestionPopupViewModel.answer}" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.v7.widget.AppCompatButton
@@ -49,9 +68,9 @@
                 android:layout_marginBottom="24dp"
                 android:background="@color/colorPrimary"
                 android:padding="12dp"
-                android:text="@string/question_save_button"
+                android:text="@string/answer_save_button"
                 android:textColor="@color/white"
-                android:onClick="@{owner::save}"/>
+                android:onClick="@{owner::answer}"/>
 
         </LinearLayout>
     </ScrollView>

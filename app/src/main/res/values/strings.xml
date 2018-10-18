@@ -69,4 +69,7 @@
     <string name="pregunta">Pregunta</string>
     <string name="question_save_button">Preguntar</string>
     <string name="question_error">La pregunta debe tener al menos 2 caracteres</string>
+    <string name="answer_error">La respuesta debe tener al menos 2 caracteres</string>
+    <string name="answer">Respuesta</string>
+    <string name="answer_save_button">Responder</string>
 </resources>

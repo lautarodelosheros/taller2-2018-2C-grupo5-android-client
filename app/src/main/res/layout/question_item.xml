@@ -12,6 +12,12 @@
             android:background="@drawable/question_shape">
 
             <TextView
+                android:id="@+id/question_id"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
+            <TextView
                 android:id="@+id/question"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
