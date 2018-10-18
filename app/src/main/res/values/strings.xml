@@ -66,4 +66,10 @@
     <string name="map_api_key">AIzaSyAtSeTb36nPHGAnXXnJxW-wrQ3_SgGBSKU</string>
     <string name="preguntas">Preguntas</string>
     <string name="new_question">Hacer una pregunta</string>
+    <string name="pregunta">Pregunta</string>
+    <string name="question_save_button">Preguntar</string>
+    <string name="question_error">La pregunta debe tener al menos 2 caracteres</string>
+    <string name="answer_error">La respuesta debe tener al menos 2 caracteres</string>
+    <string name="answer">Respuesta</string>
+    <string name="answer_save_button">Responder</string>
 </resources>

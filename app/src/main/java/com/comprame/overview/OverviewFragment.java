@@ -6,35 +6,34 @@ import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.comprame.App;
+import com.comprame.MainActivity;
 import com.comprame.R;
 import com.comprame.buy.BuyFragment;
 import com.comprame.buy.BuyViewModel;
 import com.comprame.databinding.OverviewFragmentBinding;
 import com.comprame.library.rest.Query;
 import com.comprame.library.view.ProgressPopup;
-import com.comprame.search.SearchItem;
+import com.comprame.login.Session;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class OverviewFragment extends Fragment {
 
     private OverviewViewModel overviewViewModel;
     private QuestionsList questionsList;
+    private NewQuestionPopupViewModel newQuestionPopupViewModel;
+    private AnswerQuestionPopupViewModel answerQuestionPopupViewModel;
 
     private SliderLayout mSlider;
 
@@ -45,6 +44,10 @@ public class OverviewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater
             , @Nullable ViewGroup container
             , @Nullable Bundle savedInstanceState) {
+        newQuestionPopupViewModel = ViewModelProviders.of(this)
+                .get(NewQuestionPopupViewModel.class);
+        answerQuestionPopupViewModel = ViewModelProviders.of(this)
+                .get(AnswerQuestionPopupViewModel.class);
 
         OverviewFragmentBinding binding = OverviewFragmentBinding.inflate(inflater, container, false);
         overviewViewModel = ViewModelProviders.of(getActivity()).get(OverviewViewModel.class);
@@ -79,7 +82,7 @@ public class OverviewFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        questionsList = new QuestionsList(getView().findViewById(R.id.questions_list));
+        questionsList = new QuestionsList(getView().findViewById(R.id.questions_list), this);
         loadQuestions();
     }
 
@@ -91,7 +94,7 @@ public class OverviewFragment extends Fragment {
                         .and("item_id", overviewViewModel.item.getId())
                 , Question[].class)
                 .onDone((i, ex) -> progressPopup.dismiss())
-                .run((Question[] questions) -> questionsList.addQuestions(Arrays.asList(questions))
+                .run((Question[] questions) -> questionsList.setQuestions(Arrays.asList(questions))
                         , (Exception ex) -> {
                             Log.d("QuestionsListener", "Error al buscar las preguntas", ex);
                             Toast.makeText(getActivity()
@@ -114,7 +117,55 @@ public class OverviewFragment extends Fragment {
     }
 
     public void newQuestion(View view) {
-        Toast.makeText(getContext(), "New Question", Toast.LENGTH_LONG).show();
+        NewQuestionPopup newQuestionPopup = new NewQuestionPopup(this
+                , newQuestionPopupViewModel
+                , this::createNewQuestion);
+        newQuestionPopup.show();
+    }
+
+    public void answerQuestion(View view) {
+        AnswerQuestionPopup answerQuestionPopup = new AnswerQuestionPopup(this
+                , answerQuestionPopupViewModel
+                , this::editQuestion);
+        String id = ((TextView) view.findViewById(R.id.question_id)).getText().toString();
+        answerQuestionPopupViewModel.id.setValue(id);
+        String question = ((TextView) view.findViewById(R.id.question)).getText().toString();
+        answerQuestionPopupViewModel.question.setValue(question);
+        String questioner = ((TextView) view.findViewById(R.id.questioner)).getText().toString();
+        answerQuestionPopupViewModel.questioner.setValue(questioner);
+        answerQuestionPopup.show();
+    }
+
+    private void editQuestion(View view) {
+        ProgressPopup progressDialog = new ProgressPopup("Cargando respuesta...", this.getContext());
+        progressDialog.show();
+        Question question = answerQuestionPopupViewModel.asQuestion();
+        question.item_id = overviewViewModel.item.getId();
+        question.responder = ((MainActivity) Objects.requireNonNull(getActivity())).session.getSession();
+        App.appServer.put("/question/" + question.id
+                , question
+                , Session.class)
+                .onDone((s, ex) -> progressDialog.dismiss())
+                .run(s -> loadQuestions()
+                        , ex -> Toast.makeText(this.getContext()
+                                , "Error creando la respuesta"
+                                , Toast.LENGTH_LONG).show());
+    }
+
+    private void createNewQuestion(View view) {
+        ProgressPopup progressDialog = new ProgressPopup("Creando pregunta...", this.getContext());
+        progressDialog.show();
+        Question question = newQuestionPopupViewModel.asQuestion();
+        question.item_id = overviewViewModel.item.getId();
+        question.questioner = ((MainActivity) Objects.requireNonNull(getActivity())).session.getSession();
+        App.appServer.post("/question/"
+                , question
+                , Session.class)
+                .onDone((s, ex) -> progressDialog.dismiss())
+                .run(s -> loadQuestions()
+                        , ex -> Toast.makeText(this.getContext()
+                                , "Error creando la respuesta"
+                                , Toast.LENGTH_LONG).show());
     }
 
     @Override
