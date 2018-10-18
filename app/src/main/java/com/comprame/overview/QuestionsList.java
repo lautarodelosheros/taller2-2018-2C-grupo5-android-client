@@ -28,8 +28,9 @@ public class QuestionsList {
         this.questionsList = questionsList;
     }
 
-    public void addQuestions(List<Question> questions) {
-        this.questions.addAll(questions);
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
+        questionsList.removeAllViews();
         LayoutInflater inflater = LayoutInflater.from(questionsList.getContext());
         for (Question question : questions) {
             View view  = inflater.inflate(R.layout.question_item, questionsList, false);

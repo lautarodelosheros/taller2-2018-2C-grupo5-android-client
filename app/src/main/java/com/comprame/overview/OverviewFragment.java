@@ -24,6 +24,7 @@ import com.comprame.buy.BuyViewModel;
 import com.comprame.databinding.OverviewFragmentBinding;
 import com.comprame.library.rest.Query;
 import com.comprame.library.view.ProgressPopup;
+import com.comprame.login.Session;
 import com.comprame.search.SearchItem;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
@@ -35,6 +36,7 @@ public class OverviewFragment extends Fragment {
 
     private OverviewViewModel overviewViewModel;
     private QuestionsList questionsList;
+    private NewQuestionPopupViewModel questionPopupViewModel;
 
     private SliderLayout mSlider;
 
@@ -45,6 +47,8 @@ public class OverviewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater
             , @Nullable ViewGroup container
             , @Nullable Bundle savedInstanceState) {
+        questionPopupViewModel = ViewModelProviders.of(this)
+                .get(NewQuestionPopupViewModel.class);
 
         OverviewFragmentBinding binding = OverviewFragmentBinding.inflate(inflater, container, false);
         overviewViewModel = ViewModelProviders.of(getActivity()).get(OverviewViewModel.class);
@@ -91,7 +95,7 @@ public class OverviewFragment extends Fragment {
                         .and("item_id", overviewViewModel.item.getId())
                 , Question[].class)
                 .onDone((i, ex) -> progressPopup.dismiss())
-                .run((Question[] questions) -> questionsList.addQuestions(Arrays.asList(questions))
+                .run((Question[] questions) -> questionsList.setQuestions(Arrays.asList(questions))
                         , (Exception ex) -> {
                             Log.d("QuestionsListener", "Error al buscar las preguntas", ex);
                             Toast.makeText(getActivity()
@@ -114,7 +118,23 @@ public class OverviewFragment extends Fragment {
     }
 
     public void newQuestion(View view) {
-        Toast.makeText(getContext(), "New Question", Toast.LENGTH_LONG).show();
+        NewQuestionPopup newQuestionPopup = new NewQuestionPopup(this
+                , questionPopupViewModel
+                , this::createNewQuestion);
+        newQuestionPopup.show();
+    }
+
+    private void createNewQuestion(View view) {
+        ProgressPopup progressDialog = new ProgressPopup("Creando pregunta...", this.getContext());
+        progressDialog.show();
+        App.appServer.post("/question/"
+                , questionPopupViewModel.asQuestion()
+                , Session.class)
+                .onDone((s, ex) -> progressDialog.dismiss())
+                .run(s -> loadQuestions()
+                        , ex -> Toast.makeText(this.getContext()
+                                , "Error creando la pregunta"
+                                , Toast.LENGTH_LONG).show());
     }
 
     @Override
