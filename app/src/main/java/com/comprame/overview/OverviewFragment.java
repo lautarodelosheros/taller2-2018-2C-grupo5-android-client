@@ -33,7 +33,7 @@ public class OverviewFragment extends Fragment {
     private OverviewViewModel overviewViewModel;
     private QuestionsList questionsList;
     private NewQuestionPopupViewModel newQuestionPopupViewModel;
-    private AnswerQuestionPopupViewModel answerQuestionPopupViewModel;
+    public AnswerQuestionPopupViewModel answerQuestionPopupViewModel;
 
     private SliderLayout mSlider;
 
@@ -124,19 +124,10 @@ public class OverviewFragment extends Fragment {
     }
 
     public void answerQuestion(View view) {
-        AnswerQuestionPopup answerQuestionPopup = new AnswerQuestionPopup(this
-                , answerQuestionPopupViewModel
-                , this::editQuestion);
-        String id = ((TextView) view.findViewById(R.id.question_id)).getText().toString();
-        answerQuestionPopupViewModel.id.setValue(id);
-        String question = ((TextView) view.findViewById(R.id.question)).getText().toString();
-        answerQuestionPopupViewModel.question.setValue(question);
-        String questioner = ((TextView) view.findViewById(R.id.questioner)).getText().toString();
-        answerQuestionPopupViewModel.questioner.setValue(questioner);
-        answerQuestionPopup.show();
+
     }
 
-    private void editQuestion(View view) {
+    public void editQuestion(View view) {
         ProgressPopup progressDialog = new ProgressPopup("Cargando respuesta...", this.getContext());
         progressDialog.show();
         Question question = answerQuestionPopupViewModel.asQuestion();
@@ -148,7 +139,7 @@ public class OverviewFragment extends Fragment {
                 .onDone((s, ex) -> progressDialog.dismiss())
                 .run(s -> loadQuestions()
                         , ex -> Toast.makeText(this.getContext()
-                                , "Error creando la respuesta"
+                                , "Error creando la respuesta. Reintente en unos minutos"
                                 , Toast.LENGTH_LONG).show());
     }
 
@@ -164,7 +155,7 @@ public class OverviewFragment extends Fragment {
                 .onDone((s, ex) -> progressDialog.dismiss())
                 .run(s -> loadQuestions()
                         , ex -> Toast.makeText(this.getContext()
-                                , "Error creando la respuesta"
+                                , "Error creando la pregunta. Reintente en unos minutos"
                                 , Toast.LENGTH_LONG).show());
     }
 

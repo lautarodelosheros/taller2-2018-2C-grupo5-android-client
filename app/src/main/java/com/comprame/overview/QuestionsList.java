@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
 import android.content.Context;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,13 +36,26 @@ public class QuestionsList {
             ((TextView) view.findViewById(R.id.question_id)).setText(question.id);
             ((TextView) view.findViewById(R.id.question)).setText(question.question);
             ((TextView) view.findViewById(R.id.questioner)).setText(question.questioner);
-            ((TextView) view.findViewById(R.id.answer)).setText(question.answer);
-            ((TextView) view.findViewById(R.id.responder)).setText(question.responder);
-            if (question.answer == null) {
-                view.findViewById(R.id.answer).setVisibility(View.GONE);
-                view.findViewById(R.id.responder).setVisibility(View.GONE);
+            view.findViewById(R.id.answer_button)
+                    .setOnClickListener(v -> {
+                        AnswerQuestionPopup answerQuestionPopup = new AnswerQuestionPopup(overviewFragment
+                                , overviewFragment.answerQuestionPopupViewModel
+                                , overviewFragment::editQuestion);
+                        String id = ((TextView) view.findViewById(R.id.question_id)).getText().toString();
+                        overviewFragment.answerQuestionPopupViewModel.id.setValue(id);
+                        String questionStr = ((TextView) view.findViewById(R.id.question)).getText().toString();
+                        overviewFragment.answerQuestionPopupViewModel.question.setValue(questionStr);
+                        String questioner = ((TextView) view.findViewById(R.id.questioner)).getText().toString();
+                        overviewFragment.answerQuestionPopupViewModel.questioner.setValue(questioner);
+                        answerQuestionPopup.show();
+                    });
+            if (question.answer != null) {
+                ((TextView) view.findViewById(R.id.answer)).setText(question.answer);
+                ((TextView) view.findViewById(R.id.responder)).setText(question.responder);
+                view.findViewById(R.id.answer).setVisibility(View.VISIBLE);
+                view.findViewById(R.id.responder).setVisibility(View.VISIBLE);
+                view.findViewById(R.id.answer_button).setVisibility(View.GONE);
             }
-            view.setOnClickListener(overviewFragment::answerQuestion);
             questionsList.addView(view);
         }
     }

@@ -5,6 +5,12 @@
     android:id="@+id/question_item"
     tools:context="com.comprame.MainActivity">
 
+    <data>
+        <variable
+            name="fragment"
+            type="com.comprame.overview.OverviewFragment" />
+    </data>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -38,6 +44,7 @@
                 android:id="@+id/answer"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:padding="8dp"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
@@ -46,10 +53,24 @@
                 android:id="@+id/responder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:padding="8dp"
                 android:textAlignment="textEnd"
                 android:textSize="12sp"
                 android:textStyle="italic"/>
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/answer_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="24dp"
+                android:background="@color/aluminum"
+                android:padding="12dp"
+                android:text="@string/answer_save_button"
+                android:textColor="@color/white"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp" />
 
         </LinearLayout>
 </layout>
