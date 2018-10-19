@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.comprame.login.Session;
+import com.comprame.mypurchases.MyPurchasesFragment;
 import com.comprame.profile.ProfileFragment;
 import com.comprame.search.SearchFragment;
 import com.comprame.sell.SellFragment;
@@ -85,34 +86,27 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_profile:
                 profileFragment();
                 return true;
-            case R.id.nav_purchase:
-                buyFragment();
-                return true;
             case R.id.nav_search:
                 searchFragment();
                 return true;
-            case R.id.nav_help:
-                helpFragment();
+            case R.id.nav_purchases:
+                myPurchases();
                 return true;
         }
         throw new IllegalArgumentException("Unhandled Menu searchItem");
     }
 
-    private void helpFragment() {
-        //TODO: Implementar HelpFragment
+    private void myPurchases() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_container, new MyPurchasesFragment())
+                .commit();
     }
 
     private void profileFragment() {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_container, new ProfileFragment())
-                .commit();
-    }
-
-    public void buyFragment() {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_container, new SellFragment())
                 .commit();
     }
 

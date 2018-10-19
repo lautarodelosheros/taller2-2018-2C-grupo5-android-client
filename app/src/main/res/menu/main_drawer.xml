@@ -22,13 +22,14 @@
             android:title="@string/search" />
         <!--android:onClick="@{(v) -> searchFragment()}"-->
         <item
-            android:id="@+id/nav_purchase"
+            android:id="@+id/nav_purchases"
             android:icon="@drawable/ic_launcher_foreground"
-            android:title="@string/purchase" />
-        <!--android:onClick="@{(v) -> buyFragment()}"-->
+            android:title="@string/my_purchases" />
+        <!--android:onClick="@{(v) -> myPurchasesFragment()}"-->
         <item
-            android:id="@+id/nav_help"
+            android:id="@+id/nav_sellings"
             android:icon="@drawable/ic_launcher_foreground"
-            android:title="@string/help" />
+            android:title="@string/my_sellings" />
+        <!--android:onClick="@{(v) -> mySellingsFragment()}"-->
     </group>
 </menu>

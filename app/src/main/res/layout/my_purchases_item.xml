@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_purchases_item"
+    tools:context="com.comprame.MainActivity">
+
+    <data>
+
+        <variable
+            name="myPurchasesItemModel"
+            type="com.comprame.mypurchases.MyPurchasesItemViewModel" />
+    </data>
+
+    <android.support.v7.widget.CardView
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/my_purchases_item_picture"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:contentDescription="@string/imagen_item_desc"
+                app:imageUrl="@{myPurchasesItemModel.imageUrl}" />
+
+            <TextView
+                android:id="@+id/my_purchases_item_name"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/search_item_picture"
+                android:padding="8dp"
+                android:text="@{myPurchasesItemModel.name}"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/my_purchases_item_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/search_item_picture"
+                android:padding="8dp"
+                android:text="@{myPurchasesItemModel.price}"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</layout>

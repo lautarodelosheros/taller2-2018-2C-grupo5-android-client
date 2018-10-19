@@ -1,5 +1,6 @@
 package com.comprame.overview;
 
+import android.app.AlertDialog;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
@@ -12,28 +13,27 @@ import com.comprame.databinding.AnswerQuestionPopupBinding;
 import com.comprame.library.fun.Consumer;
 
 public class AnswerQuestionPopup {
-    private Fragment fragment;
     private Consumer<View> onAnswer;
-    private PopupWindow popupWindow;
+    private AlertDialog popupWindow;
 
     public AnswerQuestionPopup(Fragment fragment, AnswerQuestionPopupViewModel answerQuestionPopupViewModel
             , Consumer<View> onAnswer) {
-        this.fragment = fragment;
         this.onAnswer = onAnswer;
         AnswerQuestionPopupBinding answerQuestionPopupBinding
                 = AnswerQuestionPopupBinding.inflate(LayoutInflater.from(fragment.getContext()));
         answerQuestionPopupBinding.setOwner(this);
         answerQuestionPopupBinding.setAnswerQuestionPopupViewModel(answerQuestionPopupViewModel);
         answerQuestionPopupBinding.setLifecycleOwner(fragment);
-        popupWindow = new PopupWindow(answerQuestionPopupBinding.getRoot()
-                , LinearLayout.LayoutParams.MATCH_PARENT
-                , LinearLayout.LayoutParams.WRAP_CONTENT
-                , true);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(fragment.getContext());
+        builder.setCancelable(true);
+        builder.setView(answerQuestionPopupBinding.getRoot());
+
+        popupWindow = builder.create();
     }
 
-    @NonNull
     public void show() {
-        popupWindow.showAtLocation(fragment.getView(), Gravity.CENTER, 0, 0);
+        popupWindow.show();
     }
 
     public void answer(View view) {

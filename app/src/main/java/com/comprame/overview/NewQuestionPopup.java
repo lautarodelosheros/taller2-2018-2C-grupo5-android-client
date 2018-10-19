@@ -1,5 +1,6 @@
 package com.comprame.overview;
 
+import android.app.AlertDialog;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
@@ -12,28 +13,27 @@ import com.comprame.databinding.NewQuestionPopupBinding;
 import com.comprame.library.fun.Consumer;
 
 public class NewQuestionPopup {
-    private Fragment fragment;
     private Consumer<View> onSave;
-    private PopupWindow popupWindow;
+    private AlertDialog popupWindow;
 
     public NewQuestionPopup(Fragment fragment, NewQuestionPopupViewModel newQuestionPopupViewModel
             , Consumer<View> onSave) {
-        this.fragment = fragment;
         this.onSave = onSave;
         NewQuestionPopupBinding newQuestionPopupBinding
                 = NewQuestionPopupBinding.inflate(LayoutInflater.from(fragment.getContext()));
         newQuestionPopupBinding.setOwner(this);
         newQuestionPopupBinding.setNewQuestionPopupViewModel(newQuestionPopupViewModel);
         newQuestionPopupBinding.setLifecycleOwner(fragment);
-        popupWindow = new PopupWindow(newQuestionPopupBinding.getRoot()
-                , LinearLayout.LayoutParams.MATCH_PARENT
-                , LinearLayout.LayoutParams.WRAP_CONTENT
-                , true);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(fragment.getContext());
+        builder.setCancelable(true);
+        builder.setView(newQuestionPopupBinding.getRoot());
+
+        popupWindow = builder.create();
     }
 
-    @NonNull
     public void show() {
-        popupWindow.showAtLocation(fragment.getView(), Gravity.CENTER, 0, 0);
+        popupWindow.show();
     }
 
     public void save(View view) {

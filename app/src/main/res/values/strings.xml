@@ -72,4 +72,6 @@
     <string name="answer_error">La respuesta debe tener al menos 2 caracteres</string>
     <string name="answer">Respuesta</string>
     <string name="answer_save_button">Responder</string>
+    <string name="my_purchases">Mis Compras</string>
+    <string name="my_sellings">Mis Ventas</string>
 </resources>
