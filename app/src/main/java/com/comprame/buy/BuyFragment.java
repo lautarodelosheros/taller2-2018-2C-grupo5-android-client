@@ -12,9 +12,11 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.comprame.App;
+import com.comprame.MainActivity;
 import com.comprame.R;
 import com.comprame.databinding.BuyFragmentBinding;
 import com.comprame.library.view.ProgressPopup;
+import com.comprame.login.Session;
 import com.comprame.search.SearchFragment;
 
 public class BuyFragment extends Fragment {
@@ -36,7 +38,7 @@ public class BuyFragment extends Fragment {
     public void buy(View item) {
         ProgressPopup popupWindow = new ProgressPopup("Procesando Pago", getContext());
         popupWindow.show();
-        App.appServer.post("/purchase/"
+        App.appServer.post("/purchase/?buyer_id=" + Session.getInstance().getSessionToken()
                 , model.asPuchase()
                 , Object.class)
                 .onDone((ok, error) -> popupWindow.dismiss())

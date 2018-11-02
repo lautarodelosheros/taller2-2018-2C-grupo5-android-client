@@ -14,7 +14,7 @@ class Config {
         PROD, DEV_EMULATOR, DEV_PHONE
     }
 
-    private static final Env environment = Env.DEV_EMULATOR;
+    private static final Env environment = Env.DEV_PHONE;
     private static final String EMULATOR_HOST_ADDRESS = "10.0.2.2";
     private static final String NETWORK_ADDRESS = "192.168.0.15";
 

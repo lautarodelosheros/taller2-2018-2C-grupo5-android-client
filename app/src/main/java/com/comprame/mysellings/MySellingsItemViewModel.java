@@ -1,4 +1,4 @@
-package com.comprame.mypurchases;
+package com.comprame.mysellings;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
@@ -6,11 +6,11 @@ import android.arch.lifecycle.ViewModel;
 
 import com.comprame.buy.BuyItem;
 
-public class MyPurchasesItemViewModel extends ViewModel {
+public class MySellingsItemViewModel extends ViewModel {
     public final BuyItem buyItem;
     public final MutableLiveData<String> imageUrl = new MutableLiveData<>();
 
-    public MyPurchasesItemViewModel(BuyItem buyItem) {
+    public MySellingsItemViewModel(BuyItem buyItem) {
         this.buyItem = buyItem;
         if (buyItem.getImages() != null &&!buyItem.getImages().isEmpty()) {
             imageUrl.setValue(buyItem.getImage(0));

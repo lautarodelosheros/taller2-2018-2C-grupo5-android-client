@@ -14,6 +14,7 @@ import android.view.MenuItem;
 
 import com.comprame.login.Session;
 import com.comprame.mypurchases.MyPurchasesFragment;
+import com.comprame.mysellings.MySellingsFragment;
 import com.comprame.profile.ProfileFragment;
 import com.comprame.search.SearchFragment;
 import com.comprame.sell.SellFragment;
@@ -34,11 +35,7 @@ public class MainActivity extends AppCompatActivity
         configureDrawerActionBar();
         configureNavigationView();
 
-        session = new Session();
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        if (bundle != null)
-            session.setSession((String) bundle.get("session"));
+        session = Session.getInstance();
 
         searchFragment();
     }
@@ -92,14 +89,24 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_purchases:
                 myPurchases();
                 return true;
+            case R.id.nav_sellings:
+                mySellings();
+                return true;
         }
-        throw new IllegalArgumentException("Unhandled Menu searchItem");
+        return false;
     }
 
     private void myPurchases() {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_container, new MyPurchasesFragment())
+                .commit();
+    }
+
+    private void mySellings() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_container, new MySellingsFragment())
                 .commit();
     }
 

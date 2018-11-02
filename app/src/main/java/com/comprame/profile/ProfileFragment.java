@@ -15,6 +15,7 @@ import com.comprame.App;
 import com.comprame.MainActivity;
 import com.comprame.R;
 import com.comprame.databinding.ProfileFragmentBinding;
+import com.comprame.login.Session;
 import com.comprame.login.User;
 import com.comprame.library.view.ProgressPopup;
 
@@ -52,7 +53,7 @@ public class ProfileFragment extends Fragment {
         ProgressPopup progressPopup = new ProgressPopup("Cargando perfil...", getContext());
         progressPopup.show();
 
-        String path = "/user/" + ((MainActivity) Objects.requireNonNull(getActivity())).session.getSession();
+        String path = "/user/" + Session.getInstance().getSessionToken();
 
         App.appServer.get(path, User.class)
                 .onDone((i, ex) -> progressPopup.dismiss())
@@ -86,7 +87,7 @@ public class ProfileFragment extends Fragment {
         ProgressPopup progressPopup = new ProgressPopup("Actualizando perfil...", getContext());
         progressPopup.show();
 
-        String path = "/user/" + ((MainActivity) Objects.requireNonNull(getActivity())).session.getSession();
+        String path = "/user/" + Session.getInstance().getSessionToken();
 
         App.appServer.put(path, profileViewModel.asUser(), User.class)
                 .onDone((i, ex) -> progressPopup.dismiss())

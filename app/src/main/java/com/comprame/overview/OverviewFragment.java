@@ -132,7 +132,7 @@ public class OverviewFragment extends Fragment {
         progressDialog.show();
         Question question = answerQuestionPopupViewModel.asQuestion();
         question.item_id = overviewViewModel.item.getId();
-        question.responder = ((MainActivity) Objects.requireNonNull(getActivity())).session.getSession();
+        question.responder = Session.getInstance().getSessionToken();
         App.appServer.put("/question/" + question.id
                 , question
                 , Session.class)
@@ -148,7 +148,7 @@ public class OverviewFragment extends Fragment {
         progressDialog.show();
         Question question = newQuestionPopupViewModel.asQuestion();
         question.item_id = overviewViewModel.item.getId();
-        question.questioner = ((MainActivity) Objects.requireNonNull(getActivity())).session.getSession();
+        question.questioner = Session.getInstance().getSessionToken();
         App.appServer.post("/question/"
                 , question
                 , Session.class)

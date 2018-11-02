@@ -74,4 +74,6 @@
     <string name="answer_save_button">Responder</string>
     <string name="my_purchases">Mis Compras</string>
     <string name="my_sellings">Mis Ventas</string>
+    <string name="open_chat_purchase">Enviar un mensaje al vendedor</string>
+    <string name="open_chat_sell">Enviar un mensaje al comprador</string>
 </resources>

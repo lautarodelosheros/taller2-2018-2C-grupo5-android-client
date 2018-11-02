@@ -4,6 +4,8 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
 
+import com.comprame.login.Session;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,6 +84,7 @@ public class SellViewModel extends AndroidViewModel {
                 , Double.valueOf(unitPrice.getValue())
                 //TODO: Reemplazar por carga de imagenes
                 , new ArrayList<String>() {{add("https://images.freeimages.com/images/large-previews/25d/eagle-1523807.jpg");}}
+                , Session.getInstance().getSessionToken()
                 , location.getValue()
                 , paymentMethod.getValue()
                 , categories.getValue());

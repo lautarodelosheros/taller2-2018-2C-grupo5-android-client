@@ -43,9 +43,9 @@ public class SignUpFragment extends Fragment {
         App.appServer.post(
                 "/user/signup"
                 , model.asUser()
-                , Session.class)
+                , SessionToken.class)
                 .onDone((s, ex) -> progressPopup.dismiss())
-                .run(s -> search(model, s)
+                .run(s -> search(s)
                         , ex -> {
                             Toast.makeText(getContext()
                                     , "Hubo un error inesperado al intentar registrar su usuario, intente hacer un Login o registrarse nuevamente"
@@ -53,10 +53,9 @@ public class SignUpFragment extends Fragment {
                         });
     }
 
-    public void search(SignUpViewModel model, Session s) {
-        model.session.setValue(s);
+    public void search(SessionToken s) {
+        Session.getInstance().setSessionToken(s.getSession());
         Intent intent = new Intent(getContext(), MainActivity.class);
-        intent.putExtra("session", s.getSession());
         startActivity(intent);
     }
 }

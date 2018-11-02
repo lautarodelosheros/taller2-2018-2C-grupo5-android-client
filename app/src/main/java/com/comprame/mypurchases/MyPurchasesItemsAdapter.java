@@ -39,7 +39,7 @@ public class MyPurchasesItemsAdapter extends RecyclerView.Adapter<MyPurchasesIte
         holder.buyItem.setMyPurchasesItemModel(new MyPurchasesItemViewModel(buyItem));
         holder.buyItem
                 .getRoot()
-                .setOnClickListener((l) -> myPurchasesFragment.openChat(buyItem)); //TODO: Abrir resumen de compra
+                .setOnClickListener((l) -> myPurchasesFragment.overviewMyPurchase(buyItem));
     }
 
     @Override
