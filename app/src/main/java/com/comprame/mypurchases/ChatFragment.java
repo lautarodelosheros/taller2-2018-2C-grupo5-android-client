@@ -18,26 +18,18 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.comprame.App;
-import com.comprame.MainActivity;
 import com.comprame.R;
-import com.comprame.buy.BuyItem;
-import com.comprame.buy.Purchase;
-import com.comprame.library.view.ProgressPopup;
 import com.comprame.login.Session;
 import com.comprame.login.User;
-import com.comprame.search.SearchItemsAdapter;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 public class ChatFragment extends Fragment {
 
@@ -70,8 +62,6 @@ public class ChatFragment extends Fragment {
         recyclerView.getItemAnimator().setChangeDuration(1000);
         recyclerView.getItemAnimator().setMoveDuration(1000);
         recyclerView.getItemAnimator().setRemoveDuration(1000);
-        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext()
-                , DividerItemDecoration.VERTICAL));
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -99,6 +89,7 @@ public class ChatFragment extends Fragment {
                             String timestamp = document.getData().get("TIMESTAMP").toString();
                             chatViewModel.addChatMessage(new ChatMessage(userName, message, timestamp));
                         }
+                        recyclerView.smoothScrollToPosition(chatViewModel.size());
                         if (this.user == null)
                             loadProfile();
                     } else {
@@ -143,14 +134,13 @@ public class ChatFragment extends Fragment {
         Map<String, Object> newMessage = new HashMap<>();
         newMessage.put("USERNAME", this.user.getName());
         newMessage.put("MESSAGE", messageInput.getText().toString());
-        newMessage.put("TIMESTAMP", Calendar.getInstance().getTime());
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
+        newMessage.put("TIMESTAMP", format.format(Calendar.getInstance().getTime()));
         messageInput.setText("");
         chatCollection.document(Calendar.getInstance().getTime().toString()).set(newMessage)
-                .addOnSuccessListener((v) ->
-                        Toast.makeText(getContext(), "Message Sent", Toast.LENGTH_SHORT).show()
-                )
+                .addOnSuccessListener((v) -> {} )
                 .addOnFailureListener((e) ->
-                        Toast.makeText(getContext(), "Error sending the message", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(getContext(), "Error enviando el mensaje. Intente nuevamente", Toast.LENGTH_SHORT).show()
                 );
     }
 

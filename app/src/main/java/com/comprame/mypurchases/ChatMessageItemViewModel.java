@@ -1,10 +1,6 @@
 package com.comprame.mypurchases;
 
 import android.arch.lifecycle.ViewModel;
-import android.text.Layout;
-import android.view.Gravity;
-
-import com.comprame.R;
 
 public class ChatMessageItemViewModel extends ViewModel {
     public final ChatMessage chatMessage;
@@ -27,19 +23,8 @@ public class ChatMessageItemViewModel extends ViewModel {
         return chatMessage.getTimestamp();
     }
 
-    public int getShape() {
-        if (user.equals(chatMessage.getUserName()))
-
-            return R.drawable.chat_out_shape;
-        else
-            return R.drawable.chat_in_shape;
-    }
-
-    public int getGravity() {
-        if (user.equals(chatMessage.getUserName()))
-            return Gravity.START;
-        else
-            return Gravity.END;
+    public boolean isTheUser() {
+        return user.equals(chatMessage.getUserName());
     }
 
 }

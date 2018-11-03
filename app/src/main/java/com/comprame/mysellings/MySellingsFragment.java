@@ -21,10 +21,6 @@ import com.comprame.buy.BuyItem;
 import com.comprame.library.view.ProgressPopup;
 import com.comprame.login.Session;
 import com.comprame.mypurchases.MyPurchase;
-import com.comprame.mypurchases.MyPurchasesItemsAdapter;
-import com.comprame.mypurchases.MyPurchasesViewModel;
-import com.comprame.mypurchases.OverviewMyPurchaseFragment;
-import com.comprame.mypurchases.OverviewMyPurchaseViewModel;
 
 import java.util.ArrayList;
 import java.util.List;

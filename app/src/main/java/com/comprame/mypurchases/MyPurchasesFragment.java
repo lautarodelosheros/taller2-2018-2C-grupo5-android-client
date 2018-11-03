@@ -12,9 +12,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -22,20 +19,10 @@ import android.widget.Toast;
 import com.comprame.App;
 import com.comprame.R;
 import com.comprame.buy.BuyItem;
-import com.comprame.buy.Purchase;
-import com.comprame.library.rest.Query;
 import com.comprame.library.view.ProgressPopup;
 import com.comprame.login.Session;
-import com.comprame.overview.OverviewFragment;
-import com.comprame.overview.OverviewViewModel;
-import com.comprame.search.SearchFilterPopUp;
-import com.comprame.search.SearchItem;
-import com.comprame.search.SearchItemsAdapter;
-import com.comprame.search.SearchViewModel;
-import com.comprame.sell.SellFragment;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class MyPurchasesFragment extends Fragment {

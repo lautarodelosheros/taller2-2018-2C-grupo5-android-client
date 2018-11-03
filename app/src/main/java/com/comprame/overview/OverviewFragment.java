@@ -10,11 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.comprame.App;
-import com.comprame.MainActivity;
 import com.comprame.R;
 import com.comprame.buy.BuyFragment;
 import com.comprame.buy.BuyViewModel;
@@ -26,7 +24,6 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 public class OverviewFragment extends Fragment {
 
@@ -121,10 +118,6 @@ public class OverviewFragment extends Fragment {
                 , newQuestionPopupViewModel
                 , this::createNewQuestion);
         newQuestionPopup.show();
-    }
-
-    public void answerQuestion(View view) {
-
     }
 
     public void editQuestion(View view) {

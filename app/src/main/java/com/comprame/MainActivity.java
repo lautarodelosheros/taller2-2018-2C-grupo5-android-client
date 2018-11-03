@@ -18,8 +18,6 @@ import com.comprame.mysellings.MySellingsFragment;
 import com.comprame.profile.ProfileFragment;
 import com.comprame.search.SearchFragment;
 import com.comprame.sell.SellFragment;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlacePicker;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

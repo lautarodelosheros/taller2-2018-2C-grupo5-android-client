@@ -46,7 +46,7 @@ public class LoginFragment extends Fragment {
                 "/user/login"
                 , model.asUser(), SessionToken.class)
                 .onDone((s, ex) -> progressPopup.dismiss())
-                .run(s -> search(s)
+                .run(this::search
                         , this::showToastError);
 
     }

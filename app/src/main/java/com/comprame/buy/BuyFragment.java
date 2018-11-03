@@ -8,11 +8,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.comprame.App;
-import com.comprame.MainActivity;
 import com.comprame.R;
 import com.comprame.databinding.BuyFragmentBinding;
 import com.comprame.library.view.ProgressPopup;

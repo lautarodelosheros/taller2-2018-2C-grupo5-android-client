@@ -4,8 +4,6 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
-import java.util.List;
-
 public class SearchItemViewModel extends ViewModel {
     public final SearchItem searchItem;
     public final MutableLiveData<String> imageUrl = new MutableLiveData<>();

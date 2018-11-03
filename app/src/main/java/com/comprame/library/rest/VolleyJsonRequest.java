@@ -13,8 +13,6 @@ import com.android.volley.toolbox.JsonRequest;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 

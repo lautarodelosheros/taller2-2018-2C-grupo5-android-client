@@ -1,13 +1,9 @@
 package com.comprame.overview;
 
 import android.app.AlertDialog;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 
 import com.comprame.databinding.NewQuestionPopupBinding;
 import com.comprame.library.fun.Consumer;

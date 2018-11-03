@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/chat_message_item"
     tools:context="com.comprame.MainActivity">
 
     <data>
+        <import type="android.view.Gravity" />
 
         <variable
             name="chatMessageViewModel"
@@ -18,47 +18,52 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@{chatMessageViewModel.shape}"
-            android:gravity="@{chatMessageViewModel.gravity}"
-            android:layout_margin="4dp">
-
-            <TextView
-                android:id="@+id/chat_message"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:textColor="@color/black"
-                android:text="@{chatMessageViewModel.message}"
-                android:textSize="16sp" />
+            android:gravity="@{chatMessageViewModel.isTheUser ? Gravity.START : Gravity.END}">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:background="@{chatMessageViewModel.isTheUser ? @drawable/chat_out_shape : @drawable/chat_in_shape}"
+                android:layout_margin="4dp">
 
                 <TextView
-                    android:id="@+id/chat_timestamp"
-                    android:layout_width="match_parent"
+                    android:id="@+id/chat_message"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    android:textAlignment="textStart"
-                    android:textSize="12sp"
-                    android:text="@{chatMessageViewModel.timestamp}"
-                    android:textStyle="italic"/>
+                    android:textColor="@color/black"
+                    android:text="@{chatMessageViewModel.message}"
+                    android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/chat_username"
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:textAlignment="textEnd"
-                    android:textSize="12sp"
-                    android:text="@{chatMessageViewModel.userName}"
-                    android:textStyle="italic"/>
+                    android:orientation="horizontal">
 
+                    <TextView
+                        android:id="@+id/chat_timestamp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:textAlignment="textStart"
+                        android:textSize="12sp"
+                        android:text="@{chatMessageViewModel.timestamp}"
+                        android:textStyle="italic"/>
+
+                    <TextView
+                        android:id="@+id/chat_username"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:textAlignment="textEnd"
+                        android:textSize="12sp"
+                        android:text="@{chatMessageViewModel.userName}"
+                        android:textStyle="italic"/>
+
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>

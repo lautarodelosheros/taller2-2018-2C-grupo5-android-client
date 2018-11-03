@@ -8,11 +8,6 @@ import android.view.ViewGroup;
 
 import com.comprame.R;
 import com.comprame.databinding.ChatMessageItemBinding;
-import com.comprame.databinding.SearchItemBinding;
-import com.comprame.search.SearchFragment;
-import com.comprame.search.SearchItem;
-import com.comprame.search.SearchItemViewModel;
-import com.comprame.search.SearchViewModel;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatMessageItemViewHolder> {
 

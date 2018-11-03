@@ -6,33 +6,15 @@ import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.comprame.App;
-import com.comprame.MainActivity;
 import com.comprame.R;
-import com.comprame.buy.BuyFragment;
-import com.comprame.buy.BuyItem;
-import com.comprame.buy.BuyViewModel;
 import com.comprame.databinding.OverviewMyPurchaseFragmentBinding;
-import com.comprame.library.rest.Query;
 import com.comprame.library.view.ProgressPopup;
-import com.comprame.login.Session;
-import com.comprame.overview.AnswerQuestionPopupViewModel;
-import com.comprame.overview.NewQuestionPopup;
-import com.comprame.overview.NewQuestionPopupViewModel;
-import com.comprame.overview.OverviewViewModel;
-import com.comprame.overview.Question;
-import com.comprame.overview.QuestionsList;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
-
-import java.util.Arrays;
-import java.util.Objects;
 
 public class OverviewMyPurchaseFragment extends Fragment {
 

@@ -45,12 +45,10 @@ public class SignUpFragment extends Fragment {
                 , model.asUser()
                 , SessionToken.class)
                 .onDone((s, ex) -> progressPopup.dismiss())
-                .run(s -> search(s)
-                        , ex -> {
-                            Toast.makeText(getContext()
-                                    , "Hubo un error inesperado al intentar registrar su usuario, intente hacer un Login o registrarse nuevamente"
-                                    , Toast.LENGTH_LONG).show();
-                        });
+                .run(this::search
+                        , ex -> Toast.makeText(getContext()
+                                , "Hubo un error inesperado al intentar registrar su usuario, intente hacer un Login o registrarse nuevamente"
+                                , Toast.LENGTH_LONG).show());
     }
 
     public void search(SessionToken s) {

@@ -1,9 +1,5 @@
 package com.comprame.mypurchases;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Map;
-
 class ChatMessage {
     private String userName;
     private String message;

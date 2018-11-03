@@ -12,14 +12,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.comprame.App;
-import com.comprame.MainActivity;
 import com.comprame.R;
 import com.comprame.databinding.ProfileFragmentBinding;
 import com.comprame.login.Session;
 import com.comprame.login.User;
 import com.comprame.library.view.ProgressPopup;
-
-import java.util.Objects;
 
 public class ProfileFragment extends Fragment {
 
