@@ -32,7 +32,6 @@ import java.util.Arrays;
 public class SearchFragment extends Fragment {
     private static final int ITEM_OFFSET = 5;
 
-    private String session;
     private SearchViewModel searchViewModel;
     private SearchFilterPopUp searchFilterPopUp;
     private RecyclerView recyclerView;
@@ -43,10 +42,6 @@ public class SearchFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setHasOptionsMenu(true);
-        this.session = getActivity().
-                getIntent()
-                .getExtras()
-                .getString("session");
     }
 
     @Override

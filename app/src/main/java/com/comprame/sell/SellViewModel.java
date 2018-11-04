@@ -4,6 +4,8 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
 
+import com.comprame.login.Session;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,6 +88,7 @@ public class SellViewModel extends AndroidViewModel {
                 , Integer.valueOf(units.getValue())
                 , Double.valueOf(unitPrice.getValue())
                 , imageUrls
+                , Session.getInstance().getSessionToken()
                 , location.getValue()
                 , paymentMethod.getValue()
                 , categories.getValue());

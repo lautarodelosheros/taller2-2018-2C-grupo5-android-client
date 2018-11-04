@@ -6,9 +6,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.databinding.BindingAdapter;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -16,10 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.comprame.library.fun.Consumer;
 import com.comprame.library.fun.Provider;
-
-import java.util.List;
 
 public class Bindings {
 

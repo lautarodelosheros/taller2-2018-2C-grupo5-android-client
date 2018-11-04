@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/overview_my_sell_fragment_layout"
+    tools:context="com.comprame.mysellings.OverviewMySellFragment">
+
+    <data>
+        <variable
+            name="fragment"
+            type="com.comprame.mysellings.OverviewMySellFragment" />
+
+        <variable
+            name="model"
+            type="com.comprame.mysellings.OverviewMySellViewModel" />
+    </data>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingLeft="24dp"
+            android:paddingTop="8dp"
+            android:paddingRight="24dp">
+
+            <TextView
+                android:id="@+id/overview_item_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="24sp"
+                android:textColor="@color/black"
+                android:text="@{model.item.name}" />
+
+            <com.daimajia.slider.library.SliderLayout
+                android:id="@+id/slider"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                />
+
+            <TextView
+                android:id="@+id/overview_item_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="@{model.item.description}" />
+
+            <TextView
+                android:id="@+id/overview_unit_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:text="@{`Precio: ` + String.valueOf(model.item.unitPrice)}" />
+
+            <TextView
+                android:id="@+id/overview_item_seller"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="@{`Vendedor: ` + model.item.seller}" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/open_chat_sell_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="24dp"
+                android:background="@color/colorPrimary"
+                android:padding="12dp"
+                android:text="@string/open_chat_sell"
+                android:textColor="@color/white"
+                android:onClick="@{fragment::openChat}"/>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</layout>

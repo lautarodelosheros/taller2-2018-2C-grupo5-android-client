@@ -1,4 +1,4 @@
-package com.comprame.mypurchases;
+package com.comprame.mysellings;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
@@ -9,11 +9,11 @@ import com.comprame.buy.BuyItem;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyPurchasesViewModel extends ViewModel {
+public class MySellingsViewModel extends ViewModel {
 
     public final MutableLiveData<List<BuyItem>> items;
 
-    public MyPurchasesViewModel() {
+    public MySellingsViewModel() {
         items = new MutableLiveData<>();
         items.setValue(new ArrayList<>());
     }

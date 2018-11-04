@@ -44,17 +44,16 @@ public class LoginFragment extends Fragment {
         progressPopup.show();
         App.appServer.post(
                 "/user/login"
-                , model.asUser(), Session.class)
+                , model.asUser(), SessionToken.class)
                 .onDone((s, ex) -> progressPopup.dismiss())
-                .run(s -> search(model, s)
+                .run(this::search
                         , this::showToastError);
 
     }
 
-    public void search(LoginViewModel model, Session session) {
-        model.session.setValue(session);
+    public void search(SessionToken session) {
+        Session.getInstance().setSessionToken(session.getSession());
         Intent intent = new Intent(getContext(), MainActivity.class);
-        intent.putExtra("session", session.getSession());
         startActivity(intent);
 
     }

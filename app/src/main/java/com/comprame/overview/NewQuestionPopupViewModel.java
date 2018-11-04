@@ -4,7 +4,6 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
 
-import com.comprame.MainActivity;
 import com.comprame.R;
 
 public class NewQuestionPopupViewModel extends AndroidViewModel {

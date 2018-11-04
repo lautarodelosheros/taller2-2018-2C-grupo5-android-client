@@ -10,11 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.comprame.App;
-import com.comprame.MainActivity;
 import com.comprame.R;
 import com.comprame.buy.BuyFragment;
 import com.comprame.buy.BuyViewModel;
@@ -26,7 +24,6 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 public class OverviewFragment extends Fragment {
 
@@ -123,16 +120,12 @@ public class OverviewFragment extends Fragment {
         newQuestionPopup.show();
     }
 
-    public void answerQuestion(View view) {
-
-    }
-
     public void editQuestion(View view) {
         ProgressPopup progressDialog = new ProgressPopup("Cargando respuesta...", this.getContext());
         progressDialog.show();
         Question question = answerQuestionPopupViewModel.asQuestion();
         question.item_id = overviewViewModel.item.getId();
-        question.responder = ((MainActivity) Objects.requireNonNull(getActivity())).session.getSession();
+        question.responder = Session.getInstance().getSessionToken();
         App.appServer.put("/question/" + question.id
                 , question
                 , Session.class)
@@ -148,7 +141,7 @@ public class OverviewFragment extends Fragment {
         progressDialog.show();
         Question question = newQuestionPopupViewModel.asQuestion();
         question.item_id = overviewViewModel.item.getId();
-        question.questioner = ((MainActivity) Objects.requireNonNull(getActivity())).session.getSession();
+        question.questioner = Session.getInstance().getSessionToken();
         App.appServer.post("/question/"
                 , question
                 , Session.class)

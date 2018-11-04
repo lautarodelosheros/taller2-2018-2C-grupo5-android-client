@@ -1,13 +1,20 @@
 package com.comprame.login;
 
 public class Session {
-    private String session;
+    private static final Session session = new Session();
+    private String token;
 
-    public String getSession() {
+    private Session() {}
+
+    public static Session getInstance() {
         return session;
     }
 
-    public void setSession(String session) {
-        this.session = session;
+    public String getSessionToken() {
+        return session.token;
+    }
+
+    public void setSessionToken(String token) {
+        session.token = token;
     }
 }

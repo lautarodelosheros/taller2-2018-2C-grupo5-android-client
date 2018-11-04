@@ -1,12 +1,16 @@
-package com.comprame.buy;
+package com.comprame.mypurchases;
 
-public class Purchase {
+import com.comprame.buy.Card;
+
+public class MyPurchase {
+    public final String id;
     public final String itemId;
     public final int units;
     public final Card paymentMethod;
     public final String buyerId;
 
-    public Purchase(String itemId, int units, Card paymentMethod) {
+    public MyPurchase(String id, String itemId, int units, Card paymentMethod) {
+        this.id = id;
         this.itemId = itemId;
         this.units = units;
         this.paymentMethod = paymentMethod;
