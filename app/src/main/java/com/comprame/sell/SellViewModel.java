@@ -16,6 +16,7 @@ public class SellViewModel extends AndroidViewModel {
     public final MutableLiveData<String> paymentMethod = new MutableLiveData<>();
     public final MutableLiveData<List<String>> categories = new MutableLiveData<>();
     public final MutableLiveData<Boolean> enabled = new MutableLiveData<>();
+    private final List<String> imageUrls = new ArrayList<String>();
 
     public SellViewModel(Application app) {
         super(app);
@@ -75,13 +76,16 @@ public class SellViewModel extends AndroidViewModel {
                 && unitPriceError() == null;
     }
 
+    public void addImageUrl(String newUrl) {
+        this.imageUrls.add(newUrl);
+    }
+
     public SellItem asSellItem() {
         return new SellItem(name.getValue()
                 , description.getValue()
                 , Integer.valueOf(units.getValue())
                 , Double.valueOf(unitPrice.getValue())
-                //TODO: Reemplazar por carga de imagenes
-                , new ArrayList<String>() {{add("https://images.freeimages.com/images/large-previews/25d/eagle-1523807.jpg");}}
+                , imageUrls
                 , location.getValue()
                 , paymentMethod.getValue()
                 , categories.getValue());
