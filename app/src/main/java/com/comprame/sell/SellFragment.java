@@ -2,6 +2,7 @@ package com.comprame.sell;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -23,22 +24,21 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
 import static android.app.Activity.RESULT_OK;
 import static com.comprame.Config.CLOUDINARY_CLOUD_NAME;
-import static com.comprame.Config.CLOUDINARY_FIXED_IMAGE_NAME;
-import static com.comprame.Config.CLOUDINARY_FIXED_IMAGE_PATH;
 import static com.comprame.Config.CLOUDINARY_UPLOAD_PRESET;
 import static com.comprame.MainActivity.PLACE_PICKER_REQUEST;
+
 
 public class SellFragment extends Fragment {
 
     private SellViewModel model;
+    private static final int FILE_PATH_REQUEST_CODE = 0;
 
     @Nullable
     @Override
@@ -65,12 +65,10 @@ public class SellFragment extends Fragment {
             }};
             Cloudinary cloudinary = new Cloudinary(config);
             try {
-                File file = new File((String) objects[0]);
-                FileInputStream fileInputStream = new FileInputStream(file);
-                Map uploadResult = cloudinary.uploader().unsignedUpload(fileInputStream, CLOUDINARY_UPLOAD_PRESET,
-                        new HashMap<String, String>() {{
-                            put("public_id", CLOUDINARY_FIXED_IMAGE_NAME);
-                        }});
+                InputStream fileInputStream = getContext().getContentResolver().
+                        openInputStream((Uri) objects[0]);
+                Map uploadResult = cloudinary.uploader().unsignedUpload(fileInputStream,
+                        CLOUDINARY_UPLOAD_PRESET, null);
 
                 model.addImageUrl(String.valueOf(uploadResult.get("url")));
             } catch (IOException | NullPointerException e) {
@@ -81,7 +79,9 @@ public class SellFragment extends Fragment {
     }
 
     public void uploadImage(View view) {
-        new UploadToCloudinary().execute(CLOUDINARY_FIXED_IMAGE_PATH);
+        Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
+        chooseFile.setType("*/*");
+        startActivityForResult(chooseFile, FILE_PATH_REQUEST_CODE);
     }
 
     public void sell(View view) {
@@ -129,6 +129,9 @@ public class SellFragment extends Fragment {
                     Place place = PlacePicker.getPlace(getActivity(), data);
                     String placeName = String.format("%s", place.getAddress());
                     model.setLocation(placeName);
+                case FILE_PATH_REQUEST_CODE:
+                    Uri uri = data.getData();
+                    new UploadToCloudinary().execute(uri);
             }
         }
     }
