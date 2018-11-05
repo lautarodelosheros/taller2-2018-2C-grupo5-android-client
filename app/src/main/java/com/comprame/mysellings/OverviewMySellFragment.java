@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.comprame.R;
 import com.comprame.databinding.OverviewMySellFragmentBinding;
+import com.comprame.library.view.GlideSliderView;
 import com.comprame.library.view.ProgressPopup;
 import com.comprame.mypurchases.ChatFragment;
 import com.comprame.mypurchases.MyPurchase;
@@ -50,7 +51,7 @@ public class OverviewMySellFragment extends Fragment {
         if (overviewMySellViewModel.item.getImages() != null) {
 
             for (String url : overviewMySellViewModel.item.getImages()) {
-                DefaultSliderView sliderView = new DefaultSliderView(getContext());
+                GlideSliderView sliderView = new GlideSliderView(getContext());
                 sliderView
                         .image(url);
                 mSlider.addSlider(sliderView);

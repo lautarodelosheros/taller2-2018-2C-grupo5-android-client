@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -39,6 +42,9 @@ public class SellFragment extends Fragment {
 
     private SellViewModel model;
     private static final int FILE_PATH_REQUEST_CODE = 0;
+    private ProgressPopup progressPopupCloudinary;
+
+    private Handler mHandler;
 
     @Nullable
     @Override
@@ -49,6 +55,14 @@ public class SellFragment extends Fragment {
         sellFragmentBinding.setFragment(this);
         model = ViewModelProviders.of(this).get(SellViewModel.class);
         sellFragmentBinding.setData(model);
+
+        mHandler = new Handler(Looper.getMainLooper()) {
+            @Override
+            public void handleMessage(Message message) {
+                progressPopupCloudinary.dismiss();
+            }
+        };
+
         return sellFragmentBinding.getRoot();
     }
 
@@ -74,6 +88,10 @@ public class SellFragment extends Fragment {
             } catch (IOException | NullPointerException e) {
                 e.printStackTrace();
             }
+
+            Message message = mHandler.obtainMessage(0, null);
+            message.sendToTarget();
+
             return null;
         }
     }
@@ -131,6 +149,8 @@ public class SellFragment extends Fragment {
                     model.setLocation(placeName);
                 case FILE_PATH_REQUEST_CODE:
                     Uri uri = data.getData();
+                    progressPopupCloudinary = new ProgressPopup("Cargando imágenes...", getContext());
+                    progressPopupCloudinary.show();
                     new UploadToCloudinary().execute(uri);
             }
         }

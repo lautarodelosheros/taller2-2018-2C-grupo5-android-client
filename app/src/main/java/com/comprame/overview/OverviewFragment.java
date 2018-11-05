@@ -18,6 +18,7 @@ import com.comprame.buy.BuyFragment;
 import com.comprame.buy.BuyViewModel;
 import com.comprame.databinding.OverviewFragmentBinding;
 import com.comprame.library.rest.Query;
+import com.comprame.library.view.GlideSliderView;
 import com.comprame.library.view.ProgressPopup;
 import com.comprame.login.Session;
 import com.daimajia.slider.library.SliderLayout;
@@ -62,7 +63,7 @@ public class OverviewFragment extends Fragment {
         if (overviewViewModel.item.getImages() != null) {
 
             for (String url : overviewViewModel.item.getImages()) {
-                DefaultSliderView sliderView = new DefaultSliderView(getContext());
+                GlideSliderView sliderView = new GlideSliderView(getContext());
                 sliderView
                         .image(url);
                 mSlider.addSlider(sliderView);

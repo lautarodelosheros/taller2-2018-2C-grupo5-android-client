@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.comprame.R;
 import com.comprame.databinding.OverviewMyPurchaseFragmentBinding;
+import com.comprame.library.view.GlideSliderView;
 import com.comprame.library.view.ProgressPopup;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
@@ -48,7 +49,7 @@ public class OverviewMyPurchaseFragment extends Fragment {
         if (overviewMyPurchaseViewModel.item.getImages() != null) {
 
             for (String url : overviewMyPurchaseViewModel.item.getImages()) {
-                DefaultSliderView sliderView = new DefaultSliderView(getContext());
+                GlideSliderView sliderView = new GlideSliderView(getContext());
                 sliderView
                         .image(url);
                 mSlider.addSlider(sliderView);
