@@ -48,7 +48,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/userName_hint"
-                    android:inputType="textEmailAddress"
+                    android:inputType="textCapWords"
                     android:text="@={loginModel.name}"
                     app:validation="@{() -> loginModel.nameError()}" />
             </android.support.design.widget.TextInputLayout>

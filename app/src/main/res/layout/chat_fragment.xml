@@ -48,7 +48,7 @@
                 android:textColor="#CFD8DC"
                 android:hint="@string/send_message_hint"
                 android:id="@+id/message_input"
-                android:inputType="textAutoComplete"
+                android:inputType="textAutoComplete|textCapSentences"
                 android:maxHeight="80dp"
                 />
 

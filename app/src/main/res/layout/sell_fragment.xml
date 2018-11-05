@@ -39,7 +39,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/item_name"
-                    android:inputType="textAutoComplete"
+                    android:inputType="textAutoComplete|textCapSentences"
                     android:text="@={data.name}"
                     app:validation="@{() -> data.nameError()}" />
             </android.support.design.widget.TextInputLayout>
@@ -55,7 +55,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/item_description"
-                    android:inputType="text"
+                    android:inputType="textCapSentences"
                     android:text="@={data.description}"
                     app:validation="@{() -> data.descriptionError()}" />
 
@@ -74,7 +74,7 @@
                     android:layout_height="wrap_content"
                     android:digits="0123456789."
                     android:hint="@string/item_units"
-                    android:inputType="numberDecimal"
+                    android:inputType="number"
                     android:text="@={data.units}"
                     app:validation="@{() -> data.unitsError()}" />
             </android.support.design.widget.TextInputLayout>
@@ -127,7 +127,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/item_category"
-                    android:inputType="text" />
+                    android:inputType="textCapWords" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.v7.widget.AppCompatButton

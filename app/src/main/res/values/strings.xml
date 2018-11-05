@@ -52,11 +52,11 @@
     <string name="units">Unidades</string>
     <string name="plus">+</string>
     <string name="minus">-</string>
-    <string name="card_number">Número</string>
-    <string name="card_owner">Nombre</string>
+    <string name="card_number">Número de tarjeta</string>
+    <string name="card_owner">Nombre como aparece en la tarjeta</string>
     <string name="card_expiration_month">Mes de Expiración</string>
-    <string name="card_expiration_year">Año Expiración</string>
-    <string name="card_security_code">Código Seguridad</string>
+    <string name="card_expiration_year">Año de Expiración</string>
+    <string name="card_security_code">Código de Seguridad</string>
     <string-array name="payment_methods">
         <item>Crédito</item>
         <item>Débito</item>
