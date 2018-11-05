@@ -78,4 +78,5 @@
     <string name="open_chat_purchase">Enviar un mensaje al vendedor</string>
     <string name="open_chat_sell">Enviar un mensaje al comprador</string>
     <string name="send_message_hint">Escribir un mensaje...</string>
+    <string name="kilometers_filter_hint">Distancia máxima (km)</string>
 </resources>

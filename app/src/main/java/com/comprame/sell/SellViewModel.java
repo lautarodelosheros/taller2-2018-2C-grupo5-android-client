@@ -14,7 +14,7 @@ public class SellViewModel extends AndroidViewModel {
     public final MutableLiveData<String> description = new MutableLiveData<>();
     public final MutableLiveData<String> units = new MutableLiveData<>();
     public final MutableLiveData<String> unitPrice = new MutableLiveData<>();
-    public final MutableLiveData<String> location = new MutableLiveData<>();
+    public final MutableLiveData<Geolocation> geolocation = new MutableLiveData<>();
     public final MutableLiveData<String> paymentMethod = new MutableLiveData<>();
     public final MutableLiveData<List<String>> categories = new MutableLiveData<>();
     public final MutableLiveData<Boolean> enabled = new MutableLiveData<>();
@@ -89,12 +89,12 @@ public class SellViewModel extends AndroidViewModel {
                 , Double.valueOf(unitPrice.getValue())
                 , imageUrls
                 , Session.getInstance().getSessionToken()
-                , location.getValue()
+                , geolocation.getValue()
                 , paymentMethod.getValue()
                 , categories.getValue());
     }
 
-    public void setLocation(String location) {
-        this.location.setValue(location);
+    public void setGeolocation(Geolocation geolocation) {
+        this.geolocation.setValue(geolocation);
     }
 }
