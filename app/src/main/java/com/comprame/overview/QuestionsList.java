@@ -19,7 +19,7 @@ public class QuestionsList {
         this.questionsList = questionsList;
     }
 
-    public void setQuestions(List<Question> questions) {
+    public void setQuestions(List<Question> questions, boolean userIsTheSeller) {
         questionsList.removeAllViews();
         LayoutInflater inflater = LayoutInflater.from(questionsList.getContext());
         for (Question question : questions) {
@@ -40,7 +40,7 @@ public class QuestionsList {
                         overviewFragment.answerQuestionPopupViewModel.questioner.setValue(questioner);
                         answerQuestionPopup.show();
                     });
-            if (question.answer != null) {
+            if (question.answer != null && userIsTheSeller) {
                 ((TextView) view.findViewById(R.id.answer)).setText(question.answer);
                 ((TextView) view.findViewById(R.id.responder)).setText(question.responder);
                 view.findViewById(R.id.answer).setVisibility(View.VISIBLE);

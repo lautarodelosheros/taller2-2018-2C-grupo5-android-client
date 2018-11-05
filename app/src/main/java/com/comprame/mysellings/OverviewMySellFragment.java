@@ -1,9 +1,8 @@
 package com.comprame.mysellings;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,40 +12,28 @@ import android.view.ViewGroup;
 import com.comprame.R;
 import com.comprame.databinding.OverviewMySellFragmentBinding;
 import com.comprame.library.view.GlideSliderView;
-import com.comprame.library.view.ProgressPopup;
 import com.comprame.mypurchases.ChatFragment;
 import com.comprame.mypurchases.MyPurchase;
 import com.daimajia.slider.library.SliderLayout;
-import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
+
+import java.util.Objects;
 
 public class OverviewMySellFragment extends Fragment {
 
-    private OverviewMySellViewModel overviewMySellViewModel;
-
-    private SliderLayout mSlider;
-
     private MyPurchase sell;
-
-    ProgressPopup progressPopup;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater
+    public View onCreateView(@NonNull LayoutInflater inflater
             , @Nullable ViewGroup container
             , @Nullable Bundle savedInstanceState) {
 
         OverviewMySellFragmentBinding binding = OverviewMySellFragmentBinding.inflate(inflater, container, false);
-        overviewMySellViewModel = ViewModelProviders.of(getActivity()).get(OverviewMySellViewModel.class);
+        OverviewMySellViewModel overviewMySellViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(OverviewMySellViewModel.class);
         binding.setModel(overviewMySellViewModel);
         binding.setFragment(this);
 
-        ViewDataBinding view =
-                DataBindingUtil.inflate(inflater
-                        , R.layout.overview_my_sell_fragment
-                        , container
-                        , false);
-
-        mSlider = binding.slider;
+        SliderLayout mSlider = binding.slider;
 
         if (overviewMySellViewModel.item.getImages() != null) {
 
@@ -73,7 +60,7 @@ public class OverviewMySellFragment extends Fragment {
     public void openChat(View view) {
         ChatFragment chatFragment = new ChatFragment();
         chatFragment.setPurchase(this.sell);
-        getActivity().getSupportFragmentManager()
+        Objects.requireNonNull(getActivity()).getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_container, chatFragment, "ChatFragement")
                 .commit();

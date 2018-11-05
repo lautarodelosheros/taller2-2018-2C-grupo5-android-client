@@ -2,7 +2,6 @@ package com.comprame.sell;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,15 +11,19 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.cloudinary.Cloudinary;
 import com.comprame.App;
 import com.comprame.R;
 import com.comprame.databinding.SellFragmentBinding;
+import com.comprame.library.view.Bindings;
 import com.comprame.library.view.ProgressPopup;
 import com.comprame.login.Session;
 import com.comprame.search.SearchFragment;
@@ -48,6 +51,8 @@ public class SellFragment extends Fragment {
     private static final int FILE_PATH_REQUEST_CODE = 0;
     private ProgressPopup progressPopupCloudinary;
 
+    private GridLayout imagesGrid;
+
     private Handler mHandler;
 
     @Nullable
@@ -60,10 +65,19 @@ public class SellFragment extends Fragment {
         model = ViewModelProviders.of(this).get(SellViewModel.class);
         sellFragmentBinding.setData(model);
 
+        imagesGrid = sellFragmentBinding.getRoot().findViewById(R.id.sell_item_images_grid);
+
         mHandler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message message) {
                 progressPopupCloudinary.dismiss();
+                String imageUrl = (String) message.obj;
+
+                ImageView imageView = new ImageView(getContext());
+                Bindings.loadImage(imageView, imageUrl);
+                CardView cardView = new CardView(getContext());
+                cardView.addView(imageView);
+                imagesGrid.addView(cardView);
             }
         };
 
@@ -89,13 +103,12 @@ public class SellFragment extends Fragment {
                         CLOUDINARY_UPLOAD_PRESET, null);
 
                 model.addImageUrl(String.valueOf(uploadResult.get("url")));
+
+                Message message = mHandler.obtainMessage(0, String.valueOf(uploadResult.get("url")));
+                message.sendToTarget();
             } catch (IOException | NullPointerException e) {
                 e.printStackTrace();
             }
-
-            Message message = mHandler.obtainMessage(0, null);
-            message.sendToTarget();
-
             return null;
         }
     }

@@ -24,11 +24,11 @@ import com.comprame.login.Session;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MyPurchasesFragment extends Fragment {
 
     private MyPurchasesViewModel myPurchasesViewModel;
-    private RecyclerView recyclerView;
 
     private List<MyPurchase> myPurchases = new ArrayList<>();
 
@@ -39,7 +39,7 @@ public class MyPurchasesFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater
+    public View onCreateView(@NonNull LayoutInflater inflater
             , ViewGroup container
             , Bundle savedInstanceState) {
         myPurchasesViewModel = ViewModelProviders.of(this)
@@ -51,8 +51,8 @@ public class MyPurchasesFragment extends Fragment {
                         , container
                         , false);
 
-        recyclerView = view.getRoot().findViewById(R.id.my_purchases_items);
-        recyclerView.getItemAnimator().setAddDuration(1000);
+        RecyclerView recyclerView = view.getRoot().findViewById(R.id.my_purchases_items);
+        Objects.requireNonNull(recyclerView.getItemAnimator()).setAddDuration(1000);
         recyclerView.getItemAnimator().setChangeDuration(1000);
         recyclerView.getItemAnimator().setMoveDuration(1000);
         recyclerView.getItemAnimator().setRemoveDuration(1000);
@@ -66,16 +66,7 @@ public class MyPurchasesFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        /*BuyItem buyItem = new BuyItem("ididid"
-                , "Articulo mockeado", "Desc"
-                , 120.20, "Pepito"
-                , "Buenos Aires", null
-                , "Cat");
-        buyItem.addImage("https://i.pinimg.com/236x/1c/23/cc/1c23cce271fbc3c6b83c7870ac9eb62e.jpg");
-        myPurchasesViewModel.addItem(buyItem);*/
-
-        //TODO: Borrar Mock
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         fetchMyPurchases(view);
     }
 
@@ -124,7 +115,8 @@ public class MyPurchasesFragment extends Fragment {
     }
 
     public void overviewMyPurchase(BuyItem buyItem) {
-        OverviewMyPurchaseViewModel overviewMyPurchaseViewModel = ViewModelProviders.of(getActivity()).get(OverviewMyPurchaseViewModel.class);
+        OverviewMyPurchaseViewModel overviewMyPurchaseViewModel = ViewModelProviders
+                .of(Objects.requireNonNull(getActivity())).get(OverviewMyPurchaseViewModel.class);
         overviewMyPurchaseViewModel.item = buyItem;
         OverviewMyPurchaseFragment overviewMyPurchaseFragment = new OverviewMyPurchaseFragment();
         overviewMyPurchaseFragment.setPurchase(myPurchases.get(myPurchasesViewModel.positionOf(buyItem)));

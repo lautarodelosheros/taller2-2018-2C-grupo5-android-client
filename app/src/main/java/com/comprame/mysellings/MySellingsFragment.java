@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -24,11 +25,11 @@ import com.comprame.mypurchases.MyPurchase;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MySellingsFragment extends Fragment {
 
     private MySellingsViewModel mySellingsViewModel;
-    private RecyclerView recyclerView;
 
     private List<MyPurchase> mySellings = new ArrayList<>();
 
@@ -39,7 +40,7 @@ public class MySellingsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater
+    public View onCreateView(@NonNull LayoutInflater inflater
             , ViewGroup container
             , Bundle savedInstanceState) {
         mySellingsViewModel = ViewModelProviders.of(this)
@@ -51,8 +52,8 @@ public class MySellingsFragment extends Fragment {
                         , container
                         , false);
 
-        recyclerView = view.getRoot().findViewById(R.id.my_sellings_items);
-        recyclerView.getItemAnimator().setAddDuration(1000);
+        RecyclerView recyclerView = view.getRoot().findViewById(R.id.my_sellings_items);
+        Objects.requireNonNull(recyclerView.getItemAnimator()).setAddDuration(1000);
         recyclerView.getItemAnimator().setChangeDuration(1000);
         recyclerView.getItemAnimator().setMoveDuration(1000);
         recyclerView.getItemAnimator().setRemoveDuration(1000);
@@ -66,7 +67,7 @@ public class MySellingsFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         fetchMySellings(view);
     }
 
@@ -115,7 +116,8 @@ public class MySellingsFragment extends Fragment {
     }
 
     public void overviewMySelling(BuyItem buyItem) {
-        OverviewMySellViewModel overviewMySellViewModel = ViewModelProviders.of(getActivity()).get(OverviewMySellViewModel.class);
+        OverviewMySellViewModel overviewMySellViewModel = ViewModelProviders
+                .of(Objects.requireNonNull(getActivity())).get(OverviewMySellViewModel.class);
         overviewMySellViewModel.item = buyItem;
         OverviewMySellFragment overviewMySellFragment = new OverviewMySellFragment();
         overviewMySellFragment.setSell(mySellings.get(mySellingsViewModel.positionOf(buyItem)));

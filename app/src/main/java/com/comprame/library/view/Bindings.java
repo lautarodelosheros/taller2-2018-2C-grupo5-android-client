@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.comprame.R;
 import com.comprame.library.fun.Provider;
 
 public class Bindings {
@@ -69,6 +70,8 @@ public class Bindings {
     public static void loadImage(ImageView imageView, String url) {
         Glide.with(imageView.getContext())
                 .load(url)
+                .thumbnail(Glide.with(imageView.getContext()).load(R.drawable.loading_gif))
+                .error(R.drawable.logo)
                 .into(imageView);
     }
 

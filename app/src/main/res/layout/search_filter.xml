@@ -67,17 +67,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/location"
-                    android:onClick="@{fragment::openPlacePicker}"/>
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="italic"
-                    android:text="@string/item_location"/>
+                    android:text="@string/item_location"
+                    android:onClick="@{fragment::openPlacePicker}"
+                    android:drawableStart="@drawable/location"/>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
