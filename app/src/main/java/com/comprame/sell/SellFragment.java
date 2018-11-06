@@ -165,11 +165,13 @@ public class SellFragment extends Fragment {
                     LatLng latLng = place.getLatLng();
                     String placeName = String.format("%s", place.getAddress());
                     model.setGeolocation(new Geolocation(latLng.latitude, latLng.longitude, placeName));
+                    break;
                 case FILE_PATH_REQUEST_CODE:
                     Uri uri = data.getData();
                     progressPopupCloudinary = new ProgressPopup("Cargando imágenes...", getContext());
                     progressPopupCloudinary.show();
                     new UploadToCloudinary().execute(uri);
+                    break;
             }
         }
     }

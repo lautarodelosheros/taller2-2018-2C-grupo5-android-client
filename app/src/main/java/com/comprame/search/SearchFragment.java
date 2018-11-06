@@ -134,8 +134,8 @@ public class SearchFragment extends Fragment {
                         .and("offset", filter.offset)
                         .and("name", filter.name)
                         .and("description", filter.description)
-                        .and("latitude", filter.geolocation.getLatitude())
-                        .and("longitude", filter.geolocation.getLongitude())
+                        .and("latitude", filter.geolocation != null ? filter.geolocation.getLatitude() : null)
+                        .and("longitude", filter.geolocation != null ? filter.geolocation.getLongitude() : null)
                         .and("kilometers", filter.kilometers)
 
                 , SearchItem[].class)
