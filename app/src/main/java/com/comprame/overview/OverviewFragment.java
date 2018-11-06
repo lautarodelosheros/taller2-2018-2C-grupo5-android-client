@@ -89,9 +89,6 @@ public class OverviewFragment extends Fragment {
                 , Question[].class
                 , Headers.Authorization(Session.getInstance()))
                 .onDone((i, ex) -> progressPopup.dismiss())
-                .run((Question[] questions) -> questionsList.setQuestions(Arrays.asList(questions))
-                , Question[].class)
-                .onDone((q, ex) -> progressPopup.dismiss())
                 .run((Question[] questions) -> questionsList
                                 .setQuestions(Arrays.asList(questions)
                                         , user.getName().equals(overviewViewModel.item.getSeller()))
@@ -110,7 +107,8 @@ public class OverviewFragment extends Fragment {
 
         String path = "/user/" + Session.getInstance().getSessionToken();
 
-        App.appServer.get(path, User.class)
+        App.appServer.get(path, User.class
+                , Headers.Authorization(Session.getInstance()))
                 .run(
                         (User user) -> {
                             if (user.getName().isEmpty()) {
