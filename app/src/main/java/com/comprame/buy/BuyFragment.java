@@ -2,6 +2,7 @@ package com.comprame.buy;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -16,11 +17,17 @@ import com.comprame.databinding.BuyFragmentBinding;
 import com.comprame.library.rest.Headers;
 import com.comprame.library.view.ProgressPopup;
 import com.comprame.login.Session;
+import com.comprame.login.User;
+import com.comprame.overview.QuestionsList;
 import com.comprame.search.SearchFragment;
+
+import java.util.Objects;
 
 public class BuyFragment extends Fragment {
 
     private BuyViewModel model;
+
+    private ProgressPopup progressPopup;
 
     @Nullable
     @Override
@@ -32,6 +39,41 @@ public class BuyFragment extends Fragment {
         binding.setData(model);
         binding.setFragment(this);
         return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        loadSeller();
+    }
+
+    private void loadSeller() {
+        progressPopup = new ProgressPopup("Cargando...", getContext());
+        progressPopup.show();
+
+        String url = "/user/" + model.item.getSellerId();
+
+        App.appServer.get(url, User.class
+                , Headers.Authorization(Session.getInstance()))
+                .onDone((u, ex) -> progressPopup.dismiss())
+                .run(
+                        (User user) -> {
+                            if (user.getName().isEmpty()) {
+                                Toast.makeText(getContext()
+                                        , "No se encuentra el vendedor"
+                                        , Toast.LENGTH_SHORT)
+                                        .show();
+                            } else {
+                                model.setSeller(user.getName());
+                            }
+                        }
+                        , (Exception ex) -> {
+                            Log.d("ProfileListener", "Error al recuperar el perfil", ex);
+                            Toast.makeText(getContext()
+                                    , "Error al cargar el perfil"
+                                    , Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                );
     }
 
     public void buy(View item) {

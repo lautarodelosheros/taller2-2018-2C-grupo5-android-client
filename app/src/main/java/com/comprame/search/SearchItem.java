@@ -13,7 +13,7 @@ public class SearchItem implements Serializable {
     public final double unitPrice;
     public final String categories;
     public final List<String> imageUrls = new ArrayList<>();
-    public final String seller;
+    public final String sellerId;
     public final Geolocation geolocation;
     public final List<String> paymentMethods;
 
@@ -21,7 +21,7 @@ public class SearchItem implements Serializable {
             , String name
             , String description
             , double unitPrice
-            , String seller
+            , String sellerId
             , Geolocation geolocation
             , ArrayList<String> paymentMethods
             , String categories) {
@@ -30,7 +30,7 @@ public class SearchItem implements Serializable {
         this.name = name;
         this.description = description;
         this.unitPrice = unitPrice;
-        this.seller = seller;
+        this.sellerId = sellerId;
         this.geolocation = geolocation;
         this.paymentMethods = paymentMethods;
         this.categories = categories;

@@ -57,7 +57,7 @@
                 android:id="@+id/buy_seller"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{data.item.seller}" />
+                android:text="@{data.seller}" />
 
 
             <LinearLayout

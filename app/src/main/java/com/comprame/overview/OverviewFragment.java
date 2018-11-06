@@ -33,10 +33,12 @@ public class OverviewFragment extends Fragment {
     private QuestionsList questionsList;
     private NewQuestionPopupViewModel newQuestionPopupViewModel;
     public AnswerQuestionPopupViewModel answerQuestionPopupViewModel;
+    private OverviewFragmentBinding binding;
 
     private SliderLayout mSlider;
 
     private User user;
+    private User seller;
 
     ProgressPopup progressPopup;
 
@@ -50,7 +52,7 @@ public class OverviewFragment extends Fragment {
         answerQuestionPopupViewModel = ViewModelProviders.of(this)
                 .get(AnswerQuestionPopupViewModel.class);
 
-        OverviewFragmentBinding binding = OverviewFragmentBinding.inflate(inflater, container, false);
+        binding = OverviewFragmentBinding.inflate(inflater, container, false);
         overviewViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(OverviewViewModel.class);
         binding.setModel(overviewViewModel);
         binding.setFragment(this);
@@ -91,7 +93,7 @@ public class OverviewFragment extends Fragment {
                 .onDone((i, ex) -> progressPopup.dismiss())
                 .run((Question[] questions) -> questionsList
                                 .setQuestions(Arrays.asList(questions)
-                                        , user.getName().equals(overviewViewModel.item.getSeller()))
+                                        , user.getName().equals(seller.getName()))
                         , (Exception ex) -> {
                             Log.d("QuestionsListener", "Error al buscar las preguntas", ex);
                             Toast.makeText(getActivity()
@@ -105,26 +107,55 @@ public class OverviewFragment extends Fragment {
         progressPopup = new ProgressPopup("Cargando publicación...", getContext());
         progressPopup.show();
 
-        String path = "/user/" + Session.getInstance().getSessionToken();
-
-        App.appServer.get(path, User.class
+        App.appServer.get("/user/", User.class
                 , Headers.Authorization(Session.getInstance()))
                 .run(
                         (User user) -> {
                             if (user.getName().isEmpty()) {
+                                progressPopup.dismiss();
                                 Toast.makeText(getContext()
                                         , "No se encuentra el usuario"
                                         , Toast.LENGTH_SHORT)
                                         .show();
                             } else {
                                 this.user = user;
-                                loadQuestions();
+                                loadSeller();
                             }
                         }
                         , (Exception ex) -> {
                             Log.d("ProfileListener", "Error al recuperar el perfil", ex);
+                            progressPopup.dismiss();
                             Toast.makeText(getContext()
                                     , "Error al cargar el perfil"
+                                    , Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                );
+    }
+
+    private void loadSeller() {
+        String url = "/user/" + overviewViewModel.item.getSellerId();
+        App.appServer.get(url, User.class
+                , Headers.Authorization(Session.getInstance()))
+                .run(
+                        (User user) -> {
+                            if (user.getName().isEmpty()) {
+                                progressPopup.dismiss();
+                                Toast.makeText(getContext()
+                                        , "No se encuentra el vendedor"
+                                        , Toast.LENGTH_SHORT)
+                                        .show();
+                            } else {
+                                this.seller = user;
+                                overviewViewModel.setSeller(user.getName());
+                                loadQuestions();
+                            }
+                        }
+                        , (Exception ex) -> {
+                            Log.d("ProfileListener", "Error al recuperar el perfil del vendedor", ex);
+                            progressPopup.dismiss();
+                            Toast.makeText(getContext()
+                                    , "Error al cargar el perfil del vendedor"
                                     , Toast.LENGTH_LONG)
                                     .show();
                         }
@@ -156,11 +187,10 @@ public class OverviewFragment extends Fragment {
         progressDialog.show();
         Question question = answerQuestionPopupViewModel.asQuestion();
         question.item_id = overviewViewModel.item.getId();
-        question.responder = Session.getInstance().getSessionToken();
         App.appServer.put("/question/" + question.id
                 , question
-                , Session.class
-                , Headers.Authorization(Session.getInstance()))
+                , Question.class
+                , new Headers().authorization(Session.getInstance().getSessionToken()))
                 .onDone((s, ex) -> progressDialog.dismiss())
                 .run(s -> loadQuestions()
                         , ex -> Toast.makeText(this.getContext()
@@ -173,10 +203,10 @@ public class OverviewFragment extends Fragment {
         progressDialog.show();
         Question question = newQuestionPopupViewModel.asQuestion();
         question.item_id = overviewViewModel.item.getId();
-        question.questioner = Session.getInstance().getSessionToken();
         App.appServer.post("/question/"
                 , question
-                , Session.class, new Headers().authorization(Session.getInstance().getSessionToken()))
+                , Question.class
+                , new Headers().authorization(Session.getInstance().getSessionToken()))
                 .onDone((s, ex) -> progressDialog.dismiss())
                 .run(s -> loadQuestions()
                         , ex -> Toast.makeText(this.getContext()

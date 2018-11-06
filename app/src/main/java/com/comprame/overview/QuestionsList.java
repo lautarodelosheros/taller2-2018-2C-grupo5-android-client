@@ -40,11 +40,13 @@ public class QuestionsList {
                         overviewFragment.answerQuestionPopupViewModel.questioner.setValue(questioner);
                         answerQuestionPopup.show();
                     });
-            if (question.answer != null && userIsTheSeller) {
+            if (question.answer != null) {
                 ((TextView) view.findViewById(R.id.answer)).setText(question.answer);
                 ((TextView) view.findViewById(R.id.responder)).setText(question.responder);
                 view.findViewById(R.id.answer).setVisibility(View.VISIBLE);
                 view.findViewById(R.id.responder).setVisibility(View.VISIBLE);
+                view.findViewById(R.id.answer_button).setVisibility(View.GONE);
+            } else if (!userIsTheSeller) {
                 view.findViewById(R.id.answer_button).setVisibility(View.GONE);
             }
             questionsList.addView(view);

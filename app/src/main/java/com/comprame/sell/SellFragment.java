@@ -125,7 +125,7 @@ public class SellFragment extends Fragment {
         progressDialog.show();
         App.appServer.post("/item/"
                 , model.asSellItem()
-                , Session.class, new Headers().authorization(Session.getInstance().getSessionToken()))
+                , SellItem.class, new Headers().authorization(Session.getInstance().getSessionToken()))
                 .onDone((s, ex) -> progressDialog.dismiss())
                 .run(s -> search()
                         , this::showToastError);

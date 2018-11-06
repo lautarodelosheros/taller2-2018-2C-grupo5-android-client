@@ -42,6 +42,7 @@ public class BuyViewModel extends AndroidViewModel {
     public final CardViewModel card = new CardViewModel();
     public final MutableLiveData<Integer> units = new MutableLiveData<>();
     public final MutableLiveData<Double> total = new MutableLiveData<>();
+    public final MutableLiveData<String> seller = new MutableLiveData<>();
 
 
     public BuyViewModel(@NonNull Application application) {
@@ -49,6 +50,13 @@ public class BuyViewModel extends AndroidViewModel {
         units.setValue(1);
     }
 
+    public void setSeller(String seller) {
+        this.seller.setValue(seller);
+    }
+
+    public String getSeller() {
+        return this.seller.getValue();
+    }
 
     public void dec() {
         int value = units.getValue();

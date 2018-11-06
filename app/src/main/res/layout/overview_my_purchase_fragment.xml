@@ -57,12 +57,12 @@
                 android:textStyle="bold"
                 android:text="@{`Precio: ` + String.valueOf(model.item.unitPrice)}" />
 
-            <TextView
+            <!--TextView
                 android:id="@+id/overview_item_seller"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
-                android:text="@{`Vendedor: ` + model.item.seller}" />
+                android:text="@{`Vendedor: ` + model.seller}" /-->
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/open_chat_purchase_button"
