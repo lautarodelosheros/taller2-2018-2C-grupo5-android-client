@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.comprame.App;
 import com.comprame.R;
 import com.comprame.databinding.ProfileFragmentBinding;
+import com.comprame.library.rest.Headers;
 import com.comprame.login.Session;
 import com.comprame.login.User;
 import com.comprame.library.view.ProgressPopup;
@@ -52,7 +53,8 @@ public class ProfileFragment extends Fragment {
 
         String path = "/user/" + Session.getInstance().getSessionToken();
 
-        App.appServer.get(path, User.class)
+        App.appServer.get(path, User.class
+                , Headers.Authorization(Session.getInstance()))
                 .onDone((i, ex) -> progressPopup.dismiss())
                 .run(
                         (User user) -> {
@@ -86,7 +88,8 @@ public class ProfileFragment extends Fragment {
 
         String path = "/user/" + Session.getInstance().getSessionToken();
 
-        App.appServer.put(path, profileViewModel.asUser(), User.class)
+        App.appServer.put(path, profileViewModel.asUser(), User.class
+                , Headers.Authorization(Session.getInstance()))
                 .onDone((i, ex) -> progressPopup.dismiss())
                 .run(
                         (User user) -> {

@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.comprame.App;
 import com.comprame.R;
 import com.comprame.buy.BuyItem;
+import com.comprame.library.rest.Headers;
 import com.comprame.library.view.ProgressPopup;
 import com.comprame.login.Session;
 import com.comprame.mypurchases.MyPurchase;
@@ -75,7 +76,8 @@ public class MySellingsFragment extends Fragment {
         progressPopup.show();
 
         App.appServer.get("/purchase/?seller_id=" + Session.getInstance().getSessionToken()
-                , MyPurchase[].class)
+                , MyPurchase[].class
+                , Headers.Authorization(Session.getInstance()))
                 .onDone((i, ex) -> progressPopup.dismiss())
                 .run(
                         (MyPurchase[] purchases) -> {
@@ -101,7 +103,8 @@ public class MySellingsFragment extends Fragment {
 
     private void fetchItem(MyPurchase purchase, String itemId) {
         App.appServer.get("/item/" + itemId,
-                BuyItem.class)
+                BuyItem.class
+                , Headers.Authorization(Session.getInstance()))
                 .run((item) -> {
                     mySellingsViewModel.addItem(item);
                     mySellings.add(purchase);

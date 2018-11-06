@@ -15,6 +15,7 @@ import com.comprame.App;
 import com.comprame.MainActivity;
 import com.comprame.R;
 import com.comprame.databinding.LoginSignupFragmentBinding;
+import com.comprame.library.rest.Headers;
 import com.comprame.library.view.ProgressPopup;
 
 public class SignUpFragment extends Fragment {
@@ -43,7 +44,7 @@ public class SignUpFragment extends Fragment {
         App.appServer.post(
                 "/user/signup"
                 , model.asUser()
-                , SessionToken.class)
+                , SessionToken.class, new Headers())
                 .onDone((s, ex) -> progressPopup.dismiss())
                 .run(this::search
                         , ex -> Toast.makeText(getContext()

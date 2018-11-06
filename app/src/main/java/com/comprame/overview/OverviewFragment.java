@@ -17,12 +17,12 @@ import com.comprame.R;
 import com.comprame.buy.BuyFragment;
 import com.comprame.buy.BuyViewModel;
 import com.comprame.databinding.OverviewFragmentBinding;
+import com.comprame.library.rest.Headers;
 import com.comprame.library.rest.Query;
 import com.comprame.library.view.GlideSliderView;
 import com.comprame.library.view.ProgressPopup;
 import com.comprame.login.Session;
 import com.daimajia.slider.library.SliderLayout;
-import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 
 import java.util.Arrays;
 
@@ -90,7 +90,8 @@ public class OverviewFragment extends Fragment {
         App.appServer.get(
                 Query.query("/question/")
                         .and("item_id", overviewViewModel.item.getId())
-                , Question[].class)
+                , Question[].class
+                , Headers.Authorization(Session.getInstance()))
                 .onDone((i, ex) -> progressPopup.dismiss())
                 .run((Question[] questions) -> questionsList.setQuestions(Arrays.asList(questions))
                         , (Exception ex) -> {
@@ -129,7 +130,8 @@ public class OverviewFragment extends Fragment {
         question.responder = Session.getInstance().getSessionToken();
         App.appServer.put("/question/" + question.id
                 , question
-                , Session.class)
+                , Session.class
+                , Headers.Authorization(Session.getInstance()))
                 .onDone((s, ex) -> progressDialog.dismiss())
                 .run(s -> loadQuestions()
                         , ex -> Toast.makeText(this.getContext()
@@ -145,7 +147,7 @@ public class OverviewFragment extends Fragment {
         question.questioner = Session.getInstance().getSessionToken();
         App.appServer.post("/question/"
                 , question
-                , Session.class)
+                , Session.class, new Headers().authorization(Session.getInstance().getSessionToken()))
                 .onDone((s, ex) -> progressDialog.dismiss())
                 .run(s -> loadQuestions()
                         , ex -> Toast.makeText(this.getContext()

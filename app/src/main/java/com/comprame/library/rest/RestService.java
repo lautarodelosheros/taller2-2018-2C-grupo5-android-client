@@ -16,43 +16,47 @@ public class RestService {
 
     public <T> Async<T> post(String path
             , Object request
-            , Class<T> responseClass) {
+            , Class<T> responseClass, Headers headers) {
         return new VolleyJsonRequest<>(queue
                 , Request.Method.POST
                 , url + path
                 , request
                 , responseClass
+                , headers.headers
         );
     }
 
     public <T> Async<T> put(String path
             , Object request
-            , Class<T> responseClass) {
+            , Class<T> responseClass, Headers headers) {
         return new VolleyJsonRequest<>(queue
                 , Request.Method.PUT
                 , url + path
                 , request
                 , responseClass
+                , headers.headers
         );
     }
 
     public <T> Async<T> get(String path
-            , Class<T> responseClass) {
+            , Class<T> responseClass, Headers headers) {
         return new VolleyJsonRequest<>(queue
                 , Request.Method.GET
                 , url + path
                 , null
                 , responseClass
+                , headers.headers
         );
     }
 
     public <T> Async<T> get(Query queryParams
-            , Class<T> responseClass) {
+            , Class<T> responseClass, Headers headers) {
         return new VolleyJsonRequest<>(queue
                 , Request.Method.GET
                 , url + queryParams.string
                 , null
                 , responseClass
+                , headers.headers
         );
     }
 }

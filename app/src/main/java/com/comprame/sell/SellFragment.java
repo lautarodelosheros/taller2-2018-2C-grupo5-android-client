@@ -19,6 +19,7 @@ import com.cloudinary.Cloudinary;
 import com.comprame.App;
 import com.comprame.R;
 import com.comprame.databinding.SellFragmentBinding;
+import com.comprame.library.rest.Headers;
 import com.comprame.library.view.ProgressPopup;
 import com.comprame.login.Session;
 import com.comprame.search.SearchFragment;
@@ -107,7 +108,7 @@ public class SellFragment extends Fragment {
         progressDialog.show();
         App.appServer.post("/item/"
                 , model.asSellItem()
-                , Session.class)
+                , Session.class, new Headers().authorization(Session.getInstance().getSessionToken()))
                 .onDone((s, ex) -> progressDialog.dismiss())
                 .run(s -> search()
                         , this::showToastError);

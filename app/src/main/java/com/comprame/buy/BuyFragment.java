@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.comprame.App;
 import com.comprame.R;
 import com.comprame.databinding.BuyFragmentBinding;
+import com.comprame.library.rest.Headers;
 import com.comprame.library.view.ProgressPopup;
 import com.comprame.login.Session;
 import com.comprame.search.SearchFragment;
@@ -38,7 +39,8 @@ public class BuyFragment extends Fragment {
         popupWindow.show();
         App.appServer.post("/purchase/?buyer_id=" + Session.getInstance().getSessionToken()
                 , model.asPuchase()
-                , Object.class)
+                , Object.class
+                , Headers.Authorization(Session.getInstance()))
                 .onDone((ok, error) -> popupWindow.dismiss())
                 .run(
                         (ok) ->

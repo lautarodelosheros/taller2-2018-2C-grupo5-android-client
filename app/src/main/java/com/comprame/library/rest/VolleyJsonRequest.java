@@ -32,19 +32,21 @@ public class VolleyJsonRequest<T> implements Async<T> {
     private final String url;
     private final Object request;
     private final Class<T> clazz;
-    private final Map<String, String> headers = new HashMap<>();
+    private final Map<String, String> headers;
 
 
     public VolleyJsonRequest(RequestQueue queue
             , int method
             , String url
             , Object request
-            , Class<T> clazz) {
+            , Class<T> clazz
+            , Map<String, String> headers) {
         this.queue = queue;
         this.method = method;
         this.url = url;
         this.request = request;
         this.clazz = clazz;
+        this.headers = headers;
     }
 
     public void run(Consumer<T> onSuccess

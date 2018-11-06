@@ -16,6 +16,7 @@ import com.comprame.App;
 import com.comprame.MainActivity;
 import com.comprame.R;
 import com.comprame.databinding.LoginFragmentBinding;
+import com.comprame.library.rest.Headers;
 import com.comprame.library.view.ProgressPopup;
 
 public class LoginFragment extends Fragment {
@@ -44,7 +45,8 @@ public class LoginFragment extends Fragment {
         progressPopup.show();
         App.appServer.post(
                 "/user/login"
-                , model.asUser(), SessionToken.class)
+                , model.asUser(), SessionToken.class
+                , new Headers())
                 .onDone((s, ex) -> progressPopup.dismiss())
                 .run(this::search
                         , this::showToastError);

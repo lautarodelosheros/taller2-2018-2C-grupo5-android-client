@@ -4,9 +4,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,6 +17,7 @@ import android.widget.Toast;
 
 import com.comprame.App;
 import com.comprame.R;
+import com.comprame.library.rest.Headers;
 import com.comprame.login.Session;
 import com.comprame.login.User;
 import com.google.firebase.firestore.CollectionReference;
@@ -101,7 +100,9 @@ public class ChatFragment extends Fragment {
     private void loadProfile() {
         String path = "/user/" + Session.getInstance().getSessionToken();
 
-        App.appServer.get(path, User.class)
+        App.appServer.get(path
+                , User.class
+                , Headers.Authorization(Session.getInstance()))
                 .run(
                         (User user) -> {
                             if (user.getName().isEmpty()) {

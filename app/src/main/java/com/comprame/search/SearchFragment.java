@@ -22,8 +22,10 @@ import android.widget.Toast;
 import com.comprame.App;
 import com.comprame.R;
 import com.comprame.buy.BuyItem;
+import com.comprame.library.rest.Headers;
 import com.comprame.library.rest.Query;
 import com.comprame.library.view.ProgressPopup;
+import com.comprame.login.Session;
 import com.comprame.overview.OverviewFragment;
 import com.comprame.overview.OverviewViewModel;
 
@@ -125,7 +127,8 @@ public class SearchFragment extends Fragment {
                         .and("description", filter.description)
                         .and("location", filter.location)
 
-                , SearchItem[].class)
+                , SearchItem[].class
+                , Headers.Authorization(Session.getInstance()))
                 .onDone((i, ex) -> progressPopup.dismiss())
                 .run(
                         (SearchItem[] searchItems) -> {
@@ -151,7 +154,8 @@ public class SearchFragment extends Fragment {
         ProgressPopup progressPopup = new ProgressPopup("Cargando publicación...", getContext());
         progressPopup.show();
         App.appServer.get("/item/" + item.id,
-                BuyItem.class)
+                BuyItem.class
+                , Headers.Authorization(Session.getInstance()))
                 .run((ok) -> {
                     progressPopup.dismiss();
                     OverviewFragment overviewFragment = new OverviewFragment();

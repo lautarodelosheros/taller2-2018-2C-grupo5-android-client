@@ -4,7 +4,6 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -19,6 +18,7 @@ import android.widget.Toast;
 import com.comprame.App;
 import com.comprame.R;
 import com.comprame.buy.BuyItem;
+import com.comprame.library.rest.Headers;
 import com.comprame.library.view.ProgressPopup;
 import com.comprame.login.Session;
 
@@ -84,7 +84,8 @@ public class MyPurchasesFragment extends Fragment {
         progressPopup.show();
 
         App.appServer.get("/purchase/?buyer_id=" + Session.getInstance().getSessionToken()
-                , MyPurchase[].class)
+                , MyPurchase[].class
+                , Headers.Authorization(Session.getInstance()))
                 .onDone((i, ex) -> progressPopup.dismiss())
                 .run(
                         (MyPurchase[] purchases) -> {
@@ -110,7 +111,8 @@ public class MyPurchasesFragment extends Fragment {
 
     private void fetchItem(MyPurchase purchase, String itemId) {
         App.appServer.get("/item/" + itemId,
-                BuyItem.class)
+                BuyItem.class
+                , Headers.Authorization(Session.getInstance()))
                 .run((item) -> {
                     myPurchasesViewModel.addItem(item);
                     myPurchases.add(purchase);
