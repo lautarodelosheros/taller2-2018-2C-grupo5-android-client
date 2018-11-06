@@ -3,6 +3,7 @@ package com.comprame.profile;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -25,7 +26,7 @@ public class ProfileFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater
+    public View onCreateView(@NonNull LayoutInflater inflater
             , @Nullable ViewGroup container
             , @Nullable Bundle savedInstanceState) {
         ProfileFragmentBinding binding = DataBindingUtil.inflate(inflater
@@ -40,7 +41,7 @@ public class ProfileFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         profileViewModel = ViewModelProviders.of(this)
                 .get(ProfileViewModel.class);
 
@@ -51,9 +52,7 @@ public class ProfileFragment extends Fragment {
         ProgressPopup progressPopup = new ProgressPopup("Cargando perfil...", getContext());
         progressPopup.show();
 
-        String path = "/user/" + Session.getInstance().getSessionToken();
-
-        App.appServer.get(path, User.class
+        App.appServer.get("/user/", User.class
                 , Headers.Authorization(Session.getInstance()))
                 .onDone((i, ex) -> progressPopup.dismiss())
                 .run(
@@ -86,9 +85,7 @@ public class ProfileFragment extends Fragment {
         ProgressPopup progressPopup = new ProgressPopup("Actualizando perfil...", getContext());
         progressPopup.show();
 
-        String path = "/user/" + Session.getInstance().getSessionToken();
-
-        App.appServer.put(path, profileViewModel.asUser(), User.class
+        App.appServer.put("/user/", profileViewModel.asUser(), User.class
                 , Headers.Authorization(Session.getInstance()))
                 .onDone((i, ex) -> progressPopup.dismiss())
                 .run(
