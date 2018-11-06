@@ -14,11 +14,11 @@ public class SellViewModel extends AndroidViewModel {
     public final MutableLiveData<String> description = new MutableLiveData<>();
     public final MutableLiveData<String> units = new MutableLiveData<>();
     public final MutableLiveData<String> unitPrice = new MutableLiveData<>();
-    public final MutableLiveData<String> location = new MutableLiveData<>();
+    public final MutableLiveData<Geolocation> geolocation = new MutableLiveData<>();
     public final MutableLiveData<String> paymentMethod = new MutableLiveData<>();
     public final MutableLiveData<List<String>> categories = new MutableLiveData<>();
     public final MutableLiveData<Boolean> enabled = new MutableLiveData<>();
-    private final List<String> imageUrls = new ArrayList<String>();
+    private final List<String> imageUrls = new ArrayList<>();
 
     public SellViewModel(Application app) {
         super(app);
@@ -64,18 +64,19 @@ public class SellViewModel extends AndroidViewModel {
         String units = this.units.getValue();
         try {
             if (units == null || Double.valueOf(units) < 1) {
-                return "Debe ingresar un unidades mayor a uno.";
+                return "Debe ingresar una cantidad de unidades mayor a uno.";
             }
         } catch (NumberFormatException e) {
-            return "Debe ingresar un unidades mayor a uno.";
+            return "Debe ingresar una cantidad de unidades mayor a uno.";
         }
         return null;
     }
 
-    boolean isValid() {
+    private boolean isValid() {
         return descriptionError() == null
                 && nameError() == null
-                && unitPriceError() == null;
+                && unitPriceError() == null
+                && unitsError() == null;
     }
 
     public void addImageUrl(String newUrl) {
@@ -89,12 +90,12 @@ public class SellViewModel extends AndroidViewModel {
                 , Double.valueOf(unitPrice.getValue())
                 , imageUrls
                 , Session.getInstance().getSessionToken()
-                , location.getValue()
+                , geolocation.getValue()
                 , paymentMethod.getValue()
                 , categories.getValue());
     }
 
-    public void setLocation(String location) {
-        this.location.setValue(location);
+    public void setGeolocation(Geolocation geolocation) {
+        this.geolocation.setValue(geolocation);
     }
 }

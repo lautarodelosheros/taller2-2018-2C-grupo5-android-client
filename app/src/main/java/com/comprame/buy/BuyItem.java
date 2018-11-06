@@ -1,5 +1,7 @@
 package com.comprame.buy;
 
+import com.comprame.sell.Geolocation;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +13,7 @@ public class BuyItem implements Serializable {
     private double unitPrice;
     private List<String> imageUrls = new ArrayList<>();
     private String seller;
-    private String location;
+    private Geolocation geolocation;
     private List<String> paymentMethods;
     private String categories;
 
@@ -20,7 +22,7 @@ public class BuyItem implements Serializable {
             , String description
             , double unitPrice
             , String seller
-            , String location
+            , Geolocation geolocation
             , ArrayList<String> paymentMethods
             , String categories) {
 
@@ -29,7 +31,7 @@ public class BuyItem implements Serializable {
         this.description = description;
         this.unitPrice = unitPrice;
         this.seller = seller;
-        this.location = location;
+        this.geolocation = geolocation;
         this.paymentMethods = paymentMethods;
         this.categories = categories;
     }
@@ -66,12 +68,12 @@ public class BuyItem implements Serializable {
         this.seller = seller;
     }
 
-    public String getLocation() {
-        return location;
+    public Geolocation getGeolocation() {
+        return geolocation;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setGeolocation(Geolocation geolocation) {
+        this.geolocation = geolocation;
     }
 
     public void addImage(String url) {

@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Comprame</string>
-    <string name="action_settings">Settings</string>
     <string name="logo_desc">Logo</string>
     <string name="email_hint">Email</string>
     <string name="password_hint">Contraseña</string>
@@ -30,14 +29,11 @@
     <string name="upload_image">Cargar imagen</string>
 
     <string name="search">Buscar</string>
-    <string name="purchase">Compras</string>
-    <string name="help">Ayuda</string>
 
     <string name="imagen_item_desc">Imagen SearchItem</string>
     <string name="filtro">Filtro</string>
     <string name="nombre_articulo_hint">Título de la publicación</string>
     <string name="descripcion_articulo_hint">Descripción de la Publicación</string>
-    <string name="ubicacion_articulo_hint">Ubicación geográfica</string>
     <string name="boton_filtrar">Filtrar</string>
 
     <string name="item_payment_methods">Metodos de Pago</string>
@@ -67,15 +63,17 @@
     <string name="map_api_key">AIzaSyAtSeTb36nPHGAnXXnJxW-wrQ3_SgGBSKU</string>
     <string name="preguntas">Preguntas</string>
     <string name="new_question">Hacer una pregunta</string>
-    <string name="pregunta">Pregunta</string>
+    <string name="pregunta">Escribir una pregunta…</string>
     <string name="question_save_button">Preguntar</string>
     <string name="question_error">La pregunta debe tener al menos 2 caracteres</string>
     <string name="answer_error">La respuesta debe tener al menos 2 caracteres</string>
-    <string name="answer">Respuesta</string>
+    <string name="answer">Escribir una respuesta…</string>
     <string name="answer_save_button">Responder</string>
     <string name="my_purchases">Mis Compras</string>
     <string name="my_sellings">Mis Ventas</string>
     <string name="open_chat_purchase">Enviar un mensaje al vendedor</string>
     <string name="open_chat_sell">Enviar un mensaje al comprador</string>
-    <string name="send_message_hint">Escribir un mensaje...</string>
+    <string name="send_message_hint">Escribir un mensaje…</string>
+    <string name="kilometers_filter_hint">Distancia máxima (km)</string>
+    <string name="send_button_desc">Send button</string>
 </resources>

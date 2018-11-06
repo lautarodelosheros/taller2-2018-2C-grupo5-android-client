@@ -4,6 +4,8 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
 
+import com.comprame.sell.Geolocation;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +13,9 @@ public class SearchViewModel extends ViewModel {
 
     public static class SearchFilter {
         public String name;
-        public String location;
+        public Geolocation geolocation;
         public String description;
+        public String kilometers;
         public int size = 5;
         public int offset = 0;
     }

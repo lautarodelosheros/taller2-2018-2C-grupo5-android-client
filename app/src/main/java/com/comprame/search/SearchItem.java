@@ -1,5 +1,7 @@
 package com.comprame.search;
 
+import com.comprame.sell.Geolocation;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +14,7 @@ public class SearchItem implements Serializable {
     public final String categories;
     public final List<String> imageUrls = new ArrayList<>();
     public final String seller;
-    public final String location;
+    public final Geolocation geolocation;
     public final List<String> paymentMethods;
 
     public SearchItem(String id
@@ -20,7 +22,7 @@ public class SearchItem implements Serializable {
             , String description
             , double unitPrice
             , String seller
-            , String location
+            , Geolocation geolocation
             , ArrayList<String> paymentMethods
             , String categories) {
 
@@ -29,7 +31,7 @@ public class SearchItem implements Serializable {
         this.description = description;
         this.unitPrice = unitPrice;
         this.seller = seller;
-        this.location = location;
+        this.geolocation = geolocation;
         this.paymentMethods = paymentMethods;
         this.categories = categories;
     }

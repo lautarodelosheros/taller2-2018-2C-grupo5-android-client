@@ -97,24 +97,13 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/location"
-                    android:onClick="@{fragment::openPlacePicker}"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="italic"
-                    android:text="@string/item_location"/>
-
-            </LinearLayout>
+                android:textStyle="italic"
+                android:text="@string/item_location"
+                android:onClick="@{fragment::openPlacePicker}"
+                android:drawableStart="@drawable/location"/>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -142,6 +131,13 @@
                 android:text="@string/upload_image"
                 android:textColor="@color/white"
                 app:btn_enable="@{data.enabled}" />
+
+            <GridLayout
+                android:id="@+id/sell_item_images_grid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            </GridLayout>
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/sell_button"

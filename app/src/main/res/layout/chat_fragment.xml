@@ -60,7 +60,8 @@
                 android:src="@android:drawable/ic_menu_send"
                 android:clickable="true"
                 android:id="@+id/send_button"
-                android:focusable="true" />
+                android:focusable="true"
+                android:contentDescription="@string/send_button_desc" />
         </LinearLayout>
     </LinearLayout>
 </layout>

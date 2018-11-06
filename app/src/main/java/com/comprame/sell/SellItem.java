@@ -10,7 +10,7 @@ public class SellItem implements Serializable {
     public final double unitPrice;
     public final List<String> imageUrls;
     public final String sellerId;
-    public final String location;
+    public final Geolocation geolocation;
     public final String paymentMethod;
     public final List<String> categories;
 
@@ -20,7 +20,7 @@ public class SellItem implements Serializable {
             , double unitPrice
             , List<String> imageUrls
             , String sellerId
-            , String location
+            , Geolocation geolocation
             , String paymentMethod
             , List<String> categories) {
         this.name = name;
@@ -29,7 +29,7 @@ public class SellItem implements Serializable {
         this.unitPrice = unitPrice;
         this.imageUrls = imageUrls;
         this.sellerId = sellerId;
-        this.location = location;
+        this.geolocation = geolocation;
         this.paymentMethod = paymentMethod;
         this.categories = categories;
     }

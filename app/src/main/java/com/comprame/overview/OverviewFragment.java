@@ -1,9 +1,8 @@
 package com.comprame.overview;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -22,9 +21,11 @@ import com.comprame.library.rest.Query;
 import com.comprame.library.view.GlideSliderView;
 import com.comprame.library.view.ProgressPopup;
 import com.comprame.login.Session;
+import com.comprame.login.User;
 import com.daimajia.slider.library.SliderLayout;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class OverviewFragment extends Fragment {
 
@@ -35,11 +36,13 @@ public class OverviewFragment extends Fragment {
 
     private SliderLayout mSlider;
 
+    private User user;
+
     ProgressPopup progressPopup;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater
+    public View onCreateView(@NonNull LayoutInflater inflater
             , @Nullable ViewGroup container
             , @Nullable Bundle savedInstanceState) {
         newQuestionPopupViewModel = ViewModelProviders.of(this)
@@ -48,15 +51,9 @@ public class OverviewFragment extends Fragment {
                 .get(AnswerQuestionPopupViewModel.class);
 
         OverviewFragmentBinding binding = OverviewFragmentBinding.inflate(inflater, container, false);
-        overviewViewModel = ViewModelProviders.of(getActivity()).get(OverviewViewModel.class);
+        overviewViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(OverviewViewModel.class);
         binding.setModel(overviewViewModel);
         binding.setFragment(this);
-
-        ViewDataBinding view =
-                DataBindingUtil.inflate(inflater
-                        , R.layout.overview_fragment
-                        , container
-                        , false);
 
         mSlider = binding.slider;
 
@@ -79,14 +76,13 @@ public class OverviewFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        questionsList = new QuestionsList(getView().findViewById(R.id.questions_list), this);
-        loadQuestions();
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        questionsList = new QuestionsList(Objects.requireNonNull(getView())
+                .findViewById(R.id.questions_list), this);
+        loadOverview();
     }
 
     private void loadQuestions() {
-        progressPopup = new ProgressPopup("Cargando preguntas...", getContext());
-        progressPopup.show();
         App.appServer.get(
                 Query.query("/question/")
                         .and("item_id", overviewViewModel.item.getId())
@@ -94,6 +90,11 @@ public class OverviewFragment extends Fragment {
                 , Headers.Authorization(Session.getInstance()))
                 .onDone((i, ex) -> progressPopup.dismiss())
                 .run((Question[] questions) -> questionsList.setQuestions(Arrays.asList(questions))
+                , Question[].class)
+                .onDone((q, ex) -> progressPopup.dismiss())
+                .run((Question[] questions) -> questionsList
+                                .setQuestions(Arrays.asList(questions)
+                                        , user.getName().equals(overviewViewModel.item.getSeller()))
                         , (Exception ex) -> {
                             Log.d("QuestionsListener", "Error al buscar las preguntas", ex);
                             Toast.makeText(getActivity()
@@ -103,9 +104,39 @@ public class OverviewFragment extends Fragment {
                         });
     }
 
+    private void loadOverview() {
+        progressPopup = new ProgressPopup("Cargando publicación...", getContext());
+        progressPopup.show();
+
+        String path = "/user/" + Session.getInstance().getSessionToken();
+
+        App.appServer.get(path, User.class)
+                .run(
+                        (User user) -> {
+                            if (user.getName().isEmpty()) {
+                                Toast.makeText(getContext()
+                                        , "No se encuentra el usuario"
+                                        , Toast.LENGTH_SHORT)
+                                        .show();
+                            } else {
+                                this.user = user;
+                                loadQuestions();
+                            }
+                        }
+                        , (Exception ex) -> {
+                            Log.d("ProfileListener", "Error al recuperar el perfil", ex);
+                            Toast.makeText(getContext()
+                                    , "Error al cargar el perfil"
+                                    , Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                );
+    }
+
     public void buy(View view) {
         BuyFragment buyFragment = new BuyFragment();
-        BuyViewModel buyViewModel = ViewModelProviders.of(getActivity()).get(BuyViewModel.class);
+        BuyViewModel buyViewModel = ViewModelProviders
+                .of(Objects.requireNonNull(getActivity())).get(BuyViewModel.class);
         buyViewModel.item = overviewViewModel.item;
         buyViewModel.total.setValue(overviewViewModel.item.getUnitPrice());
         getActivity()
@@ -140,7 +171,7 @@ public class OverviewFragment extends Fragment {
     }
 
     private void createNewQuestion(View view) {
-        ProgressPopup progressDialog = new ProgressPopup("Creando pregunta...", this.getContext());
+        ProgressPopup progressDialog = new ProgressPopup("Cargando pregunta...", this.getContext());
         progressDialog.show();
         Question question = newQuestionPopupViewModel.asQuestion();
         question.item_id = overviewViewModel.item.getId();

@@ -8,11 +8,15 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.cloudinary.Cloudinary;
@@ -20,6 +24,7 @@ import com.comprame.App;
 import com.comprame.R;
 import com.comprame.databinding.SellFragmentBinding;
 import com.comprame.library.rest.Headers;
+import com.comprame.library.view.Bindings;
 import com.comprame.library.view.ProgressPopup;
 import com.comprame.login.Session;
 import com.comprame.search.SearchFragment;
@@ -27,11 +32,13 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import static android.app.Activity.RESULT_OK;
 import static com.comprame.Config.CLOUDINARY_CLOUD_NAME;
@@ -45,11 +52,13 @@ public class SellFragment extends Fragment {
     private static final int FILE_PATH_REQUEST_CODE = 0;
     private ProgressPopup progressPopupCloudinary;
 
+    private GridLayout imagesGrid;
+
     private Handler mHandler;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater
+    public View onCreateView(@NonNull LayoutInflater inflater
             , @Nullable ViewGroup container
             , @Nullable Bundle savedInstanceState) {
         SellFragmentBinding sellFragmentBinding = SellFragmentBinding.inflate(inflater, container, false);
@@ -57,10 +66,19 @@ public class SellFragment extends Fragment {
         model = ViewModelProviders.of(this).get(SellViewModel.class);
         sellFragmentBinding.setData(model);
 
+        imagesGrid = sellFragmentBinding.getRoot().findViewById(R.id.sell_item_images_grid);
+
         mHandler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message message) {
                 progressPopupCloudinary.dismiss();
+                String imageUrl = (String) message.obj;
+
+                ImageView imageView = new ImageView(getContext());
+                Bindings.loadImage(imageView, imageUrl);
+                CardView cardView = new CardView(getContext());
+                cardView.addView(imageView);
+                imagesGrid.addView(cardView);
             }
         };
 
@@ -80,19 +98,18 @@ public class SellFragment extends Fragment {
             }};
             Cloudinary cloudinary = new Cloudinary(config);
             try {
-                InputStream fileInputStream = getContext().getContentResolver().
+                InputStream fileInputStream = Objects.requireNonNull(getContext()).getContentResolver().
                         openInputStream((Uri) objects[0]);
                 Map uploadResult = cloudinary.uploader().unsignedUpload(fileInputStream,
                         CLOUDINARY_UPLOAD_PRESET, null);
 
                 model.addImageUrl(String.valueOf(uploadResult.get("url")));
+
+                Message message = mHandler.obtainMessage(0, String.valueOf(uploadResult.get("url")));
+                message.sendToTarget();
             } catch (IOException | NullPointerException e) {
                 e.printStackTrace();
             }
-
-            Message message = mHandler.obtainMessage(0, null);
-            message.sendToTarget();
-
             return null;
         }
     }
@@ -121,7 +138,7 @@ public class SellFragment extends Fragment {
     }
 
     private void search() {
-        getActivity()
+        Objects.requireNonNull(getActivity())
                 .getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_container, new SearchFragment())
@@ -131,7 +148,7 @@ public class SellFragment extends Fragment {
     public void openPlacePicker(View view) {
         PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
         try {
-            getActivity().startActivityForResult(builder.build(getActivity()), PLACE_PICKER_REQUEST);
+            getActivity().startActivityForResult(builder.build(Objects.requireNonNull(getActivity())), PLACE_PICKER_REQUEST);
         } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
             e.printStackTrace();
         }
@@ -145,14 +162,17 @@ public class SellFragment extends Fragment {
         if (resultCode == RESULT_OK) {
             switch (requestCode){
                 case PLACE_PICKER_REQUEST:
-                    Place place = PlacePicker.getPlace(getActivity(), data);
+                    Place place = PlacePicker.getPlace(Objects.requireNonNull(getActivity()), data);
+                    LatLng latLng = place.getLatLng();
                     String placeName = String.format("%s", place.getAddress());
-                    model.setLocation(placeName);
+                    model.setGeolocation(new Geolocation(latLng.latitude, latLng.longitude, placeName));
+                    break;
                 case FILE_PATH_REQUEST_CODE:
                     Uri uri = data.getData();
                     progressPopupCloudinary = new ProgressPopup("Cargando imágenes...", getContext());
                     progressPopupCloudinary.show();
                     new UploadToCloudinary().execute(uri);
+                    break;
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.comprame.search;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
@@ -28,8 +29,18 @@ import com.comprame.library.view.ProgressPopup;
 import com.comprame.login.Session;
 import com.comprame.overview.OverviewFragment;
 import com.comprame.overview.OverviewViewModel;
+import com.comprame.sell.Geolocation;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Arrays;
+import java.util.Objects;
+
+import static android.app.Activity.RESULT_OK;
+import static com.comprame.MainActivity.PLACE_PICKER_REQUEST;
 
 public class SearchFragment extends Fragment {
     private static final int ITEM_OFFSET = 5;
@@ -125,7 +136,9 @@ public class SearchFragment extends Fragment {
                         .and("offset", filter.offset)
                         .and("name", filter.name)
                         .and("description", filter.description)
-                        .and("location", filter.location)
+                        .and("latitude", filter.geolocation != null ? filter.geolocation.getLatitude() : null)
+                        .and("longitude", filter.geolocation != null ? filter.geolocation.getLongitude() : null)
+                        .and("kilometers", filter.kilometers)
 
                 , SearchItem[].class
                 , Headers.Authorization(Session.getInstance()))
@@ -176,5 +189,29 @@ public class SearchFragment extends Fragment {
                 });
     }
 
+    public void openPlacePicker(View view) {
+        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+        try {
+            getActivity().startActivityForResult(builder.build(Objects.requireNonNull(getActivity())), PLACE_PICKER_REQUEST);
+        } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            switch (requestCode){
+                case PLACE_PICKER_REQUEST:
+                    Place place = PlacePicker.getPlace(Objects.requireNonNull(getActivity()), data);
+                    LatLng latLng = place.getLatLng();
+                    String placeName = String.format("%s", place.getAddress());
+                    searchViewModel.filter().geolocation = new Geolocation(latLng.latitude, latLng.longitude, placeName);
+            }
+        }
+    }
 
 }

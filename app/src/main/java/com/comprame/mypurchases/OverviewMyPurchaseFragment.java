@@ -1,9 +1,8 @@
 package com.comprame.mypurchases;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,38 +12,28 @@ import android.view.ViewGroup;
 import com.comprame.R;
 import com.comprame.databinding.OverviewMyPurchaseFragmentBinding;
 import com.comprame.library.view.GlideSliderView;
-import com.comprame.library.view.ProgressPopup;
 import com.daimajia.slider.library.SliderLayout;
-import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
+
+import java.util.Objects;
 
 public class OverviewMyPurchaseFragment extends Fragment {
 
-    private OverviewMyPurchaseViewModel overviewMyPurchaseViewModel;
-
-    private SliderLayout mSlider;
-
     private MyPurchase purchase;
-
-    ProgressPopup progressPopup;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater
+    public View onCreateView(@NonNull LayoutInflater inflater
             , @Nullable ViewGroup container
             , @Nullable Bundle savedInstanceState) {
 
-        OverviewMyPurchaseFragmentBinding binding = OverviewMyPurchaseFragmentBinding.inflate(inflater, container, false);
-        overviewMyPurchaseViewModel = ViewModelProviders.of(getActivity()).get(OverviewMyPurchaseViewModel.class);
+        OverviewMyPurchaseFragmentBinding binding = OverviewMyPurchaseFragmentBinding
+                .inflate(inflater, container, false);
+        OverviewMyPurchaseViewModel overviewMyPurchaseViewModel = ViewModelProviders
+                .of(Objects.requireNonNull(getActivity())).get(OverviewMyPurchaseViewModel.class);
         binding.setModel(overviewMyPurchaseViewModel);
         binding.setFragment(this);
 
-        ViewDataBinding view =
-                DataBindingUtil.inflate(inflater
-                        , R.layout.overview_my_purchase_fragment
-                        , container
-                        , false);
-
-        mSlider = binding.slider;
+        SliderLayout mSlider = binding.slider;
 
         if (overviewMyPurchaseViewModel.item.getImages() != null) {
 
@@ -71,9 +60,9 @@ public class OverviewMyPurchaseFragment extends Fragment {
     public void openChat(View view) {
         ChatFragment chatFragment = new ChatFragment();
         chatFragment.setPurchase(this.purchase);
-        getActivity().getSupportFragmentManager()
+        Objects.requireNonNull(getActivity()).getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_container, chatFragment, "ChatFragement")
+                .replace(R.id.main_container, chatFragment, "ChatFragment")
                 .commit();
     }
 

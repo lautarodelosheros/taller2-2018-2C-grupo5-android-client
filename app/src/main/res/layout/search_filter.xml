@@ -6,6 +6,9 @@
 
     <data>
         <variable
+            name="fragment"
+            type="com.comprame.search.SearchFragment" />
+        <variable
             name="owner"
             type="com.comprame.search.SearchFilterPopUp" />
         <variable
@@ -59,20 +62,35 @@
             </android.support.design.widget.TextInputLayout>
 
             <!-- Filtro ubicacion -->
-            <android.support.design.widget.TextInputLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp">
+                android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/search_filter_location"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="italic"
+                    android:text="@string/item_location"
+                    android:onClick="@{fragment::openPlacePicker}"
+                    android:drawableStart="@drawable/location"/>
+
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/ubicacion_articulo_hint"
-                    android:inputType="text"
-                    android:text="@={searchViewModel.filter.location}" />
-            </android.support.design.widget.TextInputLayout>
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp">
+
+                    <EditText
+                        android:id="@+id/search_filter_kilometers"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/kilometers_filter_hint"
+                        android:inputType="numberDecimal"
+                        android:text="@={searchViewModel.filter.kilometers}" />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/search_filter_btn"
