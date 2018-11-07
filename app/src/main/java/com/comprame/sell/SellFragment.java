@@ -77,11 +77,13 @@ public class SellFragment extends Fragment {
                 progressPopupCloudinary.dismiss();
                 String imageUrl = (String) message.obj;
 
-                ImageView imageView = new ImageView(getContext());
+                ImageView imageView = new ImageView(sellFragmentBinding.getRoot().getContext());
                 Bindings.loadImage(imageView, imageUrl);
-                CardView cardView = new CardView(getContext());
-                cardView.addView(imageView);
-                imagesGrid.addView(cardView);
+                GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+                params.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, GridLayout.FILL, 1f);
+                params.width = 0;
+                imageView.setLayoutParams(params);
+                imagesGrid.addView(imageView);
             }
         };
 
