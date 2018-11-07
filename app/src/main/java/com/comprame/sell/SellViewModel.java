@@ -24,7 +24,6 @@ public class SellViewModel extends AndroidViewModel {
         super(app);
         enabled.setValue(false);
         units.setValue("1");
-        unitPrice.setValue("0");
         name.observeForever((s) -> enabled.setValue(this.isValid()));
         description.observeForever((s) -> enabled.setValue(this.isValid()));
         units.observeForever((s) -> enabled.setValue(this.isValid()));

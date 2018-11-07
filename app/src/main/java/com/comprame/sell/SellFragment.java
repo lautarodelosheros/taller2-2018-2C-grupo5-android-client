@@ -79,10 +79,6 @@ public class SellFragment extends Fragment {
 
                 ImageView imageView = new ImageView(sellFragmentBinding.getRoot().getContext());
                 Bindings.loadImage(imageView, imageUrl);
-                GridLayout.LayoutParams params = new GridLayout.LayoutParams();
-                params.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, GridLayout.FILL, 1f);
-                params.width = 0;
-                imageView.setLayoutParams(params);
                 imagesGrid.addView(imageView);
             }
         };
