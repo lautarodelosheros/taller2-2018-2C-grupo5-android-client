@@ -98,9 +98,7 @@ public class ChatFragment extends Fragment {
     }
 
     private void loadProfile() {
-        String path = "/user/" + Session.getInstance().getSessionToken();
-
-        App.appServer.get(path
+        App.appServer.get("/user/"
                 , User.class
                 , Headers.Authorization(Session.getInstance()))
                 .run(
