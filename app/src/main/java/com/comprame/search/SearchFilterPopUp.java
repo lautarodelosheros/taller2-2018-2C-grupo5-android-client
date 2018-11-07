@@ -11,10 +11,12 @@ import com.comprame.library.fun.Consumer;
 public class SearchFilterPopUp {
     private Consumer<View> onSearch;
     private AlertDialog popupWindow;
+    private SearchFragment searchFragment;
 
-    public SearchFilterPopUp(Fragment fragment, SearchViewModel searchViewModel
+    public SearchFilterPopUp(SearchFragment fragment, SearchViewModel searchViewModel
             ,
                              Consumer<View> onSearch) {
+        this.searchFragment = fragment;
         this.onSearch = onSearch;
         SearchFilterBinding filterBinding
                 = SearchFilterBinding.inflate(LayoutInflater.from(fragment.getContext()));
@@ -31,6 +33,10 @@ public class SearchFilterPopUp {
 
     public void show() {
         popupWindow.show();
+    }
+
+    public void openPlacePicker(View view) {
+        this.searchFragment.openPlacePicker(view);
     }
 
     public void search(View view) {

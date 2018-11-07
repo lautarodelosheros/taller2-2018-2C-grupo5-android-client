@@ -48,7 +48,14 @@ public class MainActivity extends AppCompatActivity
             switch (requestCode){
                 case PLACE_PICKER_REQUEST:
                     Fragment sellFragment = getSupportFragmentManager().findFragmentByTag("SellFragment");
-                    sellFragment.onActivityResult(requestCode, resultCode, data);
+                    if (sellFragment != null)
+                        sellFragment.onActivityResult(requestCode, resultCode, data);
+                    else {
+                        Fragment searchFragment = getSupportFragmentManager().findFragmentByTag("SearchFragment");
+                        if (searchFragment != null)
+                            searchFragment.onActivityResult(requestCode, resultCode, data);
+
+                    }
             }
         }
     }
@@ -125,7 +132,7 @@ public class MainActivity extends AppCompatActivity
     public void searchFragment() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_container, new SearchFragment())
+                .replace(R.id.main_container, new SearchFragment(), "SearchFragment")
                 .commit();
     }
 
