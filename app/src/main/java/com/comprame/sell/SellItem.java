@@ -13,6 +13,7 @@ public class SellItem implements Serializable {
     public final Geolocation geolocation;
     public final String paymentMethod;
     public final List<String> categories;
+    public final String currency;
 
     public SellItem(String name
             , String description
@@ -32,5 +33,6 @@ public class SellItem implements Serializable {
         this.geolocation = geolocation;
         this.paymentMethod = paymentMethod;
         this.categories = categories;
+        this.currency = "ARS";
     }
 }
