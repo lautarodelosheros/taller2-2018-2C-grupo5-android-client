@@ -71,7 +71,6 @@ public class VolleyJsonRequest<T> implements Async<T> {
                     Log.d("Rest", url
                             + "\n Request:" + requestBody);
                     Cache.Entry entry = HttpHeaderParser.parseCacheHeaders(response);
-                    // if (Log.isLoggable("Rest", Log.DEBUG))
                     Log.d("Rest", url
                             + "\n Response:" + responseBody);
                     return Response.success(result, entry);

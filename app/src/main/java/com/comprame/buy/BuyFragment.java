@@ -79,7 +79,7 @@ public class BuyFragment extends Fragment {
     public void buy(View item) {
         ProgressPopup popupWindow = new ProgressPopup("Procesando Pago", getContext());
         popupWindow.show();
-        App.appServer.post("/purchase/?buyer_id=" + Session.getInstance().getSessionToken()
+        App.appServer.post("/purchase/"
                 , model.asPuchase()
                 , Object.class
                 , Headers.Authorization(Session.getInstance()))
