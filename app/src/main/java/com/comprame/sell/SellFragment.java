@@ -17,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cloudinary.Cloudinary;
@@ -51,6 +53,7 @@ public class SellFragment extends Fragment {
     private SellViewModel model;
     private static final int FILE_PATH_REQUEST_CODE = 0;
     private ProgressPopup progressPopupCloudinary;
+    private SellFragmentBinding sellFragmentBinding;
 
     private GridLayout imagesGrid;
 
@@ -61,7 +64,7 @@ public class SellFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater
             , @Nullable ViewGroup container
             , @Nullable Bundle savedInstanceState) {
-        SellFragmentBinding sellFragmentBinding = SellFragmentBinding.inflate(inflater, container, false);
+        sellFragmentBinding = SellFragmentBinding.inflate(inflater, container, false);
         sellFragmentBinding.setFragment(this);
         model = ViewModelProviders.of(this).get(SellViewModel.class);
         sellFragmentBinding.setData(model);
@@ -166,6 +169,7 @@ public class SellFragment extends Fragment {
                     LatLng latLng = place.getLatLng();
                     String placeName = String.format("%s", place.getAddress());
                     model.setGeolocation(new Geolocation(latLng.latitude, latLng.longitude, placeName));
+                    addAddress(placeName);
                     break;
                 case FILE_PATH_REQUEST_CODE:
                     Uri uri = data.getData();
@@ -175,5 +179,13 @@ public class SellFragment extends Fragment {
                     break;
             }
         }
+    }
+
+    private void addAddress(String placeName) {
+        LinearLayout linearLayout = sellFragmentBinding.getRoot().findViewById(R.id.list_geolocation_sell);
+        linearLayout.removeAllViews();
+        TextView textView = new TextView(sellFragmentBinding.getRoot().getContext());
+        textView.setText(placeName);
+        linearLayout.addView(textView);
     }
 }

@@ -72,6 +72,8 @@ public class ChatFragment extends Fragment {
 
         chatCollection.addSnapshotListener((v, e) -> loadChat());
 
+        loadProfile();
+
         return view.getRoot();
     }
 
@@ -89,8 +91,6 @@ public class ChatFragment extends Fragment {
                             chatViewModel.addChatMessage(new ChatMessage(userName, message, timestamp));
                         }
                         recyclerView.smoothScrollToPosition(chatViewModel.size());
-                        if (this.user == null)
-                            loadProfile();
                     } else {
                         Toast.makeText(getContext(), "Error al leer", Toast.LENGTH_SHORT).show();
                     }

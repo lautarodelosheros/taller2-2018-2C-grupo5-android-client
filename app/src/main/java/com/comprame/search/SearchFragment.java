@@ -18,6 +18,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.comprame.App;
@@ -210,8 +212,13 @@ public class SearchFragment extends Fragment {
                     LatLng latLng = place.getLatLng();
                     String placeName = String.format("%s", place.getAddress());
                     searchViewModel.filter().geolocation = new Geolocation(latLng.latitude, latLng.longitude, placeName);
+                    addAddress(placeName);
             }
         }
+    }
+
+    private void addAddress(String placeName) {
+        searchFilterPopUp.addAddress(placeName);
     }
 
 }

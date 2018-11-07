@@ -33,7 +33,7 @@
     <string name="imagen_item_desc">Imagen SearchItem</string>
     <string name="filtro">Filtro</string>
     <string name="nombre_articulo_hint">Título de la publicación</string>
-    <string name="descripcion_articulo_hint">Descripción de la Publicación</string>
+    <string name="descripcion_articulo_hint">Descripción de la publicación</string>
     <string name="boton_filtrar">Filtrar</string>
 
     <string name="item_payment_methods">Metodos de Pago</string>

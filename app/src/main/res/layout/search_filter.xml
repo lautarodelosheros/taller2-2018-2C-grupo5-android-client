@@ -60,28 +60,38 @@
 
             <!-- Filtro ubicacion -->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="italic"
-                    android:text="@string/item_location"
-                    android:onClick="@{owner::openPlacePicker}"
-                    android:drawableStart="@drawable/location"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:text="@string/item_location"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:onClick="@{owner::openPlacePicker}"
+                android:drawableStart="@drawable/location"/>
 
-                <android.support.design.widget.TextInputLayout
+            <LinearLayout
+                android:id="@+id/list_geolocation_filter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            </LinearLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+
+                <EditText
+                    android:id="@+id/search_filter_kilometers"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp">
-
-                    <EditText
-                        android:id="@+id/search_filter_kilometers"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/kilometers_filter_hint"
-                        android:inputType="numberDecimal"
-                        android:text="@={searchViewModel.filter.kilometers}" />
-                </android.support.design.widget.TextInputLayout>
+                    android:hint="@string/kilometers_filter_hint"
+                    android:inputType="numberDecimal"
+                    android:text="@={searchViewModel.filter.kilometers}" />
+            </android.support.design.widget.TextInputLayout>
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/search_filter_btn"
