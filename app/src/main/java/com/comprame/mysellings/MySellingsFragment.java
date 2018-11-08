@@ -76,7 +76,7 @@ public class MySellingsFragment extends Fragment {
         ProgressPopup progressPopup = new ProgressPopup("Cargando Mis Ventas...", getContext());
         progressPopup.show();
 
-        App.appServer.get("/purchase/?seller" + Session.getInstance().getSessionToken()
+        App.appServer.get("/purchase/?seller"
                 , MyPurchase[].class
                 , Headers.Authorization(Session.getInstance()))
                 .onDone((i, ex) -> progressPopup.dismiss())
