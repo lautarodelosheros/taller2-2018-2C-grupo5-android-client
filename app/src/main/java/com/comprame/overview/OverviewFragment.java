@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.comprame.App;
@@ -148,6 +149,7 @@ public class OverviewFragment extends Fragment {
                             } else {
                                 this.seller = user;
                                 overviewViewModel.setSeller(user.getName());
+                                addSeller(user.getName());
                                 loadQuestions();
                             }
                         }
@@ -160,6 +162,11 @@ public class OverviewFragment extends Fragment {
                                     .show();
                         }
                 );
+    }
+
+    private void addSeller(String name) {
+        ((TextView) binding.getRoot()
+                .findViewById(R.id.overview_item_seller)).setText("Vendedor: " + name);
     }
 
     public void buy(View view) {

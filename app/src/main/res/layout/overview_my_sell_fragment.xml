@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:text="@{`Precio: ` + String.valueOf(model.item.unitPrice)}" />
+                android:text="@{`Precio: $` + String.valueOf(model.item.unitPrice)}" />
 
             <!--TextView
                 android:id="@+id/overview_item_seller"

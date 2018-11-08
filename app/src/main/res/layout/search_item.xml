@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/search_item_picture"
                 android:padding="8dp"
-                android:text="@{searchItemModel.price}"
+                android:text="@{`$` + searchItemModel.price}"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold" />

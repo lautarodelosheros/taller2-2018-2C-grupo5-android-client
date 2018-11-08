@@ -70,8 +70,10 @@ public class Bindings {
     public static void loadImage(ImageView imageView, String url) {
         Glide.with(imageView.getContext())
                 .load(url)
-                .thumbnail(Glide.with(imageView.getContext()).load(R.drawable.loading_gif))
+                .placeholder(R.drawable.logo)
                 .error(R.drawable.logo)
+                .centerCrop()
+                .fitCenter()
                 .into(imageView);
     }
 

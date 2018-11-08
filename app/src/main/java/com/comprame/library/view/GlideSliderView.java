@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.comprame.R;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 
 public class GlideSliderView extends DefaultSliderView {
@@ -22,6 +23,7 @@ public class GlideSliderView extends DefaultSliderView {
         Glide.with(getContext())
                 .load(getUrl())
                 .centerCrop()
+                .fitCenter()
                 .crossFade()
                 .into(targetImageView);
     }
