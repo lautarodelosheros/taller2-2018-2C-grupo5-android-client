@@ -42,6 +42,11 @@ public class MySellingsItemsAdapter extends RecyclerView.Adapter<MySellingsItems
                 .setOnClickListener((l) -> mySellingsFragment.overviewMySelling(buyItem));
     }
 
+    public void removeAllItems() {
+        this.items.items.getValue().clear();
+        this.notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return items.size();

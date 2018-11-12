@@ -50,6 +50,7 @@ public class SearchFragment extends Fragment {
     private SearchViewModel searchViewModel;
     private SearchFilterPopUp searchFilterPopUp;
     private RecyclerView recyclerView;
+    private SearchItemsAdapter searchItemsAdapter;
 
     private boolean moreItemsLeft = true;
 
@@ -79,7 +80,8 @@ public class SearchFragment extends Fragment {
         recyclerView.getItemAnimator().setRemoveDuration(1000);
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext()
                 , DividerItemDecoration.VERTICAL));
-        recyclerView.setAdapter(new SearchItemsAdapter(searchViewModel, this));
+        searchItemsAdapter = new SearchItemsAdapter(searchViewModel, this);
+        recyclerView.setAdapter(searchItemsAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -123,6 +125,8 @@ public class SearchFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        searchViewModel.removeAllItems();
+        searchViewModel.setOffset(0);
         fetchItems(view);
     }
 
@@ -180,6 +184,7 @@ public class SearchFragment extends Fragment {
                             .getSupportFragmentManager()
                             .beginTransaction()
                             .replace(R.id.main_container, overviewFragment)
+                            .addToBackStack(null)
                             .commit();
                 }, (ex) -> {
                     progressPopup.dismiss();

@@ -63,6 +63,7 @@ public class OverviewMyPurchaseFragment extends Fragment {
         Objects.requireNonNull(getActivity()).getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_container, chatFragment, "ChatFragment")
+                .addToBackStack(null)
                 .commit();
     }
 

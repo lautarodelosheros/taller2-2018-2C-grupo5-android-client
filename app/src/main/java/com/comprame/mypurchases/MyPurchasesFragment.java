@@ -30,6 +30,7 @@ import java.util.Objects;
 public class MyPurchasesFragment extends Fragment {
 
     private MyPurchasesViewModel myPurchasesViewModel;
+    private MyPurchasesItemsAdapter myPurchasesItemsAdapter;
 
     private List<MyPurchase> myPurchases = new ArrayList<>();
 
@@ -59,7 +60,8 @@ public class MyPurchasesFragment extends Fragment {
         recyclerView.getItemAnimator().setRemoveDuration(1000);
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext()
                 , DividerItemDecoration.VERTICAL));
-        recyclerView.setAdapter(new MyPurchasesItemsAdapter(myPurchasesViewModel, this));
+        myPurchasesItemsAdapter = new MyPurchasesItemsAdapter(myPurchasesViewModel, this);
+        recyclerView.setAdapter(myPurchasesItemsAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
 
@@ -69,6 +71,12 @@ public class MyPurchasesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         fetchMyPurchases(view);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        myPurchasesItemsAdapter.removeAllItems();
     }
 
     public void fetchMyPurchases(View view) {
@@ -126,6 +134,7 @@ public class MyPurchasesFragment extends Fragment {
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_container, overviewMyPurchaseFragment, "OverviewMyPurchaseFragment")
+                .addToBackStack(null)
                 .commit();
     }
 }

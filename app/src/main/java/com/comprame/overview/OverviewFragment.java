@@ -179,6 +179,7 @@ public class OverviewFragment extends Fragment {
                 .getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_container, buyFragment)
+                .addToBackStack(null)
                 .commit();
     }
 

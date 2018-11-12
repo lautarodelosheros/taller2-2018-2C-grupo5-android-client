@@ -31,6 +31,7 @@ import java.util.Objects;
 public class MySellingsFragment extends Fragment {
 
     private MySellingsViewModel mySellingsViewModel;
+    private MySellingsItemsAdapter mySellingsItemsAdapter;
 
     private List<MyPurchase> mySellings = new ArrayList<>();
 
@@ -60,11 +61,18 @@ public class MySellingsFragment extends Fragment {
         recyclerView.getItemAnimator().setRemoveDuration(1000);
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext()
                 , DividerItemDecoration.VERTICAL));
-        recyclerView.setAdapter(new MySellingsItemsAdapter(mySellingsViewModel, this));
+        mySellingsItemsAdapter = new MySellingsItemsAdapter(mySellingsViewModel, this);
+        recyclerView.setAdapter(mySellingsItemsAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
 
         return view.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mySellingsItemsAdapter.removeAllItems();
     }
 
     @Override
@@ -127,6 +135,7 @@ public class MySellingsFragment extends Fragment {
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_container, overviewMySellFragment, "OverviewMySellFragment")
+                .addToBackStack(null)
                 .commit();
     }
 }

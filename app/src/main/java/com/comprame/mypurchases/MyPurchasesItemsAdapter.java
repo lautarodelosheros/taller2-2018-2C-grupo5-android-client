@@ -47,6 +47,11 @@ public class MyPurchasesItemsAdapter extends RecyclerView.Adapter<MyPurchasesIte
         return items.size();
     }
 
+    public void removeAllItems() {
+        this.items.items.getValue().clear();
+        this.notifyDataSetChanged();
+    }
+
     class MyPurchasesItemViewHolder extends RecyclerView.ViewHolder {
 
         private final MyPurchasesItemBinding buyItem;

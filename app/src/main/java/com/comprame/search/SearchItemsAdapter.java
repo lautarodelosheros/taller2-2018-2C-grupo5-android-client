@@ -46,6 +46,11 @@ public class SearchItemsAdapter extends RecyclerView.Adapter<SearchItemsAdapter.
         return items.size();
     }
 
+    public void removeAllItems() {
+        this.items.removeAllItems();
+        this.notifyDataSetChanged();
+    }
+
     class SearchItemViewHolder extends RecyclerView.ViewHolder {
 
         private final SearchItemBinding searchItem;

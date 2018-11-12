@@ -143,6 +143,7 @@ public class SellFragment extends Fragment {
                 .getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_container, new SearchFragment())
+                .addToBackStack(null)
                 .commit();
     }
 

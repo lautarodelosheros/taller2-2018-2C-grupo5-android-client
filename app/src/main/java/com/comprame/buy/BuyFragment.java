@@ -90,6 +90,7 @@ public class BuyFragment extends Fragment {
                                         .getSupportFragmentManager()
                                         .beginTransaction()
                                         .replace(R.id.main_container, new SearchFragment())
+                                        .addToBackStack(null)
                                         .commit()
                         , (ex) -> {
                             Log.d("BuyFragment", "Comprando Item", ex);
