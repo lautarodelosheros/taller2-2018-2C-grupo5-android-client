@@ -16,6 +16,7 @@ import com.comprame.login.Session;
 import com.comprame.mypurchases.MyPurchasesFragment;
 import com.comprame.mysellings.MySellingsFragment;
 import com.comprame.profile.ProfileFragment;
+import com.comprame.qrcode.BuyWithQRFragment;
 import com.comprame.search.SearchFragment;
 import com.comprame.sell.SellFragment;
 
@@ -97,6 +98,9 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_sellings:
                 mySellings();
                 return true;
+            case R.id.nav_qr_code:
+                buyWithQRFragment();
+                return true;
         }
         return false;
     }
@@ -105,6 +109,7 @@ public class MainActivity extends AppCompatActivity
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_container, new MyPurchasesFragment())
+                .addToBackStack(null)
                 .commit();
     }
 
@@ -112,6 +117,7 @@ public class MainActivity extends AppCompatActivity
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_container, new MySellingsFragment())
+                .addToBackStack(null)
                 .commit();
     }
 
@@ -119,6 +125,7 @@ public class MainActivity extends AppCompatActivity
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_container, new ProfileFragment())
+                .addToBackStack(null)
                 .commit();
     }
 
@@ -126,6 +133,7 @@ public class MainActivity extends AppCompatActivity
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_container, new SellFragment(), "SellFragment")
+                .addToBackStack(null)
                 .commit();
     }
 
@@ -133,8 +141,15 @@ public class MainActivity extends AppCompatActivity
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_container, new SearchFragment(), "SearchFragment")
+                .addToBackStack(null)
                 .commit();
     }
 
-
+    public void buyWithQRFragment() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_container, new BuyWithQRFragment(), "BuyWithQRFragment")
+                .addToBackStack(null)
+                .commit();
+    }
 }

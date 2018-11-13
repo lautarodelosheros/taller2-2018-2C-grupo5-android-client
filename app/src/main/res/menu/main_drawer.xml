@@ -31,5 +31,10 @@
             android:icon="@drawable/ic_launcher_foreground"
             android:title="@string/my_sellings" />
         <!--android:onClick="@{(v) -> mySellingsFragment()}"-->
+        <item
+            android:id="@+id/nav_qr_code"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="@string/qr_code" />
+        <!--android:onClick="@{(v) -> buyWithQRFragment()}"-->
     </group>
 </menu>

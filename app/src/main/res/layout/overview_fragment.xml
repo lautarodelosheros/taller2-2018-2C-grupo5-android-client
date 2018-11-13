@@ -88,18 +88,50 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
 
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/new_question_button"
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/new_question_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="24dp"
+                    android:background="@color/colorPrimary"
+                    android:padding="12dp"
+                    android:text="@string/new_question"
+                    android:textColor="@color/white"
+                    android:onClick="@{fragment::newQuestion}"/>
+
+            <ProgressBar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="24dp"
-                android:background="@color/colorPrimary"
-                android:padding="12dp"
-                android:text="@string/new_question"
-                android:textColor="@color/white"
-                android:onClick="@{fragment::newQuestion}"/>
+                android:id="@+id/qrProgressBar" />
 
-        </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/qrTextExplanation"
+                android:textColor="@color/black"
+                android:textAlignment="center"
+                android:visibility="gone"
+                android:text="@string/qr_code_explanation"/>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp">
+
+                <ImageView
+                    android:id="@+id/qrCodeImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginStart="25dp"
+                    android:contentDescription="@null"
+                    android:onClick="@{fragment::printQRCode}" />
+
+            </FrameLayout>
+
+            </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </layout>
