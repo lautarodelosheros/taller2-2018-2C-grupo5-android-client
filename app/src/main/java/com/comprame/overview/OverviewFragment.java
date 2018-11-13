@@ -1,14 +1,20 @@
 package com.comprame.overview;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.print.PrintHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +29,9 @@ import com.comprame.library.view.GlideSliderView;
 import com.comprame.library.view.ProgressPopup;
 import com.comprame.login.Session;
 import com.comprame.login.User;
+import com.comprame.qrcode.QRCodeHelper;
 import com.daimajia.slider.library.SliderLayout;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -74,7 +82,6 @@ public class OverviewFragment extends Fragment {
         } else {
             mSlider.setVisibility(View.GONE);
         }
-
         return binding.getRoot();
     }
 
@@ -83,6 +90,7 @@ public class OverviewFragment extends Fragment {
         questionsList = new QuestionsList(Objects.requireNonNull(getView())
                 .findViewById(R.id.questions_list), this);
         loadOverview();
+        new QRLoader().execute(this.overviewViewModel.item.getId());
     }
 
     private void loadQuestions() {
@@ -227,6 +235,37 @@ public class OverviewFragment extends Fragment {
         // To prevent a memory leak on rotation, make sure to call stopAutoCycle() on the slider before activity or fragment is destroyed
         mSlider.stopAutoCycle();
         super.onStop();
+    }
+
+    public void printQRCode(View view) {
+        ImageView imageView = view.getRootView().findViewById(R.id.qrCodeImageView);
+        PrintHelper printHelper = new PrintHelper(Objects.requireNonNull(getContext()));
+        printHelper.setScaleMode(PrintHelper.SCALE_MODE_FIT);
+        printHelper.printBitmap("print", ((BitmapDrawable)imageView.getDrawable()).getBitmap());
+    }
+
+    private class QRLoader extends AsyncTask<String, Integer, Bitmap> {
+
+        @Override
+        protected Bitmap doInBackground(String... params) {
+            return QRCodeHelper
+                    .newInstance(getContext())
+                    .setContent(params[0])
+                    .setErrorCorrectionLevel(ErrorCorrectionLevel.Q)
+                    .setMargin(2)
+                    .getQRCode();
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            super.onPostExecute(bitmap);
+            TextView textView = Objects.requireNonNull(getView()).findViewById(R.id.qrTextExplanation);
+            textView.setVisibility(View.VISIBLE);
+            ProgressBar progressBar = getView().findViewById(R.id.qrProgressBar);
+            progressBar.setVisibility(View.GONE);
+            ImageView qrCodeImageView = Objects.requireNonNull(getView()).findViewById(R.id.qrCodeImageView);
+            qrCodeImageView.setImageBitmap(bitmap);
+        }
     }
 
 }

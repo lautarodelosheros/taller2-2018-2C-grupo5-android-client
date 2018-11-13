@@ -76,4 +76,7 @@
     <string name="send_message_hint">Escribir un mensaje…</string>
     <string name="kilometers_filter_hint">Distancia máxima (km)</string>
     <string name="send_button_desc">Send button</string>
+    <string name="qr_code">Comprar con Código QR</string>
+    <string name="generate_qr_code">Generar código QR</string>
+    <string name="qr_code_explanation">Podés usar este código QR para acceder a esta publicación de la manera más fácil! Tocá la imagen para imprimir</string>
 </resources>
