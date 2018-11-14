@@ -43,6 +43,7 @@ public class OverviewFragment extends Fragment {
     private NewQuestionPopupViewModel newQuestionPopupViewModel;
     public AnswerQuestionPopupViewModel answerQuestionPopupViewModel;
     private OverviewFragmentBinding binding;
+    private AsyncTask qrTask;
 
     private SliderLayout mSlider;
 
@@ -90,7 +91,7 @@ public class OverviewFragment extends Fragment {
         questionsList = new QuestionsList(Objects.requireNonNull(getView())
                 .findViewById(R.id.questions_list), this);
         loadOverview();
-        new QRLoader().execute(this.overviewViewModel.item.getId());
+        qrTask = new QRLoader().execute(this.overviewViewModel.item.getId());
     }
 
     private void loadQuestions() {
@@ -234,6 +235,8 @@ public class OverviewFragment extends Fragment {
     public void onStop() {
         // To prevent a memory leak on rotation, make sure to call stopAutoCycle() on the slider before activity or fragment is destroyed
         mSlider.stopAutoCycle();
+        if(qrTask != null && qrTask.getStatus() == AsyncTask.Status.RUNNING)
+            qrTask.cancel(true);
         super.onStop();
     }
 
