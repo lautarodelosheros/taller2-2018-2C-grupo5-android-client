@@ -56,6 +56,11 @@ public class LoginFragment extends Fragment {
     public void search(SessionToken session) {
         Session.getInstance().setSessionToken(session.getSession());
         Intent intent = new Intent(getContext(), MainActivity.class);
+
+        Bundle bundle = new Bundle();
+        bundle.putString("name", model.name.getValue());
+        intent.putExtras(bundle);
+
         startActivity(intent);
 
     }

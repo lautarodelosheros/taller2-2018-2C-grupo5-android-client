@@ -11,6 +11,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.comprame.login.Session;
 import com.comprame.mypurchases.MyPurchasesFragment;
@@ -36,7 +38,21 @@ public class MainActivity extends AppCompatActivity
 
         session = Session.getInstance();
 
+        Bundle bundle = getIntent().getExtras();
+        String name = "";
+        if(bundle != null)
+            name = bundle.getString("name");
+
+        setHeaderData(name);
+
         searchFragment();
+    }
+
+    private void setHeaderData(String name) {
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = headerView.findViewById(R.id.header_username);
+        navUsername.setText(name);
     }
 
     public final static int PLACE_PICKER_REQUEST = 999;
