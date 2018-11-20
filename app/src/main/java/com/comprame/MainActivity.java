@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.comprame.categories.CategoriesFragment;
 import com.comprame.login.Session;
 import com.comprame.mypurchases.MyPurchasesFragment;
 import com.comprame.mysellings.MySellingsFragment;
@@ -156,7 +157,7 @@ public class MainActivity extends AppCompatActivity
     public void searchFragment() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_container, new SearchFragment(), "SearchFragment")
+                .replace(R.id.main_container, new CategoriesFragment(), "CategoriesFragment")
                 .addToBackStack(null)
                 .commit();
     }

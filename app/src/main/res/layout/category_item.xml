@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/search_item"
+    tools:context="com.comprame.MainActivity">
+
+    <data>
+
+        <variable
+            name="categoryModel"
+            type="com.comprame.categories.CategoryViewModel" />
+    </data>
+
+    <android.support.v7.widget.CardView
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/category_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="@{categoryModel.category}"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </android.support.v7.widget.CardView>
+</layout>

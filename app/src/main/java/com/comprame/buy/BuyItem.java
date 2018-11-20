@@ -15,7 +15,7 @@ public class BuyItem implements Serializable {
     private String sellerId;
     private Geolocation geolocation;
     private List<String> paymentMethods;
-    private String categories;
+    private List<String> categories;
 
     public BuyItem(String id
             , String name
@@ -24,7 +24,7 @@ public class BuyItem implements Serializable {
             , String sellerId
             , Geolocation geolocation
             , ArrayList<String> paymentMethods
-            , String categories) {
+            , List<String> categories) {
 
         this.id = id;
         this.name = name;
@@ -103,11 +103,11 @@ public class BuyItem implements Serializable {
         this.paymentMethods = paymentMethods;
     }
 
-    public String getCategories() {
+    public List<String> getCategories() {
         return categories;
     }
 
-    public void setCategories(String categories) {
+    public void setCategories(List<String> categories) {
         this.categories = categories;
     }
 

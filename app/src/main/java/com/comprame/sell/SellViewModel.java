@@ -7,6 +7,7 @@ import android.arch.lifecycle.MutableLiveData;
 import com.comprame.login.Session;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SellViewModel extends AndroidViewModel {
@@ -16,7 +17,7 @@ public class SellViewModel extends AndroidViewModel {
     public final MutableLiveData<String> unitPrice = new MutableLiveData<>();
     public final MutableLiveData<Geolocation> geolocation = new MutableLiveData<>();
     public final MutableLiveData<String> paymentMethod = new MutableLiveData<>();
-    public final MutableLiveData<List<String>> categories = new MutableLiveData<>();
+    public final MutableLiveData<String> categories = new MutableLiveData<>();
     public final MutableLiveData<Boolean> enabled = new MutableLiveData<>();
     private final List<String> imageUrls = new ArrayList<>();
 
@@ -91,7 +92,7 @@ public class SellViewModel extends AndroidViewModel {
                 , Session.getInstance().getSessionToken()
                 , geolocation.getValue()
                 , paymentMethod.getValue()
-                , categories.getValue());
+                , Arrays.asList(categories.getValue().split(" ")));
     }
 
     public void setGeolocation(Geolocation geolocation) {

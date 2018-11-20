@@ -53,6 +53,7 @@ public class SearchFragment extends Fragment {
     private SearchItemsAdapter searchItemsAdapter;
 
     private boolean moreItemsLeft = true;
+    private String category;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -142,6 +143,7 @@ public class SearchFragment extends Fragment {
                         .and("offset", filter.offset)
                         .and("name", filter.name)
                         .and("description", filter.description)
+                        .and("category", this.category)
                         .and("latitude", filter.geolocation != null ? filter.geolocation.getLatitude() : null)
                         .and("longitude", filter.geolocation != null ? filter.geolocation.getLongitude() : null)
                         .and("kilometers", filter.kilometers)
@@ -226,4 +228,7 @@ public class SearchFragment extends Fragment {
         searchFilterPopUp.addAddress(placeName);
     }
 
+    public void setCategory(String category) {
+        this.category = category;
+    }
 }
