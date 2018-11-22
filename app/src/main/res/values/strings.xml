@@ -38,7 +38,7 @@
 
     <string name="item_payment_methods">Metodos de Pago</string>
     <string name="item_category">Categorias</string>
-    <string name="item_location">Ubicación</string>
+    <string name="item_location">UBICACIÓN</string>
     <string name="item_unit_price">Precio Unitario</string>
     <string name="item_units">Unidades</string>
     <string name="item_description">Descripción</string>
@@ -79,4 +79,7 @@
     <string name="qr_code">Comprar con Código QR</string>
     <string name="generate_qr_code">Generar código QR</string>
     <string name="qr_code_explanation">Podés usar este código QR para acceder a esta publicación de la manera más fácil! Tocá la imagen para imprimir</string>
+    <string name="categories">CATEGORÍAS</string>
+    <string name="category">Categoría</string>
+    <string name="category_save_button">Agregar categoría</string>
 </resources>

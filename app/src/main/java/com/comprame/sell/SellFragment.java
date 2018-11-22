@@ -54,6 +54,7 @@ public class SellFragment extends Fragment {
     private static final int FILE_PATH_REQUEST_CODE = 0;
     private ProgressPopup progressPopupCloudinary;
     private SellFragmentBinding sellFragmentBinding;
+    private CategoryPopupViewModel categoryPopupViewModel;
 
     private GridLayout imagesGrid;
 
@@ -68,6 +69,9 @@ public class SellFragment extends Fragment {
         sellFragmentBinding.setFragment(this);
         model = ViewModelProviders.of(this).get(SellViewModel.class);
         sellFragmentBinding.setData(model);
+
+        categoryPopupViewModel = ViewModelProviders.of(this)
+                .get(CategoryPopupViewModel.class);
 
         imagesGrid = sellFragmentBinding.getRoot().findViewById(R.id.sell_item_images_grid);
 
@@ -178,6 +182,22 @@ public class SellFragment extends Fragment {
                     break;
             }
         }
+    }
+
+    public void openCategoryPopup(View view) {
+        CategoryPopup categoryPopup = new CategoryPopup(this
+                , categoryPopupViewModel
+                , this::addCategory);
+        categoryPopup.show();
+    }
+
+    private void addCategory(View view) {
+        model.addCategory(categoryPopupViewModel.getCategory());
+        GridLayout categoryList = sellFragmentBinding.getRoot().findViewById(R.id.category_list);
+        View categoryItem = getLayoutInflater().inflate(R.layout.category_item, null);
+        TextView categoryName = categoryItem.findViewById(R.id.category_name);
+        categoryName.setText(categoryPopupViewModel.getCategory());
+        categoryList.addView(categoryItem);
     }
 
     private void addAddress(String placeName) {

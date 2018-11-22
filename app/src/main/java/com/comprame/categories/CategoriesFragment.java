@@ -72,8 +72,6 @@ public class CategoriesFragment extends Fragment {
         recyclerView.getItemAnimator().setChangeDuration(1000);
         recyclerView.getItemAnimator().setMoveDuration(1000);
         recyclerView.getItemAnimator().setRemoveDuration(1000);
-        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext()
-                , DividerItemDecoration.VERTICAL));
         categoriesAdapter = new CategoriesAdapter(categoriesViewModel, this);
         recyclerView.setAdapter(categoriesAdapter);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), NUMBER_OF_COLUMNS);

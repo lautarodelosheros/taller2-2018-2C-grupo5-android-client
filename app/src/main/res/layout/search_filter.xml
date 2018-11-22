@@ -69,7 +69,7 @@
                 android:textAlignment="center"
                 android:gravity="center"
                 android:onClick="@{owner::openPlacePicker}"
-                android:drawableStart="@drawable/location"/>
+                android:drawableStart="@drawable/ic_location"/>
 
             <LinearLayout
                 android:id="@+id/list_geolocation_filter"

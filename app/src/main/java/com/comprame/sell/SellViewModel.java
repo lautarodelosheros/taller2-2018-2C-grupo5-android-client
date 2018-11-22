@@ -17,7 +17,7 @@ public class SellViewModel extends AndroidViewModel {
     public final MutableLiveData<String> unitPrice = new MutableLiveData<>();
     public final MutableLiveData<Geolocation> geolocation = new MutableLiveData<>();
     public final MutableLiveData<String> paymentMethod = new MutableLiveData<>();
-    public final MutableLiveData<String> categories = new MutableLiveData<>();
+    public final MutableLiveData<List<String>> categories = new MutableLiveData<>();
     public final MutableLiveData<Boolean> enabled = new MutableLiveData<>();
     private final List<String> imageUrls = new ArrayList<>();
 
@@ -25,6 +25,7 @@ public class SellViewModel extends AndroidViewModel {
         super(app);
         enabled.setValue(false);
         units.setValue("1");
+        categories.setValue(new ArrayList<>());
         name.observeForever((s) -> enabled.setValue(this.isValid()));
         description.observeForever((s) -> enabled.setValue(this.isValid()));
         units.observeForever((s) -> enabled.setValue(this.isValid()));
@@ -83,6 +84,10 @@ public class SellViewModel extends AndroidViewModel {
         this.imageUrls.add(newUrl);
     }
 
+    public void addCategory(String category) {
+        this.categories.getValue().add(category);
+    }
+
     public SellItem asSellItem() {
         return new SellItem(name.getValue()
                 , description.getValue()
@@ -92,7 +97,7 @@ public class SellViewModel extends AndroidViewModel {
                 , Session.getInstance().getSessionToken()
                 , geolocation.getValue()
                 , paymentMethod.getValue()
-                , Arrays.asList(categories.getValue().split(" ")));
+                , categories.getValue());
     }
 
     public void setGeolocation(Geolocation geolocation) {
