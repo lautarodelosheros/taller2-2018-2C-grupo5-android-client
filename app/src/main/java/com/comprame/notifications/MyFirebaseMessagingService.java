@@ -27,8 +27,11 @@ import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.comprame.App;
 import com.comprame.MainActivity;
 import com.comprame.R;
+import com.comprame.library.rest.Headers;
+import com.comprame.login.Session;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -86,7 +89,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onNewToken(String token) {
         Log.d(TAG, "Refreshed token: " + token);
 
-        sendRegistrationToServer(token);
+        App.appServer.post("/firebase/" + token
+                , token
+                , String.class
+                , new Headers().authorization(Session.getInstance().getSessionToken()))
+                .run((s) -> Log.d("FirebaseTokenListener", "Token sent correctly"),
+                        (ex) -> Log.d("FirebaseTokenListener", ex.toString()));
     }
     // [END on_new_token]
 
