@@ -18,6 +18,7 @@ import com.comprame.categories.CategoriesFragment;
 import com.comprame.login.Session;
 import com.comprame.mypurchases.MyPurchasesFragment;
 import com.comprame.mysellings.MySellingsFragment;
+import com.comprame.notifications.FirebaseMessagingManager;
 import com.comprame.profile.ProfileFragment;
 import com.comprame.qrcode.BuyWithQRFragment;
 import com.comprame.search.SearchFragment;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity
     private DrawerLayout drawerLayout;
 
     public Session session;
+    private FirebaseMessagingManager firebaseMessagingManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,8 @@ public class MainActivity extends AppCompatActivity
             name = bundle.getString("name");
 
         setHeaderData(name);
+
+        firebaseMessagingManager = new FirebaseMessagingManager(this);
 
         searchFragment();
     }
