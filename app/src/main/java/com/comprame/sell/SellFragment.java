@@ -56,7 +56,7 @@ public class SellFragment extends Fragment {
     private SellFragmentBinding sellFragmentBinding;
     private CategoryPopupViewModel categoryPopupViewModel;
 
-    private GridLayout imagesGrid;
+    private LinearLayout imagesGrid;
 
     private Handler mHandler;
 

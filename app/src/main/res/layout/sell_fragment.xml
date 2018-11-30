@@ -171,13 +171,11 @@
                 android:text="@string/upload_image"
                 android:textColor="@color/white" />
 
-            <GridLayout
+            <LinearLayout
                 android:id="@+id/sell_item_images_grid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:columnCount="4">
-            </GridLayout>
+                android:orientation="vertical" />
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/sell_button"

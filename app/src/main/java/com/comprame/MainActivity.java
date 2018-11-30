@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.comprame.categories.CategoriesFragment;
 import com.comprame.login.Session;
+import com.comprame.mypublications.MyPublicationsFragment;
 import com.comprame.mypurchases.MyPurchasesFragment;
 import com.comprame.mysellings.MySellingsFragment;
 import com.comprame.notifications.FirebaseMessagingManager;
@@ -113,6 +114,9 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_search:
                 searchFragment();
                 return true;
+            case R.id.nav_publications:
+                myPublications();
+                return true;
             case R.id.nav_purchases:
                 myPurchases();
                 return true;
@@ -124,6 +128,14 @@ public class MainActivity extends AppCompatActivity
                 return true;
         }
         return false;
+    }
+
+    private void myPublications() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_container, new MyPublicationsFragment())
+                .addToBackStack(null)
+                .commit();
     }
 
     private void myPurchases() {

@@ -22,6 +22,11 @@
             android:title="@string/search" />
         <!--android:onClick="@{(v) -> searchFragment()}"-->
         <item
+            android:id="@+id/nav_publications"
+            android:icon="@drawable/ic_my_sellings"
+            android:title="@string/my_publications" />
+        <!--android:onClick="@{(v) -> myPublicationsFragment()}"-->
+        <item
             android:id="@+id/nav_purchases"
             android:icon="@drawable/ic_my_purchases"
             android:title="@string/my_purchases" />

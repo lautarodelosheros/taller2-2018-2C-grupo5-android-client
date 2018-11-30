@@ -86,4 +86,5 @@
     <string name="default_notification_channel_name" translatable="true">News</string>
     <string name="msg_subscribe_failed">Failed to subscribe to news topic</string>
     <string name="fcm_message">Notificación de comprame!</string>
+    <string name="my_publications">Mis Publicaciones</string>
 </resources>
