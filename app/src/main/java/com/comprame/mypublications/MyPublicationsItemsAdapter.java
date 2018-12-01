@@ -7,13 +7,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.comprame.R;
-import com.comprame.buy.BuyItem;
 import com.comprame.databinding.MyPublicationsItemBinding;
-import com.comprame.databinding.MySellingsItemBinding;
-import com.comprame.mysellings.MySellingsFragment;
-import com.comprame.mysellings.MySellingsItemViewModel;
-import com.comprame.mysellings.MySellingsViewModel;
-import com.comprame.sell.SellItem;
 
 public class MyPublicationsItemsAdapter extends RecyclerView.Adapter<MyPublicationsItemsAdapter.MyPublicationsItemViewHolder> {
 
@@ -40,15 +34,15 @@ public class MyPublicationsItemsAdapter extends RecyclerView.Adapter<MyPublicati
 
     @Override
     public void onBindViewHolder(@NonNull MyPublicationsItemViewHolder holder, int position) {
-        SellItem sellItem = items.items.getValue().get(position);
-        holder.sellItem.setMyPublicationsItemModel(new MyPublicationsItemViewModel(sellItem));
-        holder.sellItem
+        Publication publication = items.publications.getValue().get(position);
+        holder.publication.setMyPublicationsItemModel(new MyPublicationsItemViewModel(publication));
+        holder.publication
                 .getRoot()
-                .setOnClickListener((l) -> myPublicationsFragment.overviewMyPublication(sellItem));
+                .setOnClickListener((l) -> myPublicationsFragment.overviewMyPublication(publication));
     }
 
     public void removeAllItems() {
-        this.items.items.getValue().clear();
+        this.items.publications.getValue().clear();
         this.notifyDataSetChanged();
     }
 
@@ -59,11 +53,11 @@ public class MyPublicationsItemsAdapter extends RecyclerView.Adapter<MyPublicati
 
     class MyPublicationsItemViewHolder extends RecyclerView.ViewHolder {
 
-        private final MyPublicationsItemBinding sellItem;
+        private final MyPublicationsItemBinding publication;
 
-        MyPublicationsItemViewHolder(final MyPublicationsItemBinding sellItem) {
-            super(sellItem.getRoot());
-            this.sellItem = sellItem;
+        MyPublicationsItemViewHolder(final MyPublicationsItemBinding publication) {
+            super(publication.getRoot());
+            this.publication = publication;
         }
 
     }

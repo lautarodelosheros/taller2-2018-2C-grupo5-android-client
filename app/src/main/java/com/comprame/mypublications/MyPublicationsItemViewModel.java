@@ -4,30 +4,27 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
-import com.comprame.buy.BuyItem;
-import com.comprame.sell.SellItem;
-
 public class MyPublicationsItemViewModel extends ViewModel {
-    public final SellItem sellItem;
+    public final Publication publication;
     public final MutableLiveData<String> imageUrl = new MutableLiveData<>();
 
-    public MyPublicationsItemViewModel(SellItem sellItem) {
-        this.sellItem = sellItem;
-        if (sellItem.imageUrls != null && !sellItem.imageUrls.isEmpty()) {
-            imageUrl.setValue(sellItem.imageUrls.get(0));
+    public MyPublicationsItemViewModel(Publication publication) {
+        this.publication = publication;
+        if (publication.getImageUrls() != null && !publication.getImageUrls().isEmpty()) {
+            imageUrl.setValue(publication.getImageUrls().get(0));
         }
     }
 
     public String getDescription() {
-        return sellItem.description;
+        return publication.getDescription();
     }
 
     public String getName() {
-        return sellItem.name;
+        return publication.getName();
     }
 
     public String getPrice() {
-        return String.valueOf(sellItem.unitPrice);
+        return String.valueOf(publication.getUnitPrice());
     }
 
     public LiveData<String> getImageUrl() {

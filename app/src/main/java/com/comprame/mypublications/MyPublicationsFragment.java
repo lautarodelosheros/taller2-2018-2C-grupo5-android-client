@@ -18,16 +18,9 @@ import android.widget.Toast;
 
 import com.comprame.App;
 import com.comprame.R;
-import com.comprame.buy.BuyItem;
 import com.comprame.library.rest.Headers;
 import com.comprame.library.view.ProgressPopup;
 import com.comprame.login.Session;
-import com.comprame.mypurchases.MyPurchase;
-import com.comprame.mysellings.MySellingsItemsAdapter;
-import com.comprame.mysellings.MySellingsViewModel;
-import com.comprame.mysellings.OverviewMySellFragment;
-import com.comprame.mysellings.OverviewMySellViewModel;
-import com.comprame.sell.SellItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +31,7 @@ public class MyPublicationsFragment extends Fragment {
     private MyPublicationsViewModel myPublicationsViewModel;
     private MyPublicationsItemsAdapter myPublicationsItemsAdapter;
 
-    private List<SellItem> myPublications = new ArrayList<>();
+    private List<Publication> myPublications = new ArrayList<>();
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -82,27 +75,27 @@ public class MyPublicationsFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        fetchMySellings(view);
+        fetchMyPublications(view);
     }
 
-    public void fetchMySellings(View view) {
+    public void fetchMyPublications(View view) {
         ProgressPopup progressPopup = new ProgressPopup("Cargando Mis Publicaciones...", getContext());
         progressPopup.show();
 
         App.appServer.get("/item/?seller=true"
-                , SellItem[].class
+                , Publication[].class
                 , Headers.Authorization(Session.getInstance()))
                 .onDone((i, ex) -> progressPopup.dismiss())
                 .run(
-                        (SellItem[] items) -> {
-                            if (items.length == 0)
+                        (Publication[] publications) -> {
+                            if (publications.length == 0)
                                 Toast.makeText(view.getContext()
                                         , "Sin Resultados"
                                         , Toast.LENGTH_SHORT)
                                         .show();
                             else
-                                for (SellItem item: items)
-                                    myPublicationsViewModel.addItem(item);
+                                for (Publication publication: publications)
+                                    myPublicationsViewModel.addItem(publication);
                         }
                         , (Exception ex) -> {
                             Log.d("MyPublicationsListener", "Error al buscar publicaciones", ex);
@@ -114,16 +107,13 @@ public class MyPublicationsFragment extends Fragment {
                 );
     }
 
-    public void overviewMyPublication(SellItem sellItem) {
-        /*OverviewMyPublicationViewModel overviewMyPublicationViewModel = ViewModelProviders
-                .of(Objects.requireNonNull(getActivity())).get(OverviewMyPublicationViewModel.class);
-        overviewMyPublicationViewModel.item = sellItem;
-        OverviewMyPublicationFragment overviewMyPublicationFragment = new OverviewMyPublicationFragment();
-        overviewMyPublicationFragment.setItem(myPublications.get(myPublicationsViewModel.positionOf(sellItem)));
+    public void overviewMyPublication(Publication publication) {
+        EditPublicationFragment editPublicationFragment = new EditPublicationFragment();
+        editPublicationFragment.setPublication(publication);
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_container, overviewMyPublicationFragment, "OverviewMyPublicationFragment")
+                .replace(R.id.main_container, editPublicationFragment, "EditPublicationFragment")
                 .addToBackStack(null)
-                .commit();*/
+                .commit();
     }
 }

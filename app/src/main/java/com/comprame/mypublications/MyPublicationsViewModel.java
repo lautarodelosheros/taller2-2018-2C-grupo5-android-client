@@ -4,39 +4,36 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
 
-import com.comprame.buy.BuyItem;
-import com.comprame.sell.SellItem;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class MyPublicationsViewModel extends ViewModel {
 
-    public final MutableLiveData<List<SellItem>> items;
+    public final MutableLiveData<List<Publication>> publications;
 
     public MyPublicationsViewModel() {
-        items = new MutableLiveData<>();
-        items.setValue(new ArrayList<>());
+        publications = new MutableLiveData<>();
+        publications.setValue(new ArrayList<>());
     }
 
-    public void observeForever(Observer<List<SellItem>> observer) {
-        items.observeForever(observer);
+    public void observeForever(Observer<List<Publication>> observer) {
+        publications.observeForever(observer);
     }
 
     public int size() {
-        return items.getValue().size();
+        return publications.getValue().size();
     }
 
-    public void addItem(SellItem sellItem) {
-        this.items.getValue().add(sellItem);
-        setItems(this.items.getValue());
+    public void addItem(Publication publication) {
+        this.publications.getValue().add(publication);
+        setItems(this.publications.getValue());
     }
 
-    public void setItems(List<SellItem> sellItems) {
-        this.items.setValue(sellItems);
+    public void setItems(List<Publication> publications) {
+        this.publications.setValue(publications);
     }
 
-    public int positionOf(SellItem sellItem) {
-        return items.getValue().indexOf(sellItem);
+    public int positionOf(Publication publication) {
+        return publications.getValue().indexOf(publication);
     }
 }
