@@ -88,4 +88,5 @@
     <string name="fcm_message">Notificación de comprame!</string>
     <string name="my_publications">Mis Publicaciones</string>
     <string name="edit_publication">Actualizar Publicación</string>
+    <string name="delivery_estimate">Estimar Envío</string>
 </resources>

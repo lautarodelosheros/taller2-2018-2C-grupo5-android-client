@@ -1,6 +1,7 @@
 package com.comprame.overview;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
@@ -30,11 +31,19 @@ import com.comprame.library.view.ProgressPopup;
 import com.comprame.login.Session;
 import com.comprame.login.User;
 import com.comprame.qrcode.QRCodeHelper;
+import com.comprame.sell.Geolocation;
 import com.daimajia.slider.library.SliderLayout;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 import java.util.Arrays;
 import java.util.Objects;
+
+import static android.app.Activity.RESULT_OK;
+import static com.comprame.MainActivity.PLACE_PICKER_REQUEST;
 
 public class OverviewFragment extends Fragment {
 
@@ -235,7 +244,7 @@ public class OverviewFragment extends Fragment {
     public void onStop() {
         // To prevent a memory leak on rotation, make sure to call stopAutoCycle() on the slider before activity or fragment is destroyed
         mSlider.stopAutoCycle();
-        if(qrTask != null && qrTask.getStatus() == AsyncTask.Status.RUNNING)
+        if (qrTask != null && qrTask.getStatus() == AsyncTask.Status.RUNNING)
             qrTask.cancel(true);
         super.onStop();
     }
@@ -244,7 +253,7 @@ public class OverviewFragment extends Fragment {
         ImageView imageView = view.getRootView().findViewById(R.id.qrCodeImageView);
         PrintHelper printHelper = new PrintHelper(Objects.requireNonNull(getContext()));
         printHelper.setScaleMode(PrintHelper.SCALE_MODE_FIT);
-        printHelper.printBitmap("print", ((BitmapDrawable)imageView.getDrawable()).getBitmap());
+        printHelper.printBitmap("print", ((BitmapDrawable) imageView.getDrawable()).getBitmap());
     }
 
     private class QRLoader extends AsyncTask<String, Integer, Bitmap> {
@@ -268,6 +277,50 @@ public class OverviewFragment extends Fragment {
             progressBar.setVisibility(View.GONE);
             ImageView qrCodeImageView = Objects.requireNonNull(getView()).findViewById(R.id.qrCodeImageView);
             qrCodeImageView.setImageBitmap(bitmap);
+        }
+    }
+
+    public void estimate(View item) {
+        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+        try {
+            getActivity()
+                    .startActivityForResult(builder.build(getActivity()), PLACE_PICKER_REQUEST);
+        } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
+            Log.e("Estimate Delivery", "Open location", e);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case PLACE_PICKER_REQUEST:
+                    Place place = PlacePicker.getPlace(Objects.requireNonNull(getActivity()), data);
+                    overviewViewModel.location = new Geolocation(
+                            place.getLatLng().latitude,
+                            place.getLatLng().longitude,
+                            String.format("%s", place.getAddress()));
+                    ProgressPopup progressDialog = new ProgressPopup("Cargando pregunta...", this.getContext());
+                    progressDialog.show();
+                    App.appServer
+                            .post("/delivery-estimate/",
+                                    new Estimate(overviewViewModel.location,
+                                            overviewViewModel.item.getId(),
+                                            1),
+                                    DeliveryEstimate.class,
+                                    Headers.Authorization(Session.getInstance()))
+                            .onDone((ok, error) -> progressDialog.dismiss())
+                            .run(
+                                    (ok) ->
+                                            overviewViewModel.setDelivery(ok),
+                                    (error) ->
+                                            Toast.makeText(this.getContext()
+                                                    , "Error estimando el envio. Reintente en unos minutos"
+                                                    , Toast.LENGTH_LONG).show()
+                            );
+                    break;
+            }
         }
     }
 

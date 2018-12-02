@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity
 
         Bundle bundle = getIntent().getExtras();
         String name = "";
-        if(bundle != null)
+        if (bundle != null)
             name = bundle.getString("name");
 
         setHeaderData(name);
@@ -68,16 +68,22 @@ public class MainActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK) {
-            switch (requestCode){
+            switch (requestCode) {
                 case PLACE_PICKER_REQUEST:
                     Fragment sellFragment = getSupportFragmentManager().findFragmentByTag("SellFragment");
-                    if (sellFragment != null)
+                    if (sellFragment != null) {
                         sellFragment.onActivityResult(requestCode, resultCode, data);
-                    else {
-                        Fragment searchFragment = getSupportFragmentManager().findFragmentByTag("SearchFragment");
-                        if (searchFragment != null)
-                            searchFragment.onActivityResult(requestCode, resultCode, data);
-
+                        return;
+                    }
+                    Fragment searchFragment = getSupportFragmentManager().findFragmentByTag("SearchFragment");
+                    if (searchFragment != null) {
+                        searchFragment.onActivityResult(requestCode, resultCode, data);
+                        return;
+                    }
+                    Fragment overviewFragment = getSupportFragmentManager().findFragmentByTag("OverviewFragment");
+                    if (overviewFragment != null) {
+                        overviewFragment.onActivityResult(requestCode, resultCode, data);
+                        return;
                     }
             }
         }

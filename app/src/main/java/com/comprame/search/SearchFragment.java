@@ -185,7 +185,7 @@ public class SearchFragment extends Fragment {
                     getActivity()
                             .getSupportFragmentManager()
                             .beginTransaction()
-                            .replace(R.id.main_container, overviewFragment)
+                            .replace(R.id.main_container, overviewFragment, "OverviewFragment")
                             .addToBackStack(null)
                             .commit();
                 }, (ex) -> {
