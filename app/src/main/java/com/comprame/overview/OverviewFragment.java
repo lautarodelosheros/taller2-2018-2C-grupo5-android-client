@@ -297,7 +297,7 @@ public class OverviewFragment extends Fragment {
             switch (requestCode) {
                 case PLACE_PICKER_REQUEST:
                     Place place = PlacePicker.getPlace(Objects.requireNonNull(getActivity()), data);
-                    overviewViewModel.location = new Geolocation(
+                    overviewViewModel.geolocation = new Geolocation(
                             place.getLatLng().latitude,
                             place.getLatLng().longitude,
                             String.format("%s", place.getAddress()));
@@ -305,7 +305,7 @@ public class OverviewFragment extends Fragment {
                     progressDialog.show();
                     App.appServer
                             .post("/delivery-estimate/",
-                                    new Estimate(overviewViewModel.location,
+                                    new Estimate(overviewViewModel.geolocation,
                                             overviewViewModel.item.getId(),
                                             1),
                                     DeliveryEstimate.class,

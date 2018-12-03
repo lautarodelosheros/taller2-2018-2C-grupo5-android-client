@@ -4,5 +4,5 @@ import com.comprame.sell.Geolocation;
 
 public class DeliveryEstimate {
     public double value;
-    public Geolocation location;
+    public Geolocation geolocation;
 }

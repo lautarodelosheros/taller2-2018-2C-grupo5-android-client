@@ -13,7 +13,7 @@ public class OverviewViewModel extends AndroidViewModel {
 
     public BuyItem item;
     public String seller;
-    public Geolocation location;
+    public Geolocation geolocation;
     public DeliveryEstimate delivery;
     public MutableLiveData<String> deliveryCost;
 
@@ -33,7 +33,7 @@ public class OverviewViewModel extends AndroidViewModel {
 
     public void setDelivery(DeliveryEstimate delivery) {
         if (delivery != null) {
-            deliveryCost.setValue("+ " + delivery.value + "(" + delivery.location.getAddress() + ")");
+            deliveryCost.setValue("+ " + delivery.value + "(" + delivery.geolocation.getAddress() + ")");
         } else {
             deliveryCost.setValue("");
         }
