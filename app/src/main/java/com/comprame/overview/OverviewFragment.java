@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -39,7 +40,11 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 import static android.app.Activity.RESULT_OK;
@@ -281,13 +286,22 @@ public class OverviewFragment extends Fragment {
     }
 
     public void estimate(View item) {
-        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-        try {
-            getActivity()
-                    .startActivityForResult(builder.build(getActivity()), PLACE_PICKER_REQUEST);
-        } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
-            Log.e("Estimate Delivery", "Open location", e);
-        }
+        android.app.DatePickerDialog dialog = new android.app.DatePickerDialog(getContext(),
+                (DatePicker view, int year, int month, int dayOfMonth) -> {
+                    try {
+                        overviewViewModel.deliveryDate.setValue(new Date(year, month, dayOfMonth));
+                        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+                        getActivity()
+                                .startActivityForResult(builder.build(OverviewFragment.this.getActivity()), PLACE_PICKER_REQUEST);
+                    } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
+                        Log.e("Estimate Delivery", "Open location", e);
+                    }
+                },
+                Calendar.getInstance().get(Calendar.YEAR),
+                Calendar.getInstance().get(Calendar.MONTH),
+                Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+        dialog.show();
+
     }
 
     @Override
@@ -307,7 +321,9 @@ public class OverviewFragment extends Fragment {
                             .post("/delivery-estimate/",
                                     new Estimate(overviewViewModel.geolocation,
                                             overviewViewModel.item.getId(),
-                                            1),
+                                            1,
+                                            new SimpleDateFormat()
+                                                    .format(overviewViewModel.deliveryDate.getValue())),
                                     DeliveryEstimate.class,
                                     Headers.Authorization(Session.getInstance()))
                             .onDone((ok, error) -> progressDialog.dismiss())

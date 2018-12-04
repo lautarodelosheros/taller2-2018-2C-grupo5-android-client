@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 import com.comprame.buy.BuyItem;
 import com.comprame.sell.Geolocation;
 
+import java.util.Date;
+
 
 public class OverviewViewModel extends AndroidViewModel {
 
@@ -16,10 +18,13 @@ public class OverviewViewModel extends AndroidViewModel {
     public Geolocation geolocation;
     public DeliveryEstimate delivery;
     public MutableLiveData<String> deliveryCost;
+    public MutableLiveData<Date> deliveryDate;
+
 
     public OverviewViewModel(@NonNull Application application) {
         super(application);
         deliveryCost = new MutableLiveData<>();
+        deliveryDate = new MutableLiveData<>();
         setDelivery(delivery);
     }
 
