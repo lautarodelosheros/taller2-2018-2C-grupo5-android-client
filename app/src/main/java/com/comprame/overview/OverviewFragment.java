@@ -201,7 +201,7 @@ public class OverviewFragment extends Fragment {
         getActivity()
                 .getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_container, buyFragment)
+                .replace(R.id.main_container, buyFragment, "BuyFragment")
                 .addToBackStack(null)
                 .commit();
     }
@@ -282,61 +282,6 @@ public class OverviewFragment extends Fragment {
             progressBar.setVisibility(View.GONE);
             ImageView qrCodeImageView = Objects.requireNonNull(getView()).findViewById(R.id.qrCodeImageView);
             qrCodeImageView.setImageBitmap(bitmap);
-        }
-    }
-
-    public void estimate(View item) {
-        android.app.DatePickerDialog dialog = new android.app.DatePickerDialog(getContext(),
-                (DatePicker view, int year, int month, int dayOfMonth) -> {
-                    try {
-                        overviewViewModel.deliveryDate.setValue(new Date(year, month, dayOfMonth));
-                        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-                        getActivity()
-                                .startActivityForResult(builder.build(OverviewFragment.this.getActivity()), PLACE_PICKER_REQUEST);
-                    } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
-                        Log.e("Estimate Delivery", "Open location", e);
-                    }
-                },
-                Calendar.getInstance().get(Calendar.YEAR),
-                Calendar.getInstance().get(Calendar.MONTH),
-                Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
-        dialog.show();
-
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case PLACE_PICKER_REQUEST:
-                    Place place = PlacePicker.getPlace(Objects.requireNonNull(getActivity()), data);
-                    overviewViewModel.geolocation = new Geolocation(
-                            place.getLatLng().latitude,
-                            place.getLatLng().longitude,
-                            String.format("%s", place.getAddress()));
-                    ProgressPopup progressDialog = new ProgressPopup("Cargando pregunta...", this.getContext());
-                    progressDialog.show();
-                    App.appServer
-                            .post("/delivery-estimate/",
-                                    new Estimate(overviewViewModel.geolocation,
-                                            overviewViewModel.item.getId(),
-                                            1,
-                                            new SimpleDateFormat()
-                                                    .format(overviewViewModel.deliveryDate.getValue())),
-                                    DeliveryEstimate.class,
-                                    Headers.Authorization(Session.getInstance()))
-                            .onDone((ok, error) -> progressDialog.dismiss())
-                            .run(
-                                    (ok) ->
-                                            overviewViewModel.setDelivery(ok),
-                                    (error) ->
-                                            Toast.makeText(this.getContext()
-                                                    , "Error estimando el envio. Reintente en unos minutos"
-                                                    , Toast.LENGTH_LONG).show()
-                            );
-                    break;
-            }
         }
     }
 

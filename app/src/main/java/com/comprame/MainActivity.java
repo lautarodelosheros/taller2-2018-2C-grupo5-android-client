@@ -75,14 +75,19 @@ public class MainActivity extends AppCompatActivity
                         sellFragment.onActivityResult(requestCode, resultCode, data);
                         return;
                     }
-                    Fragment searchFragment = getSupportFragmentManager().findFragmentByTag("SearchFragment");
-                    if (searchFragment != null) {
-                        searchFragment.onActivityResult(requestCode, resultCode, data);
+                    Fragment buyFragment = getSupportFragmentManager().findFragmentByTag("BuyFragment");
+                    if (buyFragment != null) {
+                        buyFragment.onActivityResult(requestCode, resultCode, data);
                         return;
                     }
                     Fragment overviewFragment = getSupportFragmentManager().findFragmentByTag("OverviewFragment");
                     if (overviewFragment != null) {
                         overviewFragment.onActivityResult(requestCode, resultCode, data);
+                        return;
+                    }
+                    Fragment searchFragment = getSupportFragmentManager().findFragmentByTag("SearchFragment");
+                    if (searchFragment != null) {
+                        searchFragment.onActivityResult(requestCode, resultCode, data);
                         return;
                     }
             }

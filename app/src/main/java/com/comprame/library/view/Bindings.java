@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -16,6 +17,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.comprame.R;
 import com.comprame.library.fun.Provider;
+
+import java.util.Date;
 
 public class Bindings {
 
@@ -78,9 +81,23 @@ public class Bindings {
     }
 
     @BindingAdapter({"read"})
-    public static <T> void readWriteText(TextView editText,  MutableLiveData<T> readIn) {
+    public static <T> void readWriteText(TextView editText, MutableLiveData<T> readIn) {
         if (readIn != null)
-            readIn.observeForever(data -> editText.setText(data.toString()));
+            readIn.observeForever(data -> {
+                        if (data instanceof Date) {
+                            editText.setText(Format.human((Date) data));
+                        } else {
+                            editText.setText(data.toString());
+                        }
+                    }
+            );
+    }
+
+
+    @BindingAdapter({"check"})
+    public static void checkValue(CheckBox checkBox, MutableLiveData<Boolean> readIn) {
+        if (readIn != null)
+            readIn.observeForever(data -> checkBox.setChecked(data));
     }
 
     @BindingAdapter("onItemSelected")

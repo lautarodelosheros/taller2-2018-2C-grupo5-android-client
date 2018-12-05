@@ -5,12 +5,24 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
+import com.comprame.library.view.Format;
+import com.comprame.sell.Geolocation;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class BuyViewModel extends AndroidViewModel {
 
     public Purchase asPuchase() {
+        Purchase.DeliveryOrder deliveryOrder = null;
+        if (includeDelivery.getValue()) {
+            deliveryOrder = new Purchase.DeliveryOrder(deliveryLocation.getValue(),
+                    Format.iso(deliveryDate.getValue()));
+        }
         return new Purchase(item.getId()
                 , units.getValue()
-                , card.asCard());
+                , card.asCard()
+                , deliveryOrder);
     }
 
     public class CardViewModel {
@@ -39,15 +51,35 @@ public class BuyViewModel extends AndroidViewModel {
     }
 
     public BuyItem item;
+
     public final CardViewModel card = new CardViewModel();
     public final MutableLiveData<Integer> units = new MutableLiveData<>();
     public final MutableLiveData<Double> total = new MutableLiveData<>();
     public final MutableLiveData<String> seller = new MutableLiveData<>();
+    public final MutableLiveData<Boolean> includeDelivery = new MutableLiveData<>();
+    public final MutableLiveData<Geolocation> deliveryLocation = new MutableLiveData<>();
+    public final MutableLiveData<Date> deliveryDate = new MutableLiveData<>();
+    public final MutableLiveData<Double> deliveryCost = new MutableLiveData<>();
 
 
     public BuyViewModel(@NonNull Application application) {
         super(application);
         units.setValue(1);
+        includeDelivery.setValue(false);
+        includeDelivery.observeForever(b -> {
+            if (item != null) {
+                if (b && deliveryCost.getValue() != null)
+                    total.setValue(units.getValue() * item.getUnitPrice() + deliveryCost.getValue());
+                else
+                    total.setValue(units.getValue() * item.getUnitPrice());
+            }
+
+        });
+        deliveryCost.observeForever((cost) -> {
+            if (cost != null) {
+                total.setValue(total.getValue() + cost);
+            }
+        });
     }
 
     public void setSeller(String seller) {
@@ -70,5 +102,9 @@ public class BuyViewModel extends AndroidViewModel {
         int value = units.getValue();
         units.setValue(++value);
         total.setValue(value * item.getUnitPrice());
+    }
+
+    public void withDelivery(boolean include) {
+        includeDelivery.setValue(include);
     }
 }

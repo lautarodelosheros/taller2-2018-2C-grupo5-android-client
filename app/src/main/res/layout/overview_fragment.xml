@@ -74,18 +74,6 @@
                 android:textSize="18sp" />
 
             <android.support.v7.widget.AppCompatButton
-                android:id="@+id/delivery_estimate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="24dp"
-                android:background="@color/colorPrimary"
-                android:padding="12dp"
-                android:text="@string/delivery_estimate"
-                android:textColor="@color/white"
-                android:onClick="@{fragment::estimate}"/>
-
-            <android.support.v7.widget.AppCompatButton
                 android:id="@+id/overview_buy_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
