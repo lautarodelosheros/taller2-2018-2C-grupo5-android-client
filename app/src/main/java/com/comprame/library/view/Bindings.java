@@ -4,8 +4,10 @@ import android.arch.core.util.Function;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.databinding.BindingAdapter;
+import android.support.v7.widget.AppCompatButton;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -69,6 +71,12 @@ public class Bindings {
         liveData.observeForever(button::setEnabled);
     }
 
+    @BindingAdapter({"btn_enable"})
+    public static void enableByObservable(AppCompatButton button
+            , LiveData<Boolean> liveData) {
+        liveData.observeForever(button::setEnabled);
+    }
+
     @BindingAdapter("imageUrl")
     public static void loadImage(ImageView imageView, String url) {
         Glide.with(imageView.getContext())
@@ -93,6 +101,18 @@ public class Bindings {
             );
     }
 
+    @BindingAdapter({"read"})
+    public static <T> void readButton(AppCompatButton button, MutableLiveData<T> readIn) {
+        if (readIn != null)
+            readIn.observeForever(data -> {
+                        if (data instanceof Date) {
+                            button.setText(Format.human((Date) data));
+                        } else {
+                            button.setText(data.toString());
+                        }
+                    }
+            );
+    }
 
     @BindingAdapter({"check"})
     public static void checkValue(CheckBox checkBox, MutableLiveData<Boolean> readIn) {
@@ -103,6 +123,18 @@ public class Bindings {
     @BindingAdapter("onItemSelected")
     public static void setItemSelectedListener(Spinner spinner, AdapterView.OnItemSelectedListener itemSelectedListener) {
         spinner.setOnItemSelectedListener(itemSelectedListener);
+    }
+
+    @BindingAdapter({"hide"})
+    public static void hide(View view, MutableLiveData<Boolean> readIn) {
+        if (readIn != null)
+            readIn.observeForever(data -> {
+                if (data)
+                    view.setVisibility(View.VISIBLE);
+                else
+                    view.setVisibility(View.INVISIBLE);
+
+            });
     }
 
 }

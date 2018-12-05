@@ -44,6 +44,8 @@
     <string name="item_description">Descripción</string>
     <string name="item_name">Nombre</string>
     <string name="buy">Comprar</string>
+    <string name="buy_with_delivery">Comprar Con Envio</string>
+    <string name="buy_without_delivery">Comprar Sin Envio</string>
     <string name="total">Total</string>
     <string name="units">Unidades</string>
     <string name="plus">+</string>

@@ -141,12 +141,11 @@
                         android:layout_width="4dp"
                         android:layout_height="wrap_content"
                         android:layout_weight=".5"
-                        app:check="@{data.includeDelivery}"
                         android:clickable="true"
-                        android:text="Incluir Envio"
                         android:onCheckedChanged="@{(button, checked) -> data.withDelivery(checked)}"
+                        android:text="Incluir Envio"
                         android:textSize="18sp"
-                        />
+                        app:check="@{data.includeDelivery}" />
 
                     <TextView
                         android:id="@+id/delivery_cost"
@@ -156,30 +155,38 @@
                         app:read="@{data.deliveryCost}" />
                 </LinearLayout>
 
-                <EditText
-                    android:id="@+id/delivery_date"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="Fecha Recepción"
-                    android:inputType="none"
-                    android:focusableInTouchMode="false"
-                    app:read="@{data.deliveryDate}"
-                    android:onClick="@{fragment::pickDate}"/>
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:hide="@{data.includeDelivery}">
 
-                <EditText
-                    android:id="@+id/delivery_geolocation"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="Dirección"
-                    android:focusableInTouchMode="false"
-                    android:inputType="none"
-                    app:read="@{data.deliveryLocation}"
-                    android:onClick="@{fragment::pickGeoLocation}"/>
+                    <EditText
+                        android:id="@+id/delivery_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:focusableInTouchMode="false"
+                        android:hint="Fecha Recepción"
+                        android:inputType="none"
+                        android:onClick="@{fragment::pickDate}"
+                        app:read="@{data.deliveryDate}"
+                        app:validation="@{()-> data.deliveryDateError}" />
 
+                    <EditText
+                        android:id="@+id/delivery_geolocation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:focusableInTouchMode="false"
+                        android:hint="Dirección"
+                        android:inputType="none"
+                        android:onClick="@{fragment::pickGeoLocation}"
+                        app:read="@{data.deliveryLocation}"
+                        app:validation="@{()-> data.deliveryLocationError}" />
+                </LinearLayout>
             </LinearLayout>
 
 
@@ -223,7 +230,8 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/card_number"
                         android:inputType="number"
-                        android:text="@={data.card.number}" />
+                        android:text="@={data.card.number}"
+                        app:validation="@{()-> data.card.numberError}" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -235,7 +243,8 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/card_owner"
                         android:inputType="textCapCharacters"
-                        android:text="@={data.card.ownerName}" />
+                        android:text="@={data.card.ownerName}"
+                        app:validation="@{()-> data.card.ownerNameError}" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -247,32 +256,43 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/card_security_code"
                         android:inputType="number"
-                        android:text="@={data.card.securityCode}" />
+                        android:text="@={data.card.securityCode}"
+                        app:validation="@{()-> data.card.securityCodeError}" />
                 </android.support.design.widget.TextInputLayout>
 
-                <android.support.design.widget.TextInputLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-                    <android.support.design.widget.TextInputEditText
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/card_expiration_month"
-                        android:inputType="number"
-                        android:text="@={data.card.expirationMonth}" />
-                </android.support.design.widget.TextInputLayout>
+                        android:layout_height="match_parent"
+                        android:layout_weight=".5">
 
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                        <android.support.design.widget.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/card_expiration_month"
+                            android:inputType="number"
+                            android:text="@={data.card.expirationMonth}"
+                            app:validation="@{()-> data.card.expirationMonthError}" />
+                    </android.support.design.widget.TextInputLayout>
 
-                    <android.support.design.widget.TextInputEditText
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/card_expiration_year"
-                        android:inputType="number"
-                        android:text="@={data.card.expirationYear}" />
-                </android.support.design.widget.TextInputLayout>
+                        android:layout_height="match_parent"
+                        android:layout_weight=".5">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/card_expiration_year"
+                            android:inputType="number"
+                            android:text="@={data.card.expirationYear}"
+                            app:validation="@{()-> data.card.expirationYearError}" />
+                    </android.support.design.widget.TextInputLayout>
+                </LinearLayout>
             </LinearLayout>
 
             <android.support.v7.widget.AppCompatButton
@@ -282,11 +302,11 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="24dp"
                 android:background="@color/colorPrimary"
-
                 android:onClick="@{fragment::buy}"
                 android:padding="12dp"
-                android:text="@string/buy"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                app:btn_enable="@{data.enabled}"
+                app:read="@{data.buyText}" />
 
         </LinearLayout>
     </ScrollView>
