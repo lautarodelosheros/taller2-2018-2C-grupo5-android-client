@@ -95,7 +95,7 @@ public class Bindings {
                         if (data instanceof Date) {
                             editText.setText(Format.human((Date) data));
                         } else {
-                            editText.setText(data.toString());
+                            editText.setText(data == null? null: data.toString());
                         }
                     }
             );

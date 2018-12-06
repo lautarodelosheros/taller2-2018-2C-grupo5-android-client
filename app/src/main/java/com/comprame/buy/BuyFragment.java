@@ -76,7 +76,6 @@ public class BuyFragment extends Fragment {
                         (ok) ->
                                 model.deliveryCost.setValue(ok.value),
                         (error) -> {
-                            model.deliveryDate.setValue(null);
                             Toast.makeText(this.getContext()
                                     , "Error estimando el envio. Reintente en unos minutos"
                                     , Toast.LENGTH_LONG).show();
