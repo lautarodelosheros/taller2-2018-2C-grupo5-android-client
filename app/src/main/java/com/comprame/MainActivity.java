@@ -22,7 +22,6 @@ import com.comprame.mysellings.MySellingsFragment;
 import com.comprame.notifications.FirebaseMessagingManager;
 import com.comprame.profile.ProfileFragment;
 import com.comprame.qrcode.BuyWithQRFragment;
-import com.comprame.search.SearchFragment;
 import com.comprame.sell.SellFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -61,7 +60,10 @@ public class MainActivity extends AppCompatActivity
         navUsername.setText(name);
     }
 
-    public final static int PLACE_PICKER_REQUEST = 999;
+    public final static int PLACE_PICKER_BUY = 0;
+    public final static int PLACE_PICKER_SEARCH = 1;
+    public final static int PLACE_PICKER_OVERVIEW = 2;
+    public final static int PLACE_PICKER_SELL = 999;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -69,7 +71,22 @@ public class MainActivity extends AppCompatActivity
 
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
-                case PLACE_PICKER_REQUEST:
+                case PLACE_PICKER_BUY:
+                    getSupportFragmentManager()
+                            .findFragmentByTag("BuyFragment")
+                            .onActivityResult(requestCode, resultCode, data);
+                    return;
+                case PLACE_PICKER_SEARCH:
+                    getSupportFragmentManager()
+                            .findFragmentByTag("SearchFragment")
+                            .onActivityResult(requestCode, resultCode, data);
+                    return;
+                case PLACE_PICKER_OVERVIEW:
+                    getSupportFragmentManager()
+                            .findFragmentByTag("OverviewFragment")
+                            .onActivityResult(requestCode, resultCode, data);
+                    return;
+                case PLACE_PICKER_SELL:
                     Fragment sellFragment = getSupportFragmentManager().findFragmentByTag("SellFragment");
                     if (sellFragment != null) {
                         sellFragment.onActivityResult(requestCode, resultCode, data);

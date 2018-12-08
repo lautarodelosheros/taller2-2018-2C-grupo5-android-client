@@ -1,7 +1,6 @@
 package com.comprame.overview;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
@@ -14,7 +13,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -32,23 +30,11 @@ import com.comprame.library.view.ProgressPopup;
 import com.comprame.login.Session;
 import com.comprame.login.User;
 import com.comprame.qrcode.QRCodeHelper;
-import com.comprame.sell.Geolocation;
 import com.daimajia.slider.library.SliderLayout;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Objects;
-
-import static android.app.Activity.RESULT_OK;
-import static com.comprame.MainActivity.PLACE_PICKER_REQUEST;
 
 public class OverviewFragment extends Fragment {
 

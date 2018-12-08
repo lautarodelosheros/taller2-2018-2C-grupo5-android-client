@@ -11,7 +11,6 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +44,7 @@ import java.util.Objects;
 import static android.app.Activity.RESULT_OK;
 import static com.comprame.Config.CLOUDINARY_CLOUD_NAME;
 import static com.comprame.Config.CLOUDINARY_UPLOAD_PRESET;
-import static com.comprame.MainActivity.PLACE_PICKER_REQUEST;
+import static com.comprame.MainActivity.PLACE_PICKER_SELL;
 
 
 public class SellFragment extends Fragment {
@@ -154,7 +153,7 @@ public class SellFragment extends Fragment {
     public void openPlacePicker(View view) {
         PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
         try {
-            getActivity().startActivityForResult(builder.build(Objects.requireNonNull(getActivity())), PLACE_PICKER_REQUEST);
+            getActivity().startActivityForResult(builder.build(Objects.requireNonNull(getActivity())), PLACE_PICKER_SELL);
         } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
             e.printStackTrace();
         }
@@ -167,7 +166,7 @@ public class SellFragment extends Fragment {
 
         if (resultCode == RESULT_OK) {
             switch (requestCode){
-                case PLACE_PICKER_REQUEST:
+                case PLACE_PICKER_SELL:
                     Place place = PlacePicker.getPlace(Objects.requireNonNull(getActivity()), data);
                     LatLng latLng = place.getLatLng();
                     String placeName = String.format("%s", place.getAddress());

@@ -25,6 +25,7 @@ public class BuyViewModel extends AndroidViewModel {
                 , deliveryOrder);
     }
 
+
     public class CardViewModel {
         public final MutableLiveData<String> ownerName;
         public final MutableLiveData<String> number;
@@ -86,6 +87,14 @@ public class BuyViewModel extends AndroidViewModel {
             return null;
         }
 
+        public void clear() {
+            ownerName.setValue(null);
+            number.setValue(null);
+            securityCode.setValue(null);
+            expirationMonth.setValue(null);
+            expirationYear.setValue(null);
+        }
+
         public boolean isValid() {
             return ownerNameError() == null
                     && numberError() == null
@@ -108,6 +117,19 @@ public class BuyViewModel extends AndroidViewModel {
     public final MutableLiveData<String> buyText = new MutableLiveData<>();
     public final MutableLiveData<Boolean> enabled = new MutableLiveData<>();
 
+
+    public void clear() {
+        if (units != null) units.setValue(1);
+        if (total != null) total.setValue(null);
+        if (seller != null) seller.setValue(null);
+        if (includeDelivery != null) includeDelivery.setValue(false);
+        if (deliveryLocation != null) deliveryLocation.setValue(null);
+        if (deliveryDate != null) deliveryDate.setValue(null);
+        if (deliveryCost != null) deliveryCost.setValue(null);
+        if (buyText != null) buyText.setValue(null);
+        if (enabled != null) enabled.setValue(false);
+        if (card != null) card.clear();
+    }
 
     public BuyViewModel(@NonNull Application application) {
         super(application);

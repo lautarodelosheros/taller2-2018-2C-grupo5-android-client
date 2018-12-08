@@ -40,7 +40,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import static android.app.Activity.RESULT_OK;
-import static com.comprame.MainActivity.PLACE_PICKER_REQUEST;
+import static com.comprame.MainActivity.PLACE_PICKER_SELL;
 
 public class SearchFragment extends Fragment {
     private static final int ITEM_OFFSET = 5;
@@ -199,7 +199,7 @@ public class SearchFragment extends Fragment {
     public void openPlacePicker(View view) {
         PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
         try {
-            getActivity().startActivityForResult(builder.build(Objects.requireNonNull(getActivity())), PLACE_PICKER_REQUEST);
+            getActivity().startActivityForResult(builder.build(Objects.requireNonNull(getActivity())), PLACE_PICKER_SELL);
         } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
             e.printStackTrace();
         }
@@ -212,7 +212,7 @@ public class SearchFragment extends Fragment {
 
         if (resultCode == RESULT_OK) {
             switch (requestCode){
-                case PLACE_PICKER_REQUEST:
+                case PLACE_PICKER_SELL:
                     Place place = PlacePicker.getPlace(Objects.requireNonNull(getActivity()), data);
                     LatLng latLng = place.getLatLng();
                     String placeName = String.format("%s", place.getAddress());

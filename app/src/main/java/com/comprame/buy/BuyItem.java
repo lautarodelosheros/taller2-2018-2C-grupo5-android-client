@@ -9,6 +9,7 @@ import java.util.List;
 public class BuyItem implements Serializable {
     private String id;
     private String name;
+    private String status;
     private String description;
     private double unitPrice;
     private List<String> imageUrls = new ArrayList<>();
@@ -19,7 +20,7 @@ public class BuyItem implements Serializable {
 
     public BuyItem(String id
             , String name
-            , String description
+            , String status, String description
             , double unitPrice
             , String sellerId
             , Geolocation geolocation
@@ -28,6 +29,7 @@ public class BuyItem implements Serializable {
 
         this.id = id;
         this.name = name;
+        this.status = status;
         this.description = description;
         this.unitPrice = unitPrice;
         this.sellerId = sellerId;
@@ -113,5 +115,13 @@ public class BuyItem implements Serializable {
 
     public List<String> getImages() {
         return imageUrls;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

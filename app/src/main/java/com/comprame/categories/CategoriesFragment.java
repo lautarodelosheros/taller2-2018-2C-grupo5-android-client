@@ -1,51 +1,27 @@
 package com.comprame.categories;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.comprame.App;
 import com.comprame.R;
-import com.comprame.buy.BuyItem;
 import com.comprame.library.rest.Headers;
-import com.comprame.library.rest.Query;
 import com.comprame.library.view.ProgressPopup;
 import com.comprame.login.Session;
-import com.comprame.overview.OverviewFragment;
-import com.comprame.overview.OverviewViewModel;
-import com.comprame.search.SearchFilterPopUp;
 import com.comprame.search.SearchFragment;
-import com.comprame.search.SearchItem;
-import com.comprame.search.SearchItemsAdapter;
-import com.comprame.search.SearchViewModel;
-import com.comprame.sell.Geolocation;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlacePicker;
-import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Arrays;
-import java.util.Objects;
-
-import static android.app.Activity.RESULT_OK;
-import static com.comprame.MainActivity.PLACE_PICKER_REQUEST;
 
 public class CategoriesFragment extends Fragment {
     private static final int NUMBER_OF_COLUMNS = 3;

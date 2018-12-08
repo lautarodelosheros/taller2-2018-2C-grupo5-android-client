@@ -92,10 +92,11 @@ public class Bindings {
     public static <T> void readWriteText(TextView editText, MutableLiveData<T> readIn) {
         if (readIn != null)
             readIn.observeForever(data -> {
+
                         if (data instanceof Date) {
                             editText.setText(Format.human((Date) data));
                         } else {
-                            editText.setText(data == null? null: data.toString());
+                            editText.setText(data == null ? null : data.toString());
                         }
                     }
             );
@@ -108,7 +109,7 @@ public class Bindings {
                         if (data instanceof Date) {
                             button.setText(Format.human((Date) data));
                         } else {
-                            button.setText(data.toString());
+                            button.setText(data == null ? null : data.toString());
                         }
                     }
             );
@@ -117,7 +118,7 @@ public class Bindings {
     @BindingAdapter({"check"})
     public static void checkValue(CheckBox checkBox, MutableLiveData<Boolean> readIn) {
         if (readIn != null)
-            readIn.observeForever(data -> checkBox.setChecked(data));
+            readIn.observeForever(checkBox::setChecked);
     }
 
     @BindingAdapter("onItemSelected")

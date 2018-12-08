@@ -12,7 +12,7 @@ public class MyPurchasesItemViewModel extends ViewModel {
 
     public MyPurchasesItemViewModel(BuyItem buyItem) {
         this.buyItem = buyItem;
-        if (buyItem.getImages() != null &&!buyItem.getImages().isEmpty()) {
+        if (buyItem.getImages() != null && !buyItem.getImages().isEmpty()) {
             imageUrl.setValue(buyItem.getImage(0));
         }
     }
@@ -23,6 +23,10 @@ public class MyPurchasesItemViewModel extends ViewModel {
 
     public String getName() {
         return buyItem.getName();
+    }
+
+    public String getStatus() {
+        return buyItem.getStatus();
     }
 
     public String getPrice() {

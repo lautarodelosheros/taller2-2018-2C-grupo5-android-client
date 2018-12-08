@@ -36,7 +36,8 @@ import java.util.Date;
 import java.util.Objects;
 
 import static android.app.Activity.RESULT_OK;
-import static com.comprame.MainActivity.PLACE_PICKER_REQUEST;
+import static com.comprame.MainActivity.PLACE_PICKER_BUY;
+import static com.comprame.MainActivity.PLACE_PICKER_SELL;
 
 public class BuyFragment extends Fragment {
 
@@ -128,12 +129,15 @@ public class BuyFragment extends Fragment {
                 .onDone((ok, error) -> popupWindow.dismiss())
                 .run(
                         (ok) ->
-                                getActivity()
-                                        .getSupportFragmentManager()
-                                        .beginTransaction()
-                                        .replace(R.id.main_container, new SearchFragment())
-                                        .addToBackStack(null)
-                                        .commit()
+                        {
+                            model.clear();
+                            getActivity()
+                                    .getSupportFragmentManager()
+                                    .beginTransaction()
+                                    .replace(R.id.main_container, new SearchFragment())
+                                    .addToBackStack(null)
+                                    .commit();
+                        }
                         , (ex) -> {
                             Log.d("BuyFragment", "Comprando Item", ex);
                             Toast.makeText(getActivity()
@@ -144,10 +148,11 @@ public class BuyFragment extends Fragment {
     }
 
     public void pickGeoLocation(View item) {
-        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
         try {
+            PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
             getActivity()
-                    .startActivityForResult(builder.build(this.getActivity()), PLACE_PICKER_REQUEST);
+                    .startActivityForResult(builder.build(this.getActivity()),
+                            PLACE_PICKER_BUY);
         } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
             Toast.makeText(getActivity()
                     , "Error resolviendo la direccion, por favor intente nuevamente"
@@ -184,7 +189,7 @@ public class BuyFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
-                case PLACE_PICKER_REQUEST:
+                case PLACE_PICKER_BUY:
                     Place place = PlacePicker.getPlace(Objects.requireNonNull(getActivity()), data);
                     model.deliveryLocation.setValue(new Geolocation(
                             place.getLatLng().latitude,

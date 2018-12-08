@@ -57,6 +57,14 @@
                 android:textStyle="bold"
                 android:text="@{`Precio: $` + String.valueOf(model.item.unitPrice)}" />
 
+
+            <TextView
+                android:id="@+id/overview_item_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="@{`Estado: ` + model.item.status}" />
+
             <!--TextView
                 android:id="@+id/overview_item_seller"
                 android:layout_width="match_parent"
