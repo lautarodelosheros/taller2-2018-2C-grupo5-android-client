@@ -11,7 +11,7 @@ public class Config {
     public static final String CLOUDINARY_CLOUD_NAME = "dsivfsfcd";
     public static final String CLOUDINARY_UPLOAD_PRESET = "in08vb9h";
 
-    private static final Env environment = Env.DEV_EMULATOR;
+    private static final Env environment = Env.PROD;
     private static final String EMULATOR_HOST_ADDRESS = "10.0.2.2";
     private static final String NETWORK_ADDRESS = "192.168.0.15";
 
