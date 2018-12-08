@@ -63,7 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
-                android:text="@{`Estado: ` + model.item.status}" />
+                android:text="@{`Estado: ` + model.purchase.status}" />
 
             <!--TextView
                 android:id="@+id/overview_item_seller"

@@ -8,10 +8,14 @@ import com.comprame.buy.BuyItem;
 
 public class OverviewMyPurchaseViewModel extends AndroidViewModel {
 
-    public BuyItem item;
+    public MyPurchase purchase;
 
     public OverviewMyPurchaseViewModel(@NonNull Application application) {
         super(application);
+    }
+
+    public BuyItem getItem() {
+        return purchase.item;
     }
 
 }

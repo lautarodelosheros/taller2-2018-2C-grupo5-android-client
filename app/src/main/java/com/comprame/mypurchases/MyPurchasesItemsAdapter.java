@@ -35,8 +35,8 @@ public class MyPurchasesItemsAdapter extends RecyclerView.Adapter<MyPurchasesIte
 
     @Override
     public void onBindViewHolder(@NonNull MyPurchasesItemViewHolder holder, int position) {
-        BuyItem buyItem = items.items.getValue().get(position);
-        holder.buyItem.setMyPurchasesItemModel(new MyPurchasesItemViewModel(buyItem));
+        MyPurchase buyItem = items.items.getValue().get(position);
+        holder.buyItem.setMyPurchasesItemModel(new MyPurchasesItemViewModel(buyItem.item));
         holder.buyItem
                 .getRoot()
                 .setOnClickListener((l) -> myPurchasesFragment.overviewMyPurchase(buyItem));

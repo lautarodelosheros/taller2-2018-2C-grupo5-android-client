@@ -35,9 +35,9 @@ public class OverviewMyPurchaseFragment extends Fragment {
 
         SliderLayout mSlider = binding.slider;
 
-        if (overviewMyPurchaseViewModel.item.getImages() != null) {
+        if (overviewMyPurchaseViewModel.getItem().getImages() != null) {
 
-            for (String url : overviewMyPurchaseViewModel.item.getImages()) {
+            for (String url : overviewMyPurchaseViewModel.getItem().getImages()) {
                 GlideSliderView sliderView = new GlideSliderView(getContext());
                 sliderView
                         .image(url);

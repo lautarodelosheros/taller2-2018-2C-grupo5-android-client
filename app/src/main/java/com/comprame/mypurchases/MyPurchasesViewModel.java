@@ -11,14 +11,14 @@ import java.util.List;
 
 public class MyPurchasesViewModel extends ViewModel {
 
-    public final MutableLiveData<List<BuyItem>> items;
+    public final MutableLiveData<List<MyPurchase>> items;
 
     public MyPurchasesViewModel() {
         items = new MutableLiveData<>();
         items.setValue(new ArrayList<>());
     }
 
-    public void observeForever(Observer<List<BuyItem>> observer) {
+    public void observeForever(Observer<List<MyPurchase>> observer) {
         items.observeForever(observer);
     }
 
@@ -26,16 +26,16 @@ public class MyPurchasesViewModel extends ViewModel {
         return items.getValue().size();
     }
 
-    public void addItem(BuyItem buyItem) {
+    public void addItem(MyPurchase buyItem) {
         this.items.getValue().add(buyItem);
         setItems(this.items.getValue());
     }
 
-    public void setItems(List<BuyItem> buyItems) {
+    public void setItems(List<MyPurchase> buyItems) {
         this.items.setValue(buyItems);
     }
 
-    public int positionOf(BuyItem buyItem) {
+    public int positionOf(MyPurchase buyItem) {
         return items.getValue().indexOf(buyItem);
     }
 }

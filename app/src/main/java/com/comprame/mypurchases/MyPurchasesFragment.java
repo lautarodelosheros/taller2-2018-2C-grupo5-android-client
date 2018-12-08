@@ -96,7 +96,7 @@ public class MyPurchasesFragment extends Fragment {
                                         .show();
                             else
 
-                                for (MyPurchase purchase: purchases)
+                                for (MyPurchase purchase : purchases)
                                     fetchItem(purchase, purchase.itemId);
                         }
                         , (Exception ex) -> {
@@ -110,8 +110,8 @@ public class MyPurchasesFragment extends Fragment {
     }
 
     private void fetchItem(MyPurchase purchase, String itemId) {
-        App.appServer.get("/item/" + itemId,
-                BuyItem.class
+        App.appServer.get("/purchase/" + purchase.id,
+                MyPurchase.class
                 , Headers.Authorization(Session.getInstance()))
                 .run((item) -> {
                     myPurchasesViewModel.addItem(item);
@@ -125,10 +125,10 @@ public class MyPurchasesFragment extends Fragment {
                 });
     }
 
-    public void overviewMyPurchase(BuyItem buyItem) {
+    public void overviewMyPurchase(MyPurchase buyItem) {
         OverviewMyPurchaseViewModel overviewMyPurchaseViewModel = ViewModelProviders
                 .of(Objects.requireNonNull(getActivity())).get(OverviewMyPurchaseViewModel.class);
-        overviewMyPurchaseViewModel.item = buyItem;
+        overviewMyPurchaseViewModel.purchase = buyItem;
         OverviewMyPurchaseFragment overviewMyPurchaseFragment = new OverviewMyPurchaseFragment();
         overviewMyPurchaseFragment.setPurchase(myPurchases.get(myPurchasesViewModel.positionOf(buyItem)));
         getActivity().getSupportFragmentManager()
